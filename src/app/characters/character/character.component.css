@@ -1,0 +1,10 @@
+.space-background{
+    background-image: url('/assets/Background.jpeg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.mage-background{
+    background-image: url('/assets/Mage\ 1.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

@@ -1,0 +1,110 @@
+<div class="grid grid-cols-12 p-3">
+    <!-- Stats -->
+    <div class="grid grid-cols-12 p-3 col-span-12">
+      <div class="col-span-12 grid place-items-center text-2xl font-cinzel">Stats</div>
+      <div class="col-span-6 grid place-items-center">Max Health:</div>
+      <div class="col-span-6">
+        <input
+          class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          type="number"
+          [(ngModel)]="char.character.stats.health"
+        />
+      </div>
+      <div class="col-span-6 grid place-items-center">Max Willpower:</div>
+      <div class="col-span-6">
+        <input
+          class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          type="number"
+          [(ngModel)]="char.character.stats.willpower"
+        />
+      </div>
+      <div class="col-span-6 grid place-items-center">Gnosis:</div>
+      <div class="col-span-6">
+        <input
+          class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          type="number"
+          [(ngModel)]="char.character.stats.gnosis"
+        />
+      </div>
+      <div class="col-span-6 grid place-items-center">Wisom:</div>
+      <div class="col-span-6">
+        <input
+          class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          type="number"
+          [(ngModel)]="char.character.stats.wisdom"
+        />
+      </div>
+      <div class="col-span-6 grid place-items-center">Max Mana:</div>
+      <div class="col-span-6">
+        <input
+          class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          type="number"
+          [(ngModel)]="char.character.stats.maxMana"
+        />
+      </div>
+    </div>
+  <!-- XP -->
+  <div class="grid grid-cols-12 p-3 col-span-12">
+    <div class="col-span-12 grid place-items-center text-2xl font-cinzel">XP</div>
+    <div class="col-span-6 grid place-items-center">Experience:</div>
+    <div class="col-span-6">
+      <input
+        class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="number"
+        [(ngModel)]="char.character.stats.experience"
+      />
+    </div>
+    <div class="col-span-6 grid place-items-center">Arcane Experience:</div>
+    <div class="col-span-6">
+      <input
+        class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="number"
+        [(ngModel)]="char.character.stats.arcaneExperiences"
+      />
+    </div>
+  </div>
+  <!-- Physical Stats -->
+  <div class="grid grid-cols-12 p-3 col-span-12">
+    <div class="col-span-12 grid place-items-center text-2xl font-cinzel">Physical Stats</div>
+    <div class="col-span-6 grid place-items-center">Speed:</div>
+    <div class="col-span-6">
+      <input
+        class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="number"
+        [(ngModel)]="char.character.stats.speed"
+      />
+    </div>
+    <div class="col-span-6 grid place-items-center">Size:</div>
+    <div class="col-span-6">
+      <input
+        class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="number"
+        [(ngModel)]="char.character.stats.size"
+      />
+    </div>
+    <div class="col-span-6 grid place-items-center">Defense:</div>
+    <div class="col-span-6">
+      <input
+        class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="number"
+        [(ngModel)]="char.character.stats.defense"
+      />
+    </div>
+    <div class="col-span-6 grid place-items-center">Armor:</div>
+    <div class="col-span-6">
+      <input
+        class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="number"
+        [(ngModel)]="char.character.stats.armor"
+      />
+    </div>
+    <div class="col-span-6 grid place-items-center">Initiative Mod:</div>
+    <div class="col-span-6">
+      <input
+        class="font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="number"
+        [(ngModel)]="char.character.stats.initiativeMod"
+      />
+    </div>
+  </div>
+</div>

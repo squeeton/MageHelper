@@ -1,7 +1,33 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { CharacterComponent } from './characters/character/character.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
-const routes: Routes = [];
+const routes: Routes = [ {
+  path: '',
+  component: HomeComponent
+},
+{
+  path: 'characters',
+  component: CharacterComponent
+},
+// {
+//   path: 'clip/:id',
+//   component: ClipComponent,
+//   resolve: {
+//     clip: ClipService
+//   }
+// },
+// {
+//   path: '',
+//   loadChildren: async () => (await import('./video/video.module')).VideoModule
+// },
+{
+  path: '**',
+  component: NotFoundComponent
+}
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

@@ -1,0 +1,10 @@
+<div class="grid grid-cols-12 hover:text-red-500 hover:cursor-pointer"
+(click)="expandSpell()">
+  <div class="col-span-8 bg-zinc-700/80 grid place-items-center h-[25px]">{{ spell.name }}</div>
+  <div class="col-span-2 bg-zinc-700/80 grid place-items-center h-[25px]">{{ spell.arcanum }}</div>
+  <div class="col-span-2 bg-zinc-700/80 grid place-items-center h-[25px]">{{ spell.dots }}</div>
+</div>
+<!-- Full Description *ngIf="!loading;"-->
+<div class="grid col-span-12 text-white" [ngClass]="{ hidden: descriptionHidden }">
+  <app-info-single-spell [spell]="spell"></app-info-single-spell>
+</div>

@@ -1,0 +1,7 @@
+<div class="grid justify-center items-center" [ngClass]="maxCols" (click)="getDots()">
+  <!-- <span *ngFor="let dot of getUsedDots()" class="material-symbols-outlined flex " [ngClass]="circleSize"> hide_source </span>
+  <span *ngFor="let dot of getFilledDots()" class="material-symbols-outlined flex  filled" [ngClass]="circleSize"> circle </span>
+  <span *ngFor="let box of getUnusedDots()" class="material-symbols-outlined flex " [ngClass]="circleSize"> circle </span>
+  <span *ngFor="let dot of getEmptyDots()" class="material-symbols-outlined flex  text opacity-20"  [ngClass]="circleSize"> circle </span> -->
+  <span *ngFor="let dot of getDots()" class="material-symbols-outlined flex select-none text-outline-white text-black" [ngClass]="dot.class" (click)="sendValue(dot.val)"> {{dot.icon}} </span>
+</div>

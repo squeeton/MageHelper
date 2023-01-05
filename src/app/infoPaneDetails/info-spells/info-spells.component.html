@@ -1,0 +1,14 @@
+<div class="font-cinzel">
+  <!-- Death -->
+  <div class="grid grid-cols-12" *ngFor="let arcanum of arcanums let i = index" [attr.data-index]="i">
+    <div
+      class="col-span-12 bg-zinc-600/80 shadow-xl grid place-items-center h-[40px] hover:text-red-500 hover:cursor-pointer border border-zinc-400/50"
+      (click)="toggleExpandArcanum(i)"
+    >
+      {{ arcanum.name | titlecase}}
+    </div>
+    <div class="col-span-12" *ngFor="let spell of getSpells(arcanum.name)"  [ngClass]="{ hidden: arcanum.hidden}">
+      <app-info-spell-list [spell]="spell"></app-info-spell-list>
+    </div>
+  </div>
+</div>

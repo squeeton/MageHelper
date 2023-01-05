@@ -1,0 +1,314 @@
+<div *ngIf="!char.loading; else loadingIcon" class="mage-background font-cinzel text-white">
+  <!-- Name Header -->
+  <div class="fixed bg-zinc-800 col-span-12 h-[75px] w-full m-0-m-auto z-20">
+    <div class="grid grid-cols-6 text-white">
+      <div></div>
+      <div class="col-span-2">
+        <div
+          class="col-span-5 text-lg font-bold hover:cursor-help hover:text-red-500"
+          (click)="info.setInfoPane('Details')"
+        >
+          {{ char.displayName }}
+        </div>
+        <div class="text-gray-400 font-playfair">
+          &nbsp;&nbsp;&nbsp;{{ char.character.details.path }}
+          <span class="text-white"> - </span>
+          {{ char.character.details.order }}
+          <span class="text-white"> - </span>
+          {{ char.character.details.legacy }}
+        </div>
+        <div class="text-gray-400 font-playfair">
+          &nbsp;&nbsp;&nbsp;<span class="text-white font-cinzel">Virtue: </span>{{ char.character.details.virtue }}
+          <span class="text-white font-cinzel">Vice: </span> {{ char.character.details.vice }}
+        </div>
+      </div>
+      <div class="col-span-2"></div>
+      <div class="grid grid-cols-6 text-white">
+        <!-- Edit Button -->
+        <span
+          *ngIf="!char.editMode; else endEditButton"
+          (click)="allowEdit()"
+          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+          title="Edit"
+        >
+          edit_square
+        </span>
+        <ng-template #endEditButton>
+          <span
+            (click)="endEdit()"
+            class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer text-blue-500 animate-pulse"
+          >
+            edit
+          </span>
+        </ng-template>
+        <!-- Roll Button -->
+        <span
+          (click)="openInfoPane()"
+          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+        >
+          casino
+        </span>
+        <!-- Save Button -->
+        <span
+          *ngIf="!char.saving; else savingIcon"
+          (click)="char.saveCharacter()"
+          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-green-500"
+        >
+          save
+        </span>
+        <ng-template #savingIcon>
+          <span
+            class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer text-green-500 animate-spin"
+          >
+            cached
+          </span>
+        </ng-template>
+        <!-- TEST BUTTON -->
+        <span
+          (click)="test()"
+          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+          [ngClass]="{ 'text-red-800 shadow-lg border-red-500 animate-ping': char.addProblem }"
+        >
+          bug_report
+        </span>
+      </div>
+    </div>
+  </div>
+  <div id="CharSheet" class="py-5 font-bold px-o" [ngClass]="this.charSheetPosition">
+    <!-- Margin Centered Sheet -->
+    <div class="max-w-screen-xl m-auto grid grid-cols-12 gap-5 mt-[75px]">
+      <!-- Attributes -->
+      <div
+        class="bg-zinc-800/80 rounded-lg border-solid border-double border-4 border-red-800 shadow-xl col-span-12 row-span-3"
+      >
+        <div class="grid-cols-12 text-center text-4xl text-outline-white text-black">Attributes</div>
+        <!-- Container -->
+        <div class="grid grid-cols-3 my-4">
+          <!-- Mental -->
+          <div class="grid grid-rows-3 border-r border-black gap-2">
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Intelligence</div>
+              <app-dots
+                [path]="'attributes.intelligence'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.intelligence"
+              ></app-dots>
+            </div>
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Wits</div>
+              <app-dots
+                [path]="'attributes.wits'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.wits"
+              ></app-dots>
+            </div>
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Resolve</div>
+              <app-dots
+                [path]="'attributes.resolve'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.resolve"
+              ></app-dots>
+            </div>
+          </div>
+          <!-- Physical -->
+          <div class="grid grid-rows-3 border-r border-black gap-2">
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Strength</div>
+              <app-dots
+                [path]="'attributes.strength'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.strength"
+              ></app-dots>
+            </div>
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Dexterity</div>
+              <app-dots
+                [path]="'attributes.dexterity'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.dexterity"
+              ></app-dots>
+            </div>
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Stamina</div>
+              <app-dots
+                [path]="'attributes.intelligence'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.stamina"
+              ></app-dots>
+            </div>
+          </div>
+          <!-- Social -->
+          <div class="grid grid-rows-3 border-black gap-2">
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Presence</div>
+              <app-dots
+                [path]="'attributes.presence'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.presence"
+              ></app-dots>
+            </div>
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Manipulation</div>
+              <app-dots
+                [path]="'attributes.manipulation'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.manipulation"
+              ></app-dots>
+            </div>
+            <div class="grid grid-cols-2 place-items-center">
+              <div class="text-center font-bold">Composure</div>
+              <app-dots
+                [path]="'attributes.composure'"
+                [size]="attributeDot"
+                [currentDots]="char.character.attributes.composure"
+              ></app-dots>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="col-span-3 font-bold text-sm">
+        <div class="justify-center text-center text-4xl text-outline-white text-black">Skills</div>
+        <!-- Container -->
+        <div
+          class="grid grid-rows-3 gap-y-5 my-3 py-3 bg-zinc-800/80 rounded-lg shadow-xl border-solid border-double border-4 border-red-800 text-white"
+        >
+          <!-- Mental -->
+          <div class="rounded-lg flex flex-col justify-center items-center">
+            <p class="text-center text-2xl">Mental</p>
+            <p class="text-center text-xs">(-3 unskilled)</p>
+            <div class="grid grid-cols-2 gap-2 min-w-[220px]">
+              <app-dots-label [currentDots]="char.character.skills.academics">Academics</app-dots-label>
+              <app-dots [path]="'skills.academics'" [currentDots]="char.character.skills.academics"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.computer">Computer</app-dots-label>
+              <app-dots [path]="'skills.computer'" [currentDots]="char.character.skills.computer"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.crafts">Crafts</app-dots-label>
+              <app-dots [path]="'skills.crafts'" [currentDots]="char.character.skills.crafts"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.investigation">Investigation</app-dots-label>
+              <app-dots [path]="'skills.investigation'" [currentDots]="char.character.skills.investigation"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.medicine"> Medicine </app-dots-label>
+              <app-dots [path]="'skills.medicine'" [currentDots]="char.character.skills.medicine"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.occult">Occult</app-dots-label>
+              <app-dots [path]="'skills.occult'" [currentDots]="char.character.skills.occult"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.politics">Politics</app-dots-label>
+              <app-dots [path]="'skills.politics'" [currentDots]="char.character.skills.politics"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.science">Science</app-dots-label>
+              <app-dots [path]="'skills.science'" [currentDots]="char.character.skills.science"></app-dots>
+            </div>
+          </div>
+          <!-- Physical -->
+          <div class="rounded-lg flex flex-col justify-center items-center">
+            <p class="text-center text-2xl">Physical</p>
+            <p class="text-center text-xs">(-1 unskilled)</p>
+            <div class="grid grid-cols-2 gap-2 min-w-[220px]">
+              <app-dots-label [currentDots]="char.character.skills.athletics">Athletics</app-dots-label>
+              <app-dots [path]="'skills.athletics'" [currentDots]="char.character.skills.athletics"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.brawl">Brawl</app-dots-label>
+              <app-dots [path]="'skills.brawl'" [currentDots]="char.character.skills.brawl"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.drive"> Drive</app-dots-label>
+              <app-dots [path]="'skills.drive'" [currentDots]="char.character.skills.drive"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.firearms"> Firearms</app-dots-label>
+              <app-dots [path]="'skills.firearms'" [currentDots]="char.character.skills.firearms"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.larceny"> Larceny</app-dots-label>
+              <app-dots [path]="'skills.larceny'" [currentDots]="char.character.skills.larceny"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.stealth"> Stealth</app-dots-label>
+              <app-dots [path]="'skills.stealth'" [currentDots]="char.character.skills.stealth"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.survival"> Survival</app-dots-label>
+              <app-dots [path]="'skills.survival'" [currentDots]="char.character.skills.survival"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.weaponry"> Weaponry</app-dots-label>
+              <app-dots [path]="'skills.weaponry'" [currentDots]="char.character.skills.weaponry"></app-dots>
+            </div>
+          </div>
+          <!-- Social -->
+          <div class="rounded-lg flex flex-col justify-center items-center">
+            <p class="text-center text-2xl">Social</p>
+            <p class="text-center text-xs">(-1 unskilled)</p>
+            <div class="grid grid-cols-2 gap-2 min-w-[220px]">
+              <app-dots-label [currentDots]="char.character.skills.animalKen">Animal Ken</app-dots-label>
+              <app-dots [path]="'skills.animalKen'" [currentDots]="char.character.skills.animalKen"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.empathy">Empathy</app-dots-label>
+              <app-dots [path]="'skills.empathy'" [currentDots]="char.character.skills.empathy"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.expression"> Expression</app-dots-label>
+              <app-dots [path]="'skills.expression'" [currentDots]="char.character.skills.expression"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.intimidation"> Intimidation</app-dots-label>
+              <app-dots [path]="'skills.intimidation'" [currentDots]="char.character.skills.intimidation"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.persuasion"> Persuasion</app-dots-label>
+              <app-dots [path]="'skills.persuasion'" [currentDots]="char.character.skills.persuasion"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.socialize"> Socialize</app-dots-label>
+              <app-dots [path]="'skills.socialize'" [currentDots]="char.character.skills.socialize"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.streetwise"> Streetwise</app-dots-label>
+              <app-dots [path]="'skills.streetwise'" [currentDots]="char.character.skills.streetwise"></app-dots>
+
+              <app-dots-label [currentDots]="char.character.skills.subterfuge"> Subterfuge</app-dots-label>
+              <app-dots [path]="'skills.subterfuge'" [currentDots]="char.character.skills.subterfuge"></app-dots>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Other Traits -->
+      <div class="col-span-9">
+        <div class="justify-center text-center text-4xl text-outline-white text-black">Other Traits</div>
+
+        <!-- Container -->
+        <div class="my-3 py-3 bg-zinc-800/80 rounded-lg shadow-xl border-solid border-double border-4 border-red-800">
+          <div class="p-3">
+            <app-tabs-container>
+              <!-- Stats -->
+              <app-tab tabTitle="Stats">
+                <app-stats-tab [attributeDot]="attributeDot"></app-stats-tab>
+              </app-tab>
+
+              <!-- Spells -->
+              <app-tab tabTitle="Spells">
+                <app-spells-tab [spells]="char.character.spells" [arcana]="char.character.arcana"> </app-spells-tab>
+              </app-tab>
+
+              <!-- Familiar -->
+              <app-tab tabTitle="Familiar"> </app-tab>
+
+              <!-- Nimbus -->
+              <app-tab tabTitle="Nimbus"> </app-tab>
+            </app-tabs-container>
+          </div>
+        </div>
+        <div class="grid grid-rows-3 gap-y-5"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #loadingIcon>
+  <div class="mage-background min-h-screen min-w-screen text-center py-52">
+    <div
+      class="max-w-screen-xl py-8 m-0 m-auto my-auto bg-zinc-800/80 rounded-lg shadow-xl border-solid border-double border-4 border-red-800 max-h-[200px]"
+    >
+      <span (click)="test()" class="material-symbols-outlined text-8xl animate-spin text-white"> autorenew </span>
+    </div>
+  </div>
+</ng-template>
+
+<!-- Info Pane -->
+<app-info-pane></app-info-pane>

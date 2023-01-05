@@ -1,0 +1,39 @@
+<div class="grid grid-cols-12 w-80 p-5 m-auto">
+  <div class="col-span-6 text-2xl font-cinzel grid place-items-center">Rote Skill:</div>
+  <div class="col-span-6 grid place-items-center">
+    <select
+      name="cars"
+      id="cars"
+      class="font-fairplay mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+      [ngClass]="{ 'bg-red-800 shadow-lg border-red-500 animate-bounce': char.addProblem}"
+      [(ngModel)]="this.roteSkill"
+      (ngModelChange)="updateRoteSkill()"
+    >
+      <option value="Academics">Academics</option>
+      <option value="Computer">Computer</option>
+      <option value="Crafts">Crafts</option>
+      <option value="Investigation">Investigation</option>
+      <option value="Medicine">Medicine</option>
+      <option value="Occult">Occult</option>
+      <option value="Politics">Politics</option>
+      <option value="Science">Science</option>
+      <option value="Athletics">Athletics</option>
+      <option value="Brawl">Brawl</option>
+      <option value="Drive">Drive</option>
+      <option value="Firearms">Firearms</option>
+      <option value="Larceny">Larceny</option>
+      <option value="Stealth">Stealth</option>
+      <option value="Survival">Survival</option>
+      <option value="Weaponry">Weaponry</option>
+      <option value="Animal Ken">Animal Ken</option>
+      <option value="Empathy">Empathy</option>
+      <option value="Expression">Expression</option>
+      <option value="Intimidation">Intimidation</option>
+      <option value="Persuasion">Persuasion</option>
+      <option value="Socialize">Socialize</option>
+      <option value="Streetwise">Streetwise</option>
+      <option value="Subterfuge">Subterfuge</option>
+    </select>
+  </div>
+</div>
+<app-info-spells> </app-info-spells>

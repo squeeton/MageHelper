@@ -1,0 +1,53 @@
+<div class="col-span-12 bg-zinc-800/80 shadow-xl grid place-items-center font-playfair">
+  <div class="grid grid-cols-12 m-5">
+    <div class="col-span-1 grid place-items-center font-cinzel border-b border-red-500">
+    </div>
+    <div class="col-span-10 grid place-items-center font-cinzel border-b border-red-500">
+      <strong>{{ spell.name }}</strong>
+    </div>
+    <div class="col-span-1 grid place-items-center font-cinzel border-b border-red-500">
+      <span
+        class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+        title="Add Rote"
+        [ngClass]="{ hidden: !char.addSpell}"
+        (click)="char.addSingleSpell(spell)"
+      >
+        add_circle
+      </span>
+    </div>
+    <div class="col-span-4 text-right">
+      <strong>Practice: &nbsp;</strong>
+    </div>
+    <div class="col-span-8">
+      {{ spell.practice }}
+    </div>
+    <div class="col-span-4 text-right">
+      <strong>Primary Factor: &nbsp;</strong>
+    </div>
+    <div class="col-span-8">
+      {{ spell.primaryFactor }}
+    </div>
+    <div class="col-span-4 text-right">
+      <strong>Withstand: &nbsp;</strong>
+    </div>
+    <div class="col-span-8">
+      {{ spell.withstand }}
+    </div>
+    <div class="col-span-4 text-right">
+      <strong>Cost: &nbsp;</strong>
+    </div>
+    <div class="col-span-8">
+      {{ spell.cost }}
+    </div>
+    <div class="col-span-4 text-right border-b border-red-500">
+      <strong>Suggested Rotes: &nbsp;</strong>
+    </div>
+    <div class="col-span-8 border-b border-red-500">
+      {{ spell.suggestedRotes }}
+    </div>
+    <div class="col-span-12 border-b border-red-500 whitespace-pre-wrap">      
+     <p>{{ spell.description }}</p> 
+     <p *ngFor="let r of spell.reach">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>+{{ r.cost}}&nbsp;Reach: &nbsp;</strong> {{r.effect}}</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+<div class="grid text-center" [ngClass]="health < 10 ? gridCols : 'grid-cols-10'">
+  <span *ngFor="let healthBox of getHealth()" class="material-symbols-outlined flex select-none " [ngClass]="healthBox.class"> {{healthBox.icon}} </span>
+</div>
