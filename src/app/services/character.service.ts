@@ -21,7 +21,7 @@ export class CharacterService {
   characterID = '';
   character: ICharacter = {
     "praxis": [],
-    "uid": "T8l241mLLvWA3GZ3IwMFV3ypqwd2",
+    "uid": "",
     "spells": [],
     "details": {
       "characterName": "Chungus McDungus",
@@ -35,12 +35,12 @@ export class CharacterService {
     "stats": {
       "size": 5,
       "armor": 2,
-      "arcaneExperiences": 1,
+      "arcaneExperiences": 0,
       "health": 7,
       "wisdom": 7,
       "willpower": 7,
       "initiativeMod": 4,
-      "experience": 2,
+      "experience": 0,
       "usedWillpower": 0,
       "defense": 5,
       "speed": 8,
@@ -91,15 +91,15 @@ export class CharacterService {
       "death": 3
     },
     "attributes": {
-      "wits": 2,
+      "wits": 1,
       "manipulation": 1,
       "strength": 1,
       "dexterity": 1,
-      "intelligence": 4,
+      "intelligence": 1,
       "stamina": 1,
       "presence": 1,
       "composure": 1,
-      "resolve": 2
+      "resolve": 1
     },
     "rotes": []
   }
@@ -245,6 +245,7 @@ export class CharacterService {
       setTimeout(() => {
         this.addProblem = false;
       }, 1500);
+      this.saving = false;
     }
   }
 
