@@ -132,7 +132,10 @@ export class CharacterService {
   async setInitialCharacter(uid: string) {
 
     let characterData = await this.db.getCharacter(uid);
-    this.character = characterData.char;
+    console.log(characterData);
+    if( characterData.char.details.characterName !=''){
+      this.character = characterData.char;
+    }
     this.characterID = characterData.id;
     this.loading = false;
   }
