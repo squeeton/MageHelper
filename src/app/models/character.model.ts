@@ -1,9 +1,12 @@
+import IFamiliar from "./familiar.model"
+import IMerit from "./merit.model"
 import IPraxis from "./praxis.model"
 import IRote from "./rote.model"
 import ISpell from "./spell.model"
 
 export interface ICharacter {
     uid: string,
+    notes:string,
     details: {
         characterName: string,
         shadowName: string,
@@ -52,7 +55,7 @@ export interface ICharacter {
         socialize: number,
         streetwise: number,
         subterfuge: number
-    },    
+    },
     arcana: {
         death: number,
         fate: number,
@@ -64,8 +67,8 @@ export interface ICharacter {
         spirit: number,
         space: number,
         time: number
-      },
-    merits: {},
+    },
+    merits: Array<IMerit>,
     stats: {
         health: number,
         bashingDamage: number,
@@ -83,20 +86,23 @@ export interface ICharacter {
         armor: number,
         initiativeMod: number,
         experience: number,
-        arcaneExperiences: number
+        arcaneExperiences: number,
+        aspirations: string,
+        obsessions: string
     },
     spells: Array<ISpell>,
     rotes: Array<IRote>,
-    praxis: Array<ISpell>
+    praxis: Array<ISpell>,
+    familiar: IFamiliar
 }
 
 
 export interface IDetails {
-        characterName: string,
-        shadowName: string,
-        virtue: string,
-        vice: string,
-        path: string,
-        order: string,
-        legacy: string
+    characterName: string,
+    shadowName: string,
+    virtue: string,
+    vice: string,
+    path: string,
+    order: string,
+    legacy: string
 }

@@ -54,7 +54,6 @@ export class DataService {
       const tempDoc = querySnapshot.docs.map((doc) => {
         return { id: doc.id, ...doc.data() }
       })
-      console.log(tempDoc)
     })
 
 
@@ -65,24 +64,26 @@ export class DataService {
 
     let char: ICharacter;
     let id: string;
-    let returnValue : {
+    let returnValue: {
       id: string,
       char: ICharacter
     }
-    const querySnapshot = await this.characterCollection.ref.where('uid', '==', uid).limit(1).get()
+    const querySnapshot = await this.characterCollection.ref.where('uid', '==', uid).get()
+    // console.log({ uid, docLen: querySnapshot.docs.length, SS: querySnapshot.docs });
 
     if (querySnapshot.docs.length > 0) {
       const doc = await querySnapshot.docs[0];
 
-      returnValue = {id: doc.id, char: doc.data()};
+      returnValue = { id: doc.id, char: doc.data() };
 
       return returnValue;
     }
     else {
       let character = {
         uid: uid,
+        notes:'',
         details: {
-          characterName: '',
+          characterName: 'Your Character Name',
           shadowName: '',
           virtue: '',
           vice: ' ',
@@ -142,7 +143,7 @@ export class DataService {
           space: 0,
           time: 0
         },
-        merits: {},
+        merits: [],
         stats: {
           health: 7,
           bashingDamage: 0,
@@ -160,24 +161,45 @@ export class DataService {
           armor: 2,
           initiativeMod: 4,
           experience: 2,
-          arcaneExperiences: 1
+          arcaneExperiences: 1,
+          aspirations: '',
+          obsessions: ''
         },
         spells: [
         ],
         rotes: [],
-        praxis: []
+        praxis: [],
+        familiar: {
+          name:'',
+          health: 0,
+          damage: 0,
+          willpower: 0,
+          usedWillpower: 0,
+          virtue: '',
+          vice: '',
+          type: '',
+          initiative: 0,
+          defense: 0,
+          speed: 0,
+          size: 0,
+          language: '',
+          rank: 0,
+          ban: '',
+          bane: '',
+          essence:0,
+          mana:0,
+          power:0,
+          finesse:0,
+          resistance:0
+        }
       }
 
       let q = this.characterCollection.add(character);
       id = (await q).id;
-      returnValue = {id, char: (character as ICharacter)}
+      returnValue = { id, char: (character as ICharacter) }
 
       return returnValue;
     }
-  }
-
-  createCharacter() {
-
   }
 
   updateCharacter(id: string, char: ICharacter) {

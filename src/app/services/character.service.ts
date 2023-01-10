@@ -5,6 +5,8 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { AuthService } from 'src/app/services/auth.service';
 import { InfoPaneService } from 'src/app/services/info-pane.service';
 import ISpell from '../models/spell.model';
+import IMeritRef from '../models/meritRef.model';
+import IMerit from '../models/merit.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,19 +22,19 @@ export class CharacterService {
   saving = false;
   characterID = '';
   character: ICharacter = {
-    "praxis": [],
-    "uid": "",
-    "spells": [],
-    "details": {
-      "characterName": "Chungus McDungus",
-      "path": "Ninja",
-      "legacy": "of Kain",
-      "vice": "Too Cool",
-      "virtue": "Way Too Cool",
-      "order": "of the Hoes",
-      "shadowName": "Big Pimpin"
+    praxis: [],
+    uid: "",
+    spells: [],
+    details: {
+      "characterName": "",
+      "path": "",
+      "legacy": "",
+      "vice": "",
+      "virtue": "",
+      "order": "",
+      "shadowName": ""
     },
-    "stats": {
+    stats: {
       "size": 5,
       "armor": 2,
       "arcaneExperiences": 0,
@@ -48,10 +50,12 @@ export class CharacterService {
       "aggravatedDamage": 0,
       "lethalDamage": 0,
       "remainingMana": 3,
-      "maxMana":0,
-      "bashingDamage": 0
+      "maxMana": 0,
+      "bashingDamage": 0,
+      "aspirations": '',
+      "obsessions": ''
     },
-    "skills": {
+    skills: {
       "weaponry": 0,
       "computer": 0,
       "occult": 0,
@@ -77,8 +81,8 @@ export class CharacterService {
       "persuasion": 0,
       "politics": 0
     },
-    "merits": {},
-    "arcana": {
+    merits: [],
+    arcana: {
       "fate": 0,
       "time": 1,
       "mind": 0,
@@ -90,7 +94,7 @@ export class CharacterService {
       "forces": 0,
       "death": 3
     },
-    "attributes": {
+    attributes: {
       "wits": 1,
       "manipulation": 1,
       "strength": 1,
@@ -101,13 +105,38 @@ export class CharacterService {
       "composure": 1,
       "resolve": 1
     },
-    "rotes": []
+    rotes: [],
+    familiar:{
+      name:'',
+      health:0,
+      damage:0,
+      virtue:'',
+      vice:'',
+      type:'',
+      willpower:0,
+      usedWillpower:0,
+      initiative:0,
+      defense:0,
+      speed:0,
+      size:0,
+      language:'',
+      rank:0,
+      ban:'',
+      bane:'',
+      essence:0,
+      mana:0,
+      power:0,
+      finesse:0,
+      resistance:0
+    },
+    notes:''
   }
   editMode = false;
   addProblem = false;
 
 
   addSpell = false;
+  addMerit = false;
   addType = '';
   roteSkillAdd = '';
 
@@ -132,10 +161,7 @@ export class CharacterService {
   async setInitialCharacter(uid: string) {
 
     let characterData = await this.db.getCharacter(uid);
-    console.log(characterData);
-    if( characterData.char.details.characterName !=''){
-      this.character = characterData.char;
-    }
+    this.character = characterData.char;
     this.characterID = characterData.id;
     this.loading = false;
   }
@@ -147,7 +173,6 @@ export class CharacterService {
     while (keys.length > 1) {
       data = data[keys.shift() as keyof Object];
     }
-
     if (data) {
       let attr = keys.shift();
       if (attr) {
@@ -280,6 +305,24 @@ export class CharacterService {
 
   }
 
+  addSingleMerit(merit: IMeritRef) {
+    let addMerit: IMerit;
+    let dots = 1;
+    if (merit.minCost == null) {
+      dots = merit.maxCost
+    }
+    else {
+      dots = merit.minCost
+    }
+    addMerit = {
+      dots: dots,
+      merit: merit
+    }
+
+    let x = this.character.merits
+    x.push(addMerit);
+
+  }
 
   removeRote(index: number) {
     if (this.character.rotes[index]) {
@@ -291,6 +334,13 @@ export class CharacterService {
       this.character.praxis.splice(index, 1);
     }
   }
+  removeMerit(index: number) {
+    if (this.character.merits[index]) {
+      this.character.merits.splice(index, 1);
+    }
+  }
 
-
+  test() {
+    console.log(this.character);
+  }
 }

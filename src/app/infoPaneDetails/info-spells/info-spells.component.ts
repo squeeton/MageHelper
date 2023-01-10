@@ -33,9 +33,6 @@ export class InfoSpellsComponent implements OnInit {
   ngOnInit(): void {
   }
   
-  expandSpell(arcanum: string, i: number) {
-  }
-
   getSpells(arcanum: string) {
     let x = this.spells[arcanum as keyof object]
     return x;

@@ -1,159 +1,204 @@
-
-                <div class="grid grid-cols-2 gap-5 p-3">
-                    <!-- Health -->
-                    <div class="grid grid-row-2">
-                      <div class="text-center text-lg select-none">
-                        <span
-                          class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
-                          title="Heal Bashing Damage"
-                          (click)="char.healDamage('bashing')"
-                        >
-                          sports_mma
-                        </span>
-                        &nbsp;
-                        <span
-                          class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
-                          title="Heal Lethal Damage"
-                          (click)="char.healDamage('lethal')"
-                          >swords</span
-                        >
-                        &nbsp;
-                        <span
-                          class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
-                          title="Heal Aggravated Damage"
-                          (click)="char.healDamage('aggravated')"
-                        >
-                          brightness_5
-                        </span>
-                        &nbsp; <span class="select-text  hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">
-                            Health</span> &nbsp;
-                        <span
-                          class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
-                          title="Deal Bashing Damage"
-                          (click)="char.addDamage('bashing')"
-                        >
-                          sports_mma
-                        </span>
-                        &nbsp;
-                        <span
-                          class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
-                          title="Deal Lethal Damage"
-                          (click)="char.addDamage('lethal')"
-                          >swords</span
-                        >
-                        &nbsp;
-                        <span
-                          class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
-                          title="Deal Aggravated Damage"
-                          (click)="char.addDamage('aggravated')"
-                        >
-                          brightness_5
-                        </span>
-                      </div>
-                      <app-healthbar
-                        [health]="char.character.stats.health"
-                        [bashing]="char.character.stats.bashingDamage"
-                        [lethal]="char.character.stats.lethalDamage"
-                        [aggravated]="char.character.stats.aggravatedDamage"
-                      ></app-healthbar>
-                    </div>
-                    <!-- Willpower -->
-                    <div class="grid grid-row-2">
-                      <div class="text-center text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Willpower</div>
-                      <app-dots
-                        [path]="'stats.willpower'"
-                        [consumablePath]="'stats.usedWillpower'"
-                        [size]="attributeDot"
-                        [maxDots]="10"
-                        [currentDots]="char.character.stats.willpower"
-                        [usedDots]="char.character.stats.usedWillpower"
-                        [consumable]="true"
-                      >
-                      </app-dots>
-                    </div>
-                    <!-- Gnosis -->
-                    <div class="grid grid-row-2 text-center">
-                      <div class="text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Gnosis</div>
-                      <app-dots
-                        [path]="'stats.gnosis'"
-                        [size]="attributeDot"
-                        [currentDots]="char.character.stats.gnosis"
-                      ></app-dots>
-                    </div>
-                    <!-- Wisdom -->
-                    <div class="grid grid-row-2 text-center">
-                      <div class="text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Wisdom</div>
-                      <app-dots
-                        [path]="'stats.wisdom'"
-                        [maxDots]="10"
-                        [size]="attributeDot"
-                        [currentDots]="char.character.stats.wisdom"
-                      ></app-dots>
-                    </div>
-                    <!-- Mana -->
-                    <div class="grid grid-row-2 text-center lex flex-col justify-center items-center">
-                      <div class="text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Mana</div>
-                      <input
-                        type="number"
-                        class="rounded-lg text-center w-4/5 text-black"
-                        [(ngModel)]="char.character.stats.remainingMana"
-                      />
-                    </div>
-                    <!-- Experience -->
-                    <div class="grid grid-cols-4 text-center lex flex-col justify-center items-center">
-                      <div class="col-span-2 text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Experience</div>
-                      <div class="col-span-2 text-lg">{{ char.character.stats.experience }}</div>
-                      <div class="col-span-2 text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Arcane Experience</div>
-                      <div class="col-span-2 text-lg">{{ char.character.stats.arcaneExperiences }}</div>
-                    </div>
-                    <!-- Physical Stats -->
-                    <div class="grid grid-cols-2 text-center flex flex-col justify-center items-center  border-solid border-double border-4 border-red-800 my-2 py-2">
-                        <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Physical Stats</div>
-                      <div>Size:</div>
-                      <div>{{ char.character.stats.size }}</div>
-                      <div>Speed:</div>
-                      <div>{{ char.character.stats.speed }}</div>
-                      <div>Defense:</div>
-                      <div>{{ char.character.stats.defense }}</div>
-                      <div>Armor:</div>
-                      <div>{{ char.character.stats.armor }}</div>
-                      <div>Initiative Mod:</div>
-                      <div>{{ char.character.stats.initiativeMod }}</div>
-                    </div>
-                    <div class="grid grid-cols-2 text-center flex flex-col justify-center items-center  border-solid border-double border-4 border-red-800">
-                    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Merits</div>
-                    <div class="col-span-2">Merit</div>
-                    <div class="col-span-2">Merit</div>
-                    <div class="col-span-2">Merit</div>
-                    <div class="col-span-2">Merit</div>
-                    <div class="col-span-2">Merit</div>
-                    </div>
-                    <div class="grid grid-cols-2 text-center flex flex-col justify-center items-center  border-solid border-double border-4 border-red-800">
-                    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Tilts</div>
-                    <div class="col-span-2">Tilts</div>
-                    <div class="col-span-2">Tilts</div>
-                    <div class="col-span-2">Tilts</div>
-                    <div class="col-span-2">Tilts</div>
-                    </div>
-                    <div class="grid grid-cols-2 text-center flex flex-col justify-center items-center  border-solid border-double border-4 border-red-800">
-                    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Conditions</div>
-                    <div class="col-span-2">Conditions</div>
-                    <div class="col-span-2">Conditions</div>
-                    <div class="col-span-2">Conditions</div>
-                    <div class="col-span-2">Conditions</div>
-                    </div>
-                    <div class="grid grid-cols-2 text-center flex flex-col justify-center items-center  border-solid border-double border-4 border-red-800">
-                    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Aspirations</div>
-                    <div class="col-span-2">Aspirations</div>
-                    <div class="col-span-2">Aspirations</div>
-                    <div class="col-span-2">Aspirations</div>
-                    <div class="col-span-2">Aspirations</div>
-                    </div>
-                    <div class="grid grid-cols-2 text-center flex flex-col justify-center items-center  border-solid border-double border-4 border-red-800">
-                    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Obsessions</div>
-                    <div class="col-span-2">Obsessions</div>
-                    <div class="col-span-2">Obsessions</div>
-                    <div class="col-span-2">Obsessions</div>
-                    <div class="col-span-2">Obsessions</div>
-                    </div>
-                  </div>
+<div class="grid grid-cols-2 gap-5 p-3">
+  <!-- Health -->
+  <div class="grid grid-row-2">
+    <div class="text-center text-lg select-none">
+      <span
+        class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
+        title="Heal Bashing Damage"
+        (click)="char.healDamage('bashing')"
+      >
+        sports_mma
+      </span>
+      &nbsp;
+      <span
+        class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
+        title="Heal Lethal Damage"
+        (click)="char.healDamage('lethal')"
+        >swords</span
+      >
+      &nbsp;
+      <span
+        class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
+        title="Heal Aggravated Damage"
+        (click)="char.healDamage('aggravated')"
+      >
+        brightness_5
+      </span>
+      &nbsp;
+      <span class="select-text hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')"> Health</span>
+      &nbsp;
+      <span
+        class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
+        title="Deal Bashing Damage"
+        (click)="char.addDamage('bashing')"
+      >
+        sports_mma
+      </span>
+      &nbsp;
+      <span
+        class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
+        title="Deal Lethal Damage"
+        (click)="char.addDamage('lethal')"
+        >swords</span
+      >
+      &nbsp;
+      <span
+        class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
+        title="Deal Aggravated Damage"
+        (click)="char.addDamage('aggravated')"
+      >
+        brightness_5
+      </span>
+    </div>
+    <app-healthbar
+      [health]="char.character.stats.health"
+      [bashing]="char.character.stats.bashingDamage"
+      [lethal]="char.character.stats.lethalDamage"
+      [aggravated]="char.character.stats.aggravatedDamage"
+    ></app-healthbar>
+  </div>
+  <!-- Willpower -->
+  <div class="grid grid-row-2">
+    <div class="text-center text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">
+      Willpower
+    </div>
+    <app-dots
+      [path]="'stats.willpower'"
+      [consumablePath]="'stats.usedWillpower'"
+      [size]="'2xl'"
+      [maxDots]="10"
+      [currentDots]="char.character.stats.willpower"
+      [usedDots]="char.character.stats.usedWillpower"
+      [consumable]="true"
+    >
+    </app-dots>
+  </div>
+  <!-- Gnosis -->
+  <div class="grid grid-row-2 text-center">
+    <div class="text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Gnosis</div>
+    <app-dots [path]="'stats.gnosis'" [size]="attributeDot" [currentDots]="char.character.stats.gnosis"></app-dots>
+  </div>
+  <!-- Wisdom -->
+  <div class="grid grid-row-2 text-center">
+    <div class="text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Wisdom</div>
+    <app-dots
+      [path]="'stats.wisdom'"
+      [maxDots]="10"
+      [size]="attributeDot"
+      [currentDots]="char.character.stats.wisdom"
+    ></app-dots>
+  </div>
+  <!-- Mana -->
+  <div class="grid grid-row-2 text-center lex flex-col justify-center items-center">
+    <div class="text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Mana</div>
+    <input
+      type="number"
+      class="rounded-lg text-center w-4/5 text-black"
+      [(ngModel)]="char.character.stats.remainingMana"
+    />
+  </div>
+  <!-- Experience -->
+  <div class="grid grid-cols-4 text-center lex flex-col justify-center items-center">
+    <div class="col-span-2 text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">
+      Experience
+    </div>
+    <div class="col-span-2 text-lg">{{ char.character.stats.experience }}</div>
+    <div class="col-span-2 text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">
+      Arcane Experience
+    </div>
+    <div class="col-span-2 text-lg">{{ char.character.stats.arcaneExperiences }}</div>
+  </div>
+  <!-- Physical Stats -->
+  <div
+    class="grid grid-cols-2 text-center flex flex-col justify-center items-center border-solid border-double border-4 border-red-800 my-2 py-2"
+  >
+    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">
+      Physical Stats
+    </div>
+    <div>Size:</div>
+    <div>{{ char.character.stats.size }}</div>
+    <div>Speed:</div>
+    <div>{{ char.character.stats.speed }}</div>
+    <div>Defense:</div>
+    <div>{{ char.character.stats.defense }}</div>
+    <div>Armor:</div>
+    <div>{{ char.character.stats.armor }}</div>
+    <div>Initiative Mod:</div>
+    <div>{{ char.character.stats.initiativeMod }}</div>
+  </div>
+  <div class="grid grid-cols-6 border-solid border-double border-4 border-red-800 my-2 p-4">
+    <div class="col-span-6 text-xl text-center hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Merits')">
+      Merits
+    </div>
+    <div
+      class="grid grid-cols-6 gap-5 text-md font-playfair col-span-6 font-normal"
+      *ngFor="let merit of char.character.merits; let i = index"
+      [attr.data-index]="i"
+    >
+      <div class="col-span-3 hover:cursor-help hover:text-red-500" (click)="previewMerit(merit)">
+        {{ merit.merit.name }}
+      </div>
+      <div class="col-span-2">
+        <app-dots
+          [path]="'merits.' + i + '.dots'"
+          [currentDots]="merit.dots"
+          [maxDots]="merit.merit.maxCost"
+        ></app-dots>
+      </div>
+      <div class="col-span-1">
+        <span
+          *ngIf="char.editMode"
+          class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
+          title="Remove Merit"
+          (click)="char.removeMerit(i)"
+        >
+          do_not_disturb_on
+        </span>
+      </div>
+    </div>
+  </div>
+  <div
+    class="grid grid-cols-2 text-center flex flex-col justify-center items-center border-solid border-double border-4 border-red-800"
+  >
+    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" >Tilts</div>
+    <div class="col-span-2">...In Progress...</div>
+    <div class="col-span-2">...In Progress...</div>
+    <div class="col-span-2">...In Progress...</div>
+    <div class="col-span-2">...In Progress...</div>
+  </div>
+  <div
+    class="grid grid-cols-2 text-center flex flex-col justify-center items-center border-solid border-double border-4 border-red-800"
+  >
+    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" >
+      Conditions
+    </div>
+    <div class="col-span-2">...In Progress...</div>
+    <div class="col-span-2">...In Progress...</div>
+    <div class="col-span-2">...In Progress...</div>
+    <div class="col-span-2">...In Progress...</div>
+  </div>
+  <div
+    class="grid grid-cols-6 border-solid border-double border-4 border-red-800 my-2 p-4"
+  >
+    <div class="col-span-6 text-xl text-center hover:cursor-help hover:text-red-500">
+      Aspirations
+    </div>
+    <textarea 
+    class="col-span-6 text-black p-3 box-border border-2 border-zinc-600 rounded-lg"
+    rows="4"
+    [(ngModel)]="char.character.stats.aspirations"
+    ></textarea>
+  </div>  
+  <div
+    class="grid grid-cols-6 border-solid border-double border-4 border-red-800 my-2 p-4"
+  >
+    <div class="col-span-6 text-xl text-center hover:cursor-help hover:text-red-500">
+      Obsessions
+    </div>
+    <textarea 
+    class="col-span-6 text-black p-3 box-border border-2 border-zinc-600 rounded-lg"
+    rows="4"    
+    [(ngModel)]="char.character.stats.obsessions"
+    ></textarea>
+  </div>
+</div>

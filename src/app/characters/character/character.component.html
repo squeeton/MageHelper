@@ -28,7 +28,7 @@
         <span
           *ngIf="!char.editMode; else endEditButton"
           (click)="allowEdit()"
-          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-blue-500"
           title="Edit"
         >
           edit_square
@@ -37,17 +37,18 @@
           <span
             (click)="endEdit()"
             class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer text-blue-500 animate-pulse"
+            title="Close Edit"
           >
             edit
           </span>
         </ng-template>
         <!-- Roll Button -->
-        <span
+        <!-- <span
           (click)="openInfoPane()"
           class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
         >
           casino
-        </span>
+        </span> -->
         <!-- Save Button -->
         <span
           *ngIf="!char.saving; else savingIcon"
@@ -65,8 +66,8 @@
         </ng-template>
         <!-- TEST BUTTON -->
         <span
-          (click)="test()"
-          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+          (click)="char.test()"
+          class="material-symbols-outlined text-3xl grid place-items-center text-zinc-600 hover:cursor-pointer hover:text-red-500"
           [ngClass]="{ 'text-red-800 shadow-lg border-red-500 animate-ping': char.addProblem }"
         >
           bug_report
@@ -287,10 +288,21 @@
               </app-tab>
 
               <!-- Familiar -->
-              <app-tab tabTitle="Familiar"> </app-tab>
+              <app-tab tabTitle="Familiar"> 
+                <app-familiar-tab ></app-familiar-tab>
+              </app-tab>
 
-              <!-- Nimbus -->
-              <app-tab tabTitle="Nimbus"> </app-tab>
+              <!-- Notes -->
+              <app-tab tabTitle="Notes"> 
+                
+                <div class="grid grid-cols-12 p-8">
+                  <textarea 
+                  class="col-span-12 text-black p-3 box-border border-2 border-zinc-600 rounded-lg text-sm"
+                  rows="4"    
+                  [(ngModel)]="char.character.notes"
+                  ></textarea>
+                </div>
+              </app-tab>
             </app-tabs-container>
           </div>
         </div>
@@ -305,7 +317,7 @@
     <div
       class="max-w-screen-xl py-8 m-0 m-auto my-auto bg-zinc-800/80 rounded-lg shadow-xl border-solid border-double border-4 border-red-800 max-h-[200px]"
     >
-      <span (click)="test()" class="material-symbols-outlined text-8xl animate-spin text-white"> autorenew </span>
+      <span class="material-symbols-outlined text-8xl animate-spin text-white"> autorenew </span>
     </div>
   </div>
 </ng-template>

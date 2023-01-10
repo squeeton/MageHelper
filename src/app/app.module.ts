@@ -28,6 +28,10 @@ import { InfoPraxisComponent } from './infoPaneDetails/info-praxis/info-praxis.c
 import { InfoStatsComponent } from './infoPaneDetails/info-stats/info-stats.component';
 import { StatsTabComponent } from './characters/stats-tab/stats-tab.component';
 import { InfoMeritsComponent } from './infoPaneDetails/info-merits/info-merits.component';
+import { InfoSingleMeritComponent } from './infoPaneDetails/info-single-merit/info-single-merit.component';
+import { InfoMeritListComponent } from './infoPaneDetails/info-merit-list/info-merit-list.component';
+import { FamiliarTabComponent } from './characters/familiar-tab/familiar-tab.component';
+import { InfoFamiliarComponent } from './infoPaneDetails/info-familiar/info-familiar.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +52,11 @@ import { InfoMeritsComponent } from './infoPaneDetails/info-merits/info-merits.c
     InfoPraxisComponent,
     InfoStatsComponent,
     StatsTabComponent,
-    InfoMeritsComponent
+    InfoMeritsComponent,
+    InfoSingleMeritComponent,
+    InfoMeritListComponent,
+    FamiliarTabComponent,
+    InfoFamiliarComponent
   ],
   imports: [
     BrowserModule,

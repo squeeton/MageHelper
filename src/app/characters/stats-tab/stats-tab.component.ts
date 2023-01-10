@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import IMerit from 'src/app/models/merit.model';
 import { CharacterService } from 'src/app/services/character.service';
 import { InfoPaneService } from 'src/app/services/info-pane.service';
 
@@ -17,4 +18,11 @@ export class StatsTabComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  previewMerit(merit: IMerit) {
+    setTimeout(() => {
+      this.info.setInfoPane('Single Merit');
+      this.info.merit = merit.merit;
+      this.info.meritDots = merit.dots;
+    }, 10);
+  }
 }

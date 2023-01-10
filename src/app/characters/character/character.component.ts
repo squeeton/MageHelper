@@ -54,6 +54,7 @@ export class CharacterComponent implements OnInit {
 
   endEdit() {
     this.char.editMode = false;
+    this.char.saveCharacter();
   }
 
   editDots($event: IDotUpdate) {
@@ -66,12 +67,5 @@ export class CharacterComponent implements OnInit {
 
   closeInfoPane() {
     this.info.closePane();
-  }
-
-  test() {
-    console.log('test begin');
-
-
-    console.log('test end');
   }
 }

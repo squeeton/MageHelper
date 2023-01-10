@@ -1,0 +1,129 @@
+<div class="grid grid-cols-12 p-4 gap-4">
+  <div></div>
+  <div class="grid grid-cols-2 col-span-10 text-center">
+    <div class="col-span-2 text-2xl hover:cursor-help hover:text-red-500"(click)="info.setInfoPane('Familiar')">{{char.character.familiar.name}}</div>
+    <div class="col-span-2 text-zinc-400"><span class="font-playfair">Rank</span> {{char.character.familiar.rank}}&nbsp;{{char.character.familiar.type}} </div>
+    
+  </div>
+  <div>
+    <span class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+    (click)="info.setInfoPane('Familiar')">
+      add_circle
+    </span>
+  </div>
+
+  <div class="grid grid-cols-4 col-span-4 gap-4">
+    <div class="grid grid-cols-2 col-span-4 text-center text-xl border-solid border-double border-4 border-red-800">
+      <div class="col-span-2">Power</div>
+      <div class="col-span-2">{{char.character.familiar.power}}</div>
+    </div>
+    <div class="grid grid-cols-2 col-span-4 text-center text-xl border-solid border-double border-4 border-red-800">
+      <div class="col-span-2">Finesse</div>
+      <div class="col-span-2">{{char.character.familiar.finesse}}</div>
+    </div>
+    <div class="grid grid-cols-2 col-span-4 text-center text-xl border-solid border-double border-4 border-red-800">
+      <div class="col-span-2">Resistance</div>
+      <div class="col-span-2">{{char.character.familiar.resistance}}</div>
+    </div>
+  </div>
+
+  <div class="col-span-8 border-solid border-double border-4 border-red-800 grid grid-cols-8 p-4">
+    <!-- Corpus -->
+    <div class="grid grid-row-2 col-span-8 p-4">
+      <div class="text-center text-lg select-none">
+        <span
+          class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
+          title="Heal Damage"
+          (click)="char.healDamage('aggravated')"
+        >
+          brightness_5
+        </span>
+        &nbsp;
+        <span class="select-text hover:cursor-help hover:text-red-500"(click)="info.setInfoPane('Familiar')"> Corpus</span>
+        &nbsp;
+        <span
+          class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
+          title="Deal Damage"
+          (click)="char.addDamage('aggravated')"
+        >
+          brightness_5
+        </span>
+      </div>
+      <div>
+        <app-healthbar
+          [health]="char.character.familiar.health"
+          [aggravated]="char.character.familiar.damage"
+        ></app-healthbar>
+      </div>
+    </div>
+
+    <!-- Willpower /Integrity-->
+    <div class="grid grid-row-2 col-span-8 p-4">
+      <div class="text-center text-lg  hover:cursor-help hover:text-red-500"(click)="info.setInfoPane('Familiar')">Willpower</div>
+      <div>
+        <app-dots
+          [path]="'stats.willpower'"
+          [consumablePath]="'stats.usedWillpower'"
+          [size]="'2xl'"
+          [maxDots]="10"
+          [currentDots]="char.character.familiar.willpower"
+          [usedDots]="char.character.familiar.usedWillpower"
+          [consumable]="true"
+        >
+        </app-dots>
+      </div>
+    </div>
+
+    <div class="col-span-4 grid grid-cols-7">
+      <div class="col-span-3 text-right">Virtue: &nbsp;&nbsp;</div>
+      <div class="col-span-4 font-playfair">{{char.character.familiar.virtue}}</div>
+      <div class="col-span-3 text-right">Vice: &nbsp;&nbsp;</div>
+      <div class="col-span-4 font-playfair">{{char.character.familiar.vice}}</div>
+      <div class="col-span-3 text-right">Language: &nbsp;&nbsp;</div>
+      <div class="col-span-4 font-playfair">{{char.character.familiar.language}}</div>
+    </div>
+    <div class="col-span-4 grid grid-cols-5">
+      <div class="col-span-3 text-right">Initiative: &nbsp; &nbsp;</div>
+      <div class="col-span-2 font-playfair">{{char.character.familiar.initiative}}</div>
+      <div class="col-span-3 text-right">Defense: &nbsp; &nbsp;</div>
+      <div class="col-span-2 font-playfair">{{char.character.familiar.defense}}</div>
+      <div class="col-span-3 text-right">Speed: &nbsp; &nbsp;</div>
+      <div class="col-span-2 font-playfair">{{char.character.familiar.speed}}</div>
+      <div class="col-span-3 text-right">Size: &nbsp; &nbsp;</div>
+      <div class="col-span-2 font-playfair">{{char.character.familiar.size}}</div>
+    </div>
+  </div>
+
+  
+  <div class="grid grid-cols-2 col-span-4 text-center text-xl border-solid border-double border-4 border-red-800 gap-3 p-4">
+    <div class="col-span-2">Ban</div>
+    <textarea 
+    class="col-span-2 text-black p-3 box-border border-2 border-zinc-600 rounded-lg text-sm"
+    rows="4"    
+    [(ngModel)]="char.character.familiar.ban"
+    ></textarea>
+  </div>
+  <div class="grid grid-cols-2 col-span-4 text-center text-xl border-solid border-double border-4 border-red-800 gap-3 p-4">
+    <div class="col-span-2">Bane</div>
+    <textarea 
+    class="col-span-2 text-black p-3 box-border border-2 border-zinc-600 rounded-lg text-sm"
+    rows="4"    
+    [(ngModel)]="char.character.familiar.bane"
+    ></textarea>
+  </div>
+  <div class="grid grid-cols-2 col-span-4 text-center text-xl border-solid border-double border-4 border-red-800 gap-3 py-4">
+    <div class="col-span-2">essence</div>    
+    <input
+    class="text-center col-span-2 font-fairplay mt-1 block w-9/12 m-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+    type="number"
+    [(ngModel)]="char.character.familiar.essence"
+  />
+    <div class="col-span-2">mana</div>
+    <input
+    class="text-center col-span-2 font-fairplay mt-1 block w-9/12 m-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+    type="number"
+    [(ngModel)]="char.character.familiar.mana"
+  />
+  </div>
+
+</div>
