@@ -1,5 +1,5 @@
 <div
-  class="fixed inset-y-0 right-0 bg-zinc-800/80 h-screen w-[525px] mt-[150px] rounded-lg shadow-xl border-solid border-double border-4 border-red-800 text-white overflow-auto"
+  class="fixed bottom-0 top-[0px] right-0 bg-zinc-800/80 w-[525px] mt-[150px] rounded-lg shadow-xl border-solid border-double border-4 border-red-800 text-white overflow-scroll"
   id="infoPaane"
   [ngClass]="{ hidden: !info.visible }"
 >
@@ -20,7 +20,7 @@
     <span class="material-symbols-outlined text-6xl relative left-[-38px] text-black"> chevron_right </span>
   </div>
 
-  <div id="info-content-container" class="">
+  <div id="info-content-container overflow-scroll" class="">
     <app-info-details *ngIf="info.currentTab == 'Details'"></app-info-details>
     <app-info-stats *ngIf="info.currentTab == 'Stats'"></app-info-stats>
     <app-info-merit-list *ngIf="info.currentTab == 'Merits'"></app-info-merit-list>

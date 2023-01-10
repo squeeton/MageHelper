@@ -18,6 +18,12 @@ export class CharacterService {
     public info: InfoPaneService,
     public auth: AuthService) { }
 
+
+
+
+
+  // ADD UNDO BUTTON
+
   loading = true;
   saving = false;
   characterID = '';
@@ -106,31 +112,32 @@ export class CharacterService {
       "resolve": 1
     },
     rotes: [],
-    familiar:{
-      name:'',
-      health:0,
-      damage:0,
-      virtue:'',
-      vice:'',
-      type:'',
-      willpower:0,
-      usedWillpower:0,
-      initiative:0,
-      defense:0,
-      speed:0,
-      size:0,
-      language:'',
-      rank:0,
-      ban:'',
-      bane:'',
-      essence:0,
-      mana:0,
-      power:0,
-      finesse:0,
-      resistance:0
+    familiar: {
+      name: '',
+      health: 0,
+      damage: 0,
+      virtue: '',
+      vice: '',
+      type: '',
+      willpower: 0,
+      usedWillpower: 0,
+      initiative: 0,
+      defense: 0,
+      speed: 0,
+      size: 0,
+      language: '',
+      rank: 0,
+      ban: '',
+      bane: '',
+      essence: 0,
+      mana: 0,
+      power: 0,
+      finesse: 0,
+      resistance: 0
     },
-    notes:''
+    notes: ''
   }
+  characterBuffer: Array<ICharacter> = [];
   editMode = false;
   addProblem = false;
 
@@ -167,6 +174,8 @@ export class CharacterService {
   }
 
   updateCharFromPath(path: string, val: any) {
+    this.saveCurrentToBuffer(this.character);
+
     let keys = path.split('.');
     let data: any = this.character;
 
@@ -182,6 +191,8 @@ export class CharacterService {
   }
 
   addDamage(damageType: string) {
+    this.saveCurrentToBuffer(this.character);
+
     let maxhealth = this.character.stats.health;
     let bashingDamage = this.character.stats.bashingDamage;
     let lethalDamage = this.character.stats.lethalDamage;
@@ -252,6 +263,7 @@ export class CharacterService {
   }
 
   healDamage(damageType: string) {
+    this.saveCurrentToBuffer(this.character);
 
     if (this.character.stats.bashingDamage > 0 && damageType == 'bashing') { this.character.stats.bashingDamage -= 1; }
     if (this.character.stats.lethalDamage > 0 && damageType == 'lethal') { this.character.stats.lethalDamage -= 1; }
@@ -274,21 +286,14 @@ export class CharacterService {
     }
   }
 
-  updateDetails(deets: IDetails) {
-    this.character.details.characterName = deets?.characterName || ''
-    this.character.details.path = deets?.path || ''
-    this.character.details.legacy = deets?.legacy || ''
-    this.character.details.vice = deets?.vice || ''
-    this.character.details.virtue = deets?.virtue || ''
-    this.character.details.order = deets?.order || ''
-    this.character.details.shadowName = deets?.shadowName || ''
-  }
-
 
   addSingleSpell(spell: ISpell) {
+    this.saveCurrentToBuffer(this.character);
+
     let addable;
     if (this.addType == 'Rote') {
       if (this.roteSkillAdd == '') {
+        document.getElementById('rote-skill')?.scrollIntoView({ block: "center" });
         this.addProblem = true;
         setTimeout(() => this.addProblem = false, 1500);
         return;
@@ -306,6 +311,8 @@ export class CharacterService {
   }
 
   addSingleMerit(merit: IMeritRef) {
+    this.saveCurrentToBuffer(this.character);
+    
     let addMerit: IMerit;
     let dots = 1;
     if (merit.minCost == null) {
@@ -325,16 +332,22 @@ export class CharacterService {
   }
 
   removeRote(index: number) {
+    this.saveCurrentToBuffer(this.character);
+    
     if (this.character.rotes[index]) {
       this.character.rotes.splice(index, 1);
     }
   }
   removePraxis(index: number) {
+    this.saveCurrentToBuffer(this.character);
+    
     if (this.character.praxis[index]) {
       this.character.praxis.splice(index, 1);
     }
   }
   removeMerit(index: number) {
+    this.saveCurrentToBuffer(this.character);
+    
     if (this.character.merits[index]) {
       this.character.merits.splice(index, 1);
     }
@@ -342,5 +355,17 @@ export class CharacterService {
 
   test() {
     console.log(this.character);
+  }
+
+  saveCurrentToBuffer(char: ICharacter) {
+    this.characterBuffer.push(JSON.parse(JSON.stringify(this.character)));
+
+    if (this.characterBuffer.length > 3) {
+      this.characterBuffer.shift();
+    }
+  }
+
+  undo(){
+    this.character = JSON.parse(JSON.stringify(this.characterBuffer.pop()));
   }
 }

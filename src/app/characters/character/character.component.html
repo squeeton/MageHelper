@@ -49,6 +49,14 @@
         >
           casino
         </span> -->
+        <!-- Undo Button -->
+        <span
+          *ngIf="char.characterBuffer.length > 0"
+          (click)="char.undo()"
+          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+        >
+          undo
+        </span>
         <!-- Save Button -->
         <span
           *ngIf="!char.saving; else savingIcon"
@@ -288,18 +296,17 @@
               </app-tab>
 
               <!-- Familiar -->
-              <app-tab tabTitle="Familiar"> 
-                <app-familiar-tab ></app-familiar-tab>
+              <app-tab tabTitle="Familiar">
+                <app-familiar-tab></app-familiar-tab>
               </app-tab>
 
               <!-- Notes -->
-              <app-tab tabTitle="Notes"> 
-                
+              <app-tab tabTitle="Notes">
                 <div class="grid grid-cols-12 p-8">
-                  <textarea 
-                  class="col-span-12 text-black p-3 box-border border-2 border-zinc-600 rounded-lg text-sm"
-                  rows="4"    
-                  [(ngModel)]="char.character.notes"
+                  <textarea
+                    class="col-span-12 text-black p-3 box-border border-2 border-zinc-600 rounded-lg text-sm"
+                    rows="4"
+                    [(ngModel)]="char.character.notes"
                   ></textarea>
                 </div>
               </app-tab>

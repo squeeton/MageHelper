@@ -19,6 +19,7 @@ export class StatsTabComponent implements OnInit {
   }
 
   previewMerit(merit: IMerit) {
+    this.info.destroyPanes();
     setTimeout(() => {
       this.info.setInfoPane('Single Merit');
       this.info.merit = merit.merit;

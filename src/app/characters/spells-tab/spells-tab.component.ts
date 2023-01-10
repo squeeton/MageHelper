@@ -40,9 +40,9 @@ export class SpellsTabComponent implements OnInit {
 
   previewSpell(spell: ISpell) {
     this.info.destroyPanes();
-    this.info.spell = spell;
     setTimeout(() => {
       this.info.setInfoPane('Single Spell');
+      this.info.spell = spell;
     }, 10);
   }
 }
