@@ -1,0 +1,33 @@
+<div class="col-span-12 bg-zinc-800/80 shadow-xl grid place-items-center font-playfair">
+  <div class="grid grid-cols-12 m-5">
+    <div class="col-span-1 grid place-items-center font-cinzel border-b border-red-500"></div>
+    <div class="col-span-10 grid place-items-center font-cinzel border-b border-red-500">
+      <strong>{{ condition.name |titlecase}} </strong>
+    </div>
+    <div class="col-span-1 grid place-items-center font-cinzel border-b border-red-500">
+      <span
+        class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+        title="Add Tilt"
+        (click)="char.addCondition(condition)"
+      >
+        add_circle
+      </span>
+    </div>
+    <div class="col-span-12">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ condition.effect }}</div>
+    <div class="col-span-12 border-b border-red-500 whitespace-pre-wrap">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ condition.effect }}</p>
+    </div>
+    <div class="col-span-12 border-b border-red-500 whitespace-pre-wrap" *ngIf="condition.possibleSources !== ''">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Possible Sources: </strong>{{ condition.possibleSources }}</p>
+    </div>
+    <div class="col-span-12 border-b border-red-500 whitespace-pre-wrap" *ngIf="condition.exampleSkills !== ''">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Example Skills: </strong>{{ condition.exampleSkills }}</p>
+    </div>
+    <div class="col-span-12 border-b border-red-500 whitespace-pre-wrap">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Resolution: </strong>{{ condition.resolution }}</p>
+    </div>
+    <div class="col-span-12 border-b border-red-500 whitespace-pre-wrap">
+      <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Beat: </strong>{{ condition.beat }}</p>
+    </div>
+  </div>
+</div>

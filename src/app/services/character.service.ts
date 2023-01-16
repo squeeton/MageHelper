@@ -7,6 +7,8 @@ import { InfoPaneService } from 'src/app/services/info-pane.service';
 import ISpell from '../models/spell.model';
 import IMeritRef from '../models/meritRef.model';
 import IMerit from '../models/merit.model';
+import ITilt from '../models/tilt.model';
+import ICondition from '../models/condition.model';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +90,8 @@ export class CharacterService {
       "politics": 0
     },
     merits: [],
+    tilts: [],
+    conditions: [],
     arcana: {
       "fate": 0,
       "time": 1,
@@ -331,6 +335,23 @@ export class CharacterService {
 
   }
 
+  addTilt(tilt: ITilt) {
+    this.saveCurrentToBuffer(this.character);
+    
+    let addTilt: ITilt;
+    let x = this.character.tilts
+    x.push(tilt);
+
+  }
+
+  addCondition(condition: ICondition) {
+    this.saveCurrentToBuffer(this.character);
+    
+    let x = this.character.conditions
+    x.push(condition);
+
+  }
+
   removeRote(index: number) {
     this.saveCurrentToBuffer(this.character);
     
@@ -350,6 +371,18 @@ export class CharacterService {
     
     if (this.character.merits[index]) {
       this.character.merits.splice(index, 1);
+    }
+  }
+  removeTilt(index: number) {
+    this.saveCurrentToBuffer(this.character);
+    if (this.character.tilts[index]) {
+      this.character.tilts.splice(index, 1);
+    }
+  }
+  removeCondition(index: number) {
+    this.saveCurrentToBuffer(this.character);
+    if (this.character.conditions[index]) {
+      this.character.conditions.splice(index, 1);
     }
   }
 

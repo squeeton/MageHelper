@@ -1,8 +1,10 @@
+import ICondition from "./condition.model"
 import IFamiliar from "./familiar.model"
 import IMerit from "./merit.model"
 import IPraxis from "./praxis.model"
 import IRote from "./rote.model"
 import ISpell from "./spell.model"
+import ITilt from "./tilt.model"
 
 export interface ICharacter {
     uid: string,
@@ -93,6 +95,8 @@ export interface ICharacter {
     spells: Array<ISpell>,
     rotes: Array<IRote>,
     praxis: Array<ISpell>,
+    tilts: Array<ITilt>,
+    conditions: Array<ICondition>,
     familiar: IFamiliar
 }
 

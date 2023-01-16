@@ -144,6 +144,8 @@ export class DataService {
           time: 0
         },
         merits: [],
+        tilts: [],
+        conditions: [],
         stats: {
           health: 7,
           bashingDamage: 0,

@@ -160,22 +160,54 @@
   <div
     class="grid grid-cols-2 text-center flex flex-col justify-center items-center border-solid border-double border-4 border-red-800"
   >
-    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" >Tilts</div>
-    <div class="col-span-2">...In Progress...</div>
-    <div class="col-span-2">...In Progress...</div>
-    <div class="col-span-2">...In Progress...</div>
-    <div class="col-span-2">...In Progress...</div>
+    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Tilts')">Tilts</div>
+    
+    <div
+      class="grid grid-cols-6 gap-5 text-md font-playfair col-span-6 font-normal"
+      *ngFor="let tilt of char.character.tilts; let i = index"
+      [attr.data-index]="i"
+    >
+      <div class="col-span-5 hover:cursor-help hover:text-red-500" (click)="previewTilt(tilt)">
+        {{ tilt.name | titlecase}}
+      </div>
+      <div class="col-span-1">
+        <span
+          *ngIf="char.editMode"
+          class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
+          title="Remove Tilt"
+          (click)="char.removeTilt(i)"
+        >
+          do_not_disturb_on
+        </span>
+      </div>
+    </div>
   </div>
   <div
     class="grid grid-cols-2 text-center flex flex-col justify-center items-center border-solid border-double border-4 border-red-800"
   >
-    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500" >
+    <div class="col-span-2 text-xl hover:cursor-help hover:text-red-500"  (click)="info.setInfoPane('Conditions')">
       Conditions
     </div>
-    <div class="col-span-2">...In Progress...</div>
-    <div class="col-span-2">...In Progress...</div>
-    <div class="col-span-2">...In Progress...</div>
-    <div class="col-span-2">...In Progress...</div>
+    
+    <div
+      class="grid grid-cols-6 gap-5 text-md font-playfair col-span-6 font-normal"
+      *ngFor="let condition of char.character.conditions; let i = index"
+      [attr.data-index]="i"
+    >
+      <div class="col-span-5 hover:cursor-help hover:text-red-500" (click)="previewCondition(condition)">
+        {{ condition.name | titlecase}}
+      </div>
+      <div class="col-span-1">
+        <span
+          *ngIf="char.editMode"
+          class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
+          title="Remove Tilt"
+          (click)="char.removeCondition(i)"
+        >
+          do_not_disturb_on
+        </span>
+      </div>
+    </div>
   </div>
   <div
     class="grid grid-cols-6 border-solid border-double border-4 border-red-800 my-2 p-4"

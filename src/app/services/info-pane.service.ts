@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import ICondition from '../models/condition.model';
 import IMeritRef from '../models/meritRef.model';
 import ISpell from '../models/spell.model';
+import ITilt from '../models/tilt.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +26,8 @@ export class InfoPaneService {
     "arcanum": ""
   };
   merit: IMeritRef = { name: '', type: '', variableCost: false, minCost: null, maxCost: 0, prerequisite: '', effect: '' };
+  tilt: ITilt = { name: '', preDesc: '', effect: ' ', cause: ' ', end: ' ' };
+  condition: ICondition = {name: '', effect: '', exampleSkills:'', possibleSources:'', resolution:'', beat: ''};
   meritDots = 0;
   index = 0;
 
