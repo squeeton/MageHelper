@@ -16,12 +16,19 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
 
 
   // Panel Controls
-  section = 'Spell Overview';
+  currentTab = 'Spell Overview';
   collapsible: ICollapsibleSpellCase = {
     spellDesc: false,
     caster: false,
     spell: false,
   }
+  tabs = [
+    'Spell Overview',
+    'Factors',
+    'Yantras',
+    'Paradox',
+    'Summary'
+  ]
 
   // Dice Info
   freeReach = 0;
@@ -124,19 +131,23 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     console.log(this.collapsible);
   }
 
-  setSection(section: string) {
-    this.section = section;
+  setTab(section: string) {
+    this.currentTab = section;
   }
 
-  //   bar<    K extends keyof fooType,    V extends fooType[K]>(
-  //     value: V,
-  //     obj: fooType,
-  //     prop: K
-  // ) {
-  //     obj[prop] = value;
-  // }
+  tabForward() {
+    let x = this.tabs.indexOf(this.currentTab);
+    if (x + 1 < this.tabs.length) {
+      this.currentTab = this.tabs[x + 1];
+    }
+  }
 
-
+  tabBackward() {
+    let x = this.tabs.indexOf(this.currentTab);
+    if (x > 0) {
+      this.currentTab = this.tabs[x - 1];
+    }
+  }
 
   logAll() {
 
