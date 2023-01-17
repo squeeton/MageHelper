@@ -38,6 +38,8 @@ import { InfoSingleTiltComponent } from './infoPaneDetails/tilts/info-single-til
 import { InfoConditionListComponent } from './infoPaneDetails/conditions/info-condition-list/info-condition-list.component';
 import { InfoConditionListItemComponent } from './infoPaneDetails/conditions/info-condition-list-item/info-condition-list-item.component';
 import { InfoSingleConditionComponent } from './infoPaneDetails/conditions/info-single-condition/info-single-condition.component';
+import { ArcanumMarkerComponent } from './characters/arcanum-marker/arcanum-marker.component';
+import { InfoCastSpellComponent } from './infoPaneDetails/info-cast-spell/info-cast-spell.component';
 
 @NgModule({
   declarations: [
@@ -68,7 +70,9 @@ import { InfoSingleConditionComponent } from './infoPaneDetails/conditions/info-
     InfoSingleTiltComponent,
     InfoConditionListComponent,
     InfoConditionListItemComponent,
-    InfoSingleConditionComponent
+    InfoSingleConditionComponent,
+    ArcanumMarkerComponent,
+    InfoCastSpellComponent
   ],
   imports: [
     BrowserModule,

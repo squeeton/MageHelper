@@ -18,9 +18,17 @@ export class InfoSingleSpellComponent implements OnInit {
   @Input() addTYpe = 'Rotes';
 
 
-
-
   ngOnInit(): void {
   }
+
+  castSpell() {
+    this.info.destroyPanes();
+    setTimeout(() => {
+      this.info.setInfoPane('Cast Spell');
+      this.info.spell = this.spell;
+      this.char.casting = true;
+    }, 10);
+  }
+
 
 }

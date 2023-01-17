@@ -24,10 +24,10 @@ export class CharacterService {
 
 
 
-  // ADD UNDO BUTTON
 
   loading = true;
   saving = false;
+  casting = false;
   characterID = '';
   character: ICharacter = {
     praxis: [],
@@ -93,6 +93,8 @@ export class CharacterService {
     tilts: [],
     conditions: [],
     arcana: {
+      rulingArcanum: [],
+      inferiorArcanum: [],
       "fate": 0,
       "time": 1,
       "mind": 0,
@@ -316,7 +318,7 @@ export class CharacterService {
 
   addSingleMerit(merit: IMeritRef) {
     this.saveCurrentToBuffer(this.character);
-    
+
     let addMerit: IMerit;
     let dots = 1;
     if (merit.minCost == null) {
@@ -337,7 +339,7 @@ export class CharacterService {
 
   addTilt(tilt: ITilt) {
     this.saveCurrentToBuffer(this.character);
-    
+
     let addTilt: ITilt;
     let x = this.character.tilts
     x.push(tilt);
@@ -346,7 +348,7 @@ export class CharacterService {
 
   addCondition(condition: ICondition) {
     this.saveCurrentToBuffer(this.character);
-    
+
     let x = this.character.conditions
     x.push(condition);
 
@@ -354,21 +356,21 @@ export class CharacterService {
 
   removeRote(index: number) {
     this.saveCurrentToBuffer(this.character);
-    
+
     if (this.character.rotes[index]) {
       this.character.rotes.splice(index, 1);
     }
   }
   removePraxis(index: number) {
     this.saveCurrentToBuffer(this.character);
-    
+
     if (this.character.praxis[index]) {
       this.character.praxis.splice(index, 1);
     }
   }
   removeMerit(index: number) {
     this.saveCurrentToBuffer(this.character);
-    
+
     if (this.character.merits[index]) {
       this.character.merits.splice(index, 1);
     }
@@ -386,6 +388,13 @@ export class CharacterService {
     }
   }
 
+
+  updateMajorInferiorArcanum(ruling: Array<string>, inferior: Array<string>) {
+    this.saveCurrentToBuffer(this.character);
+    this.character.arcana.rulingArcanum = ruling;
+    this.character.arcana.inferiorArcanum = inferior;
+  }
+
   test() {
     console.log(this.character);
   }
@@ -398,7 +407,7 @@ export class CharacterService {
     }
   }
 
-  undo(){
+  undo() {
     this.character = JSON.parse(JSON.stringify(this.characterBuffer.pop()));
   }
 }

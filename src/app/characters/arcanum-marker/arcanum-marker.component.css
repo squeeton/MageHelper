@@ -1,0 +1,12 @@
+.skill{
+    font-variation-settings:
+    'FILL' 0,
+    'wght' 400,
+    'GRAD' 200,
+    'opsz' 24
+  }
+  
+  .filled{
+    font-variation-settings:
+    'FILL' 1;
+  }

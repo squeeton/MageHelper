@@ -132,6 +132,8 @@ export class DataService {
           subterfuge: 0
         },
         arcana: {
+          rulingArcanum:[],
+          inferiorArcanum:[],
           death: 0,
           fate: 0,
           forces: 0,

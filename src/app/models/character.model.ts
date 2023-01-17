@@ -59,6 +59,8 @@ export interface ICharacter {
         subterfuge: number
     },
     arcana: {
+        rulingArcanum:Array<string>,
+        inferiorArcanum:Array<string>,
         death: number,
         fate: number,
         forces: number,

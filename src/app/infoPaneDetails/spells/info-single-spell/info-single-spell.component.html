@@ -50,4 +50,9 @@
      <p *ngFor="let r of spell.reach">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>+{{ r.cost}}&nbsp;Reach: &nbsp;</strong> {{r.effect}}</p>
     </div>
   </div>
+  
+  <div *ngIf="!this.char.casting" class="grid-col-span-12 m-auto border-solid border-double border-4 border-red-800 m-2 text-red-500 hover:text-white hover:cursor-pointer hover:bg-red-500" (click)="castSpell()">
+<div class="m-3 font-cinzel text-xl text-extrabold">Cast</div>
+  </div>
+
 </div>

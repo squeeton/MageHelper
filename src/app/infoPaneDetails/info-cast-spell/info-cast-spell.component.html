@@ -1,0 +1,200 @@
+<div class="grid grid-cols-12">
+  <!-- Spell -->
+  <div class="col-span-12 pb-4">
+    <div
+      class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 text-center p-2 hover:text-red-500 hover:cursor-pointer"
+      (click)="toggleSection('spellDesc')"
+    >
+      Spell description
+    </div>
+    <div class="col-span-12" [ngClass]="{ hidden: this.collapsible.spellDesc }">
+      <app-info-single-spell></app-info-single-spell>
+    </div>
+  </div>
+  <!-- Dice Pools -->
+  <div class="col-span-12 grid grid-cols-12 pb-4">
+    <div class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center">
+      Reach: {{ reach }}/{{ freeReach }}
+    </div>
+    <div class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center">Dice Pool: {{ dicePool }}</div>
+    <div class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center">Mana: {{ mana }}</div>
+    <div *ngIf="paradoxDice > 0" class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center">
+      {{ paradoxDesc }}: {{ paradoxDice }}
+    </div>
+  </div>
+
+  <div class="col-span-12 grid grid-cols-12">
+    <div class="col-span-1"></div>
+    <div class="col-span-2 rounded-full w-[50px] h-[50px] bg-red-500  grid place-items-center hover:cursor-pointer " title="Spell Overview" (click)="setSection('Spell Overview')" >
+        <span
+          class="material-symbols-outlined  text-3xl"
+        >
+        temp_preferences_custom
+        </span>
+    </div>
+    <div class="col-span-2 rounded-full w-[50px] h-[50px] bg-zinc-500  grid place-items-center hover:cursor-pointer " title="Factors" (click)="setSection('Factors')" >
+        <span
+          class="material-symbols-outlined  text-3xl"
+        >
+        list_alt
+        </span>
+    </div>
+    <div class="col-span-2 rounded-full w-[50px] h-[50px] bg-zinc-500  grid place-items-center hover:cursor-pointer " title="Yantras" (click)="setSection('Yantras')" >
+        <span
+          class="material-symbols-outlined  text-3xl"
+        >
+        spoke
+        </span>
+    </div>
+    <div class="col-span-2 rounded-full w-[50px] h-[50px] bg-zinc-500  grid place-items-center hover:cursor-pointer " title="Paradox" (click)="setSection('Paradox')" >
+        <span
+          class="material-symbols-outlined  text-3xl"
+        >
+        crisis_alert
+        </span>
+    </div>
+    <div class="col-span-2 rounded-full w-[50px] h-[50px] bg-zinc-500  grid place-items-center hover:cursor-pointer " title="Summary" (click)="setSection('Summary')" >
+        <span
+          class="material-symbols-outlined  text-3xl"
+        >
+        export_notes
+        </span>
+    </div>
+    <div class="col-span-1"></div>
+    
+    <div class="col-span-1"></div>
+    <div class="col-span-2 text-xs  text-zinc-400 " >
+        Overview
+    </div>
+    <div class="col-span-2 text-xs  text-zinc-400 " >
+        Factors
+    </div>
+    <div class="col-span-2 text-xs  text-zinc-400 " >
+        Yantras
+    </div>
+    <div class="col-span-2 text-xs  text-zinc-400 " >
+        Paradox
+    </div>
+    <div class="col-span-2 text-xs  text-zinc-400" >
+        Summary
+    </div>
+    <div class="col-span-1"></div>
+  </div>
+  <!-- Caster Info -->
+  <div class="col-span-12 py-4" (click)="toggleSection('caster')">
+    <div class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 text-center p-2 hover:text-red-500 hover:cursor-pointer">Caster Info Override</div>
+    <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.collapsible.caster }">
+      <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
+        <div class="col-span-8 text-xl font-cinzel grid place-items-center">Highest Arcanum Used:</div>
+        <div class="col-span-4 grid place-items-center">
+          <select
+            name="highest-arcanum"
+            id="highest-arcanum"
+            class="font-fairplay mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            [(ngModel)]="this.highestArcanum"
+          >
+            <option value="death">Death</option>
+            <option value="fate">Fate</option>
+            <option value="forces">Forces</option>
+            <option value="life">Life</option>
+            <option value="matter">Matter</option>
+            <option value="mind">Mind</option>
+            <option value="prime">Prime</option>
+            <option value="spirit">Spirit</option>
+            <option value="space">Space</option>
+            <option value="time">Time</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
+        <div class="col-span-8 text-xl font-cinzel grid place-items-center">Active Spells</div>
+        <input
+          class="col-span-4 font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          type="number"
+          [(ngModel)]="activeSpells"
+        />
+      </div>
+      <div class="col-span-12 text-sm text-zinc-400 text-center">
+        Maintaining more spells than the caster's Gnosis adds Reach
+      </div>
+    </div>
+  </div>
+  <!-- Spell Info -->
+  <div class="col-span-12 py-4">
+    <div class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 text-center p-2 hover:text-red-500 hover:cursor-pointer" (click)="toggleSection('spell')">Spell Info Override</div>
+
+    <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.collapsible.spell }">
+      <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
+        <div class="col-span-8 text-xl font-cinzel grid place-items-center">Primary Factor:</div>
+        <div class="col-span-4 grid place-items-center">
+          <select
+            name="highest-arcanum"
+            id="highest-arcanum"
+            class="font-fairplay mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            [(ngModel)]="this.primaryFactor"
+          >
+            <option value="Potency">Potency</option>
+            <option value="Duration">Duration</option>
+          </select>
+        </div>
+        <div class="col-span-12 text-sm text-zinc-400 text-center">
+          The Primary Factor is boosted up to the caster's Arcanum rating without incurring a penalty.
+        </div>
+      </div>
+      <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
+        <div class="col-span-3 text-xl font-cinzel grid place-items-center">Rote</div>
+        <div class="col-span-3">
+          <label class="switch">
+            <input type="checkbox" [checked]="this.isRote" (change)="toggleRote()" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-span-3 text-xl font-cinzel grid place-items-center">Praxis</div>
+        <div class="col-span-3">
+          <label class="switch">
+            <input type="checkbox" [checked]="this.isPraxis" (change)="togglePraxis()" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+
+        <div class="col-span-12 text-sm text-zinc-400 text-center">
+          Praxes only require three successes for an exceptional success, and do not require a Mana if the spell is from
+          a Common or Inferior Arcanum.
+        </div>
+
+        <div class="col-span-12 grid grid-cols-12 p-3 m-auto" *ngIf="this.isRote">
+          <div class="col-span-8 text-xl font-cinzel grid place-items-center">Rote Skill Override</div>
+          <input
+            class="col-span-4 font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            type="number"
+            [(ngModel)]="roteSkillDots"
+          />
+          <div class="col-span-12 text-sm text-zinc-400 text-center">
+            Skill dots are added to the dice pool as a Yantra bonus
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
+        <div class="col-span-8 text-xl font-cinzel grid place-items-center">Additional Spellcasting Dice?</div>
+        <input
+          class="col-span-4 font-fairplay mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          type="number"
+          [(ngModel)]="additionalDice"
+        />
+        <div class="col-span-12 text-sm text-zinc-400 text-center">From Fate magic, Merits, Artifacts, etc.</div>
+      </div>
+
+      <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
+        <div class="col-span-8 text-xl font-cinzel grid place-items-center">Spend Willpower</div>
+        <div class="col-span-4">
+          <label class="switch">
+            <input type="checkbox" [(ngModel)]="this.spendWillpower" />
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <div class="col-span-12 text-sm text-zinc-400 text-center">Adds +3 dice</div>
+      </div>
+    </div>
+  </div>
+</div>
