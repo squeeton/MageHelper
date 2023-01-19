@@ -275,6 +275,22 @@ export class CharacterService {
     if (this.character.stats.lethalDamage > 0 && damageType == 'lethal') { this.character.stats.lethalDamage -= 1; }
     if (this.character.stats.aggravatedDamage > 0 && damageType == 'aggravated') { this.character.stats.aggravatedDamage -= 1; }
   }
+  damageCorpus() {
+    this.saveCurrentToBuffer(this.character);
+
+    if (this.character.familiar.damage < this.character.familiar.health) {
+      this.character.familiar.damage += 1;
+    }
+  }
+
+  healCorpus() {
+    this.saveCurrentToBuffer(this.character);
+
+
+    if (this.character.familiar.damage > 0) {
+      this.character.familiar.damage -= 1;
+    }
+  }
 
   async saveCharacter() {
     this.saving = true;

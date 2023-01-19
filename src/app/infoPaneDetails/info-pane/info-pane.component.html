@@ -12,12 +12,12 @@
     </div>
   </div>
   <div
-    class="fixed inset-y-1/2 right-[450px] text-outline-white hover:text-red-500 hover:cursor-pointer"
+    class="fixed inset-y-1/2 right-[450px] text-outline-white text-black hover:text-red-500 hover:cursor-pointer"
     title="Close"
     (click)="info.closePane()"
   >
-    <span class="material-symbols-outlined text-6xl relative left-[11px] text-black"> arrow_right </span>
-    <span class="material-symbols-outlined text-6xl relative left-[-38px] text-black"> chevron_right </span>
+    <span class="material-symbols-outlined text-6xl relative left-[11px] w-fit"> arrow_right </span>
+    <span class="material-symbols-outlined text-6xl relative left-[-38px] w-fit"> chevron_right </span>
   </div>
 
   <div id="info-content-container overflow-scroll" class="">
@@ -37,3 +37,13 @@
     <app-info-cast-spell *ngIf="info.currentTab == 'Cast Spell'"></app-info-cast-spell>
   </div>
 </div>
+
+<!-- <div
+class="fixed inset-y-1/2 right-[0px] text-outline-white text-black hover:text-red-500 hover:cursor-pointer"
+title="Open Info"
+(click)="info.openPane()"
+[ngClass]="{ hidden: info.visible }"
+>
+<span class="material-symbols-outlined text-6xl relative right-[-75px] w-fit"> arrow_left </span>
+<span class="material-symbols-outlined text-6xl relative right-[-13px] w-fit"> chevron_left </span>
+</div> -->

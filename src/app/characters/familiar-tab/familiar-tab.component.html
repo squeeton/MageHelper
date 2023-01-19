@@ -34,7 +34,7 @@
         <span
           class="material-symbols-outlined text-lg align-bottom text-green-600 hover:cursor-pointer"
           title="Heal Damage"
-          (click)="char.healDamage('aggravated')"
+          (click)="char.healCorpus()"
         >
           brightness_5
         </span>
@@ -44,7 +44,7 @@
         <span
           class="material-symbols-outlined text-lg align-bottom text-red-600 hover:cursor-pointer"
           title="Deal Damage"
-          (click)="char.addDamage('aggravated')"
+          (click)="char.damageCorpus()"
         >
           brightness_5
         </span>
@@ -62,8 +62,8 @@
       <div class="text-center text-lg  hover:cursor-help hover:text-red-500"(click)="info.setInfoPane('Familiar')">Willpower</div>
       <div>
         <app-dots
-          [path]="'stats.willpower'"
-          [consumablePath]="'stats.usedWillpower'"
+          [path]="'familiar.willpower'"
+          [consumablePath]="'familiar.usedWillpower'"
           [size]="'2xl'"
           [maxDots]="10"
           [currentDots]="char.character.familiar.willpower"
@@ -114,13 +114,13 @@
   <div class="grid grid-cols-2 col-span-4 text-center text-xl border-solid border-double border-4 border-red-800 gap-3 py-4">
     <div class="col-span-2">essence</div>    
     <input
-    class="text-center col-span-2 font-fairplay mt-1 block w-9/12 m-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+    class="text-center col-span-2 font-playfair mt-1 block w-9/12 m-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
     type="number"
     [(ngModel)]="char.character.familiar.essence"
   />
     <div class="col-span-2">mana</div>
     <input
-    class="text-center col-span-2 font-fairplay mt-1 block w-9/12 m-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+    class="text-center col-span-2 font-playfair mt-1 block w-9/12 m-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
     type="number"
     [(ngModel)]="char.character.familiar.mana"
   />

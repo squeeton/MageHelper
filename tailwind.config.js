@@ -23,7 +23,8 @@ module.exports = {
     "grid-cols-12",
     "m-0",
     "m-auto",
-    "ml-5"
+    "ml-5",
+    "opacity-50"
   ],
   theme: {
     extend: {},
