@@ -23,8 +23,8 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
   currentTab = 'Spell Overview';
   collapsible: ICollapsibleSpellCase = {
     spellDesc: false,
-    caster: false,
-    spell: false,
+    caster: true,
+    spell: true,
     potency: false,
     range: false,
     castTime: false,
@@ -33,7 +33,12 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     yantra: false,
     pathTools: false,
     pathMaterials: false,
-    paradox: false
+    paradox: false,
+    spellSummary: false,
+    spellFactors: false,
+    releasedParadox: true,
+    containedParadox: true,
+    successes: true
   }
   tabs = [
     'Spell Overview',
@@ -53,9 +58,11 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
 
   // Caster Info
   showCasterInfo = true;
+  gnosis = 0;
   highestArcanum = '';
   charArcanaDots = 0;
   activeSpells = 0;
+  rulingArcana = true;
 
   // Spell Info
   showSpellInfo = true;
@@ -66,9 +73,10 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
   roteSkillDots = 0;
   spendWillpower = false;
   additionalDice = 0;
+  grimoire = false;
 
   // Factors
-  potencyValue = 0;
+  potencyValue = 1;
   advancedPotency = false;
   range = 0;
   rangeAdvanced = false;
@@ -171,13 +179,22 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
   sleeperWitness = false;
   dedicatedToolIndex = 7;
   additionalMana = 0;
-  numberOfSleepers='Straight Roll';
+  numberOfSleepers = 'Straight Roll';
+
+
+  // Summary
+  summaryCastTime = '';
+  summaryDuration = '';
+  summaryRange = '';
+  summaryScale = '';
 
   ngOnInit(): void {
     this.highestArcanum = this.info.spell.arcanum.toLowerCase();
     this.isRote = this.getIsRote(this.info.spell);
     this.isPraxis = this.getIsPraxis(this.info.spell);
     this.charArcanaDots = this.char.character.arcana[this.highestArcanum.toLowerCase() as keyof object];
+    this.gnosis = this.char.character.stats.gnosis;
+    this.rulingArcana = this.char.character.arcana.rulingArcanum.includes(this.highestArcanum.toLowerCase());
 
     if (this.isRote) {
       this.freeReach = 6 - this.info.spell.dots
@@ -242,6 +259,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
   }
 
 
+
   toggleRote() {
     if (this.isPraxis && !this.isRote) {
       this.isPraxis = false;
@@ -264,10 +282,12 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
 
   setTab(section: string) {
     this.currentTab = section;
+    (this.collapsible.paradox) ? this.collapsible.paradox = false : '';
   }
 
   tabForward() {
     let x = this.tabs.indexOf(this.currentTab);
+    (this.collapsible.paradox) ? this.collapsible.paradox = false : '';
     if (x + 1 < this.tabs.length) {
       this.currentTab = this.tabs[x + 1];
     }
@@ -317,7 +337,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
 
     let enabled = true;
     let currentlyActive = yantra.active
-    let atMaxYantras = this.activeYantras.length >= this.ref.infoMatrix[this.char.character.stats.gnosis].yantras;
+    let atMaxYantras = this.activeYantras.length >= this.ref.infoMatrix[this.gnosis].yantras;
     let mudraAllowed = this.isRote;
     let concentrationAllowed = this.durationAdvanced || this.duration > 0;
 
@@ -350,14 +370,15 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
   }
 
 
-
+  toggleStandardAdvanced(prop: string) {
+  }
 
 
   updatePools() {
-    let localDicePool = this.char.character.stats.gnosis + this.charArcanaDots;
-    let localReach = this.reach;
-    let localMana = this.mana;
-    let localParadox = this.paradoxDice;
+    let localDicePool = this.gnosis + this.charArcanaDots;
+    let localReach = 0;
+    let localMana = 0;
+    let localParadox = 0;
 
 
     // Dice Pool
@@ -366,7 +387,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     });
     localDicePool -= this.getPotencyMod(this.potencyValue);
     localDicePool -= this.range;
-    localDicePool -= this.castTime;
+    localDicePool += this.castTime;
     localDicePool -= this.scale;
     localDicePool -= this.duration;
     localDicePool += this.additionalDice;
@@ -375,7 +396,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     }
 
 
-// Reach
+    // Reach
     localReach += this.activeSpells;
     localReach += this.extraReach;
 
@@ -396,10 +417,13 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     }
 
 
-// Mana 
+    // Mana 
     if (this.timeInBottle) {
-      localDicePool -= 1;
-      localMana +=1
+      localReach -= 1;
+      localMana += 1
+    }
+    if (!this.rulingArcana) {
+      localMana += 1;
     }
     if (this.sympatheticRange) {
       localMana += 1;
@@ -410,33 +434,203 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     localMana += this.additionalMana;
 
 
-// Paradox
+    // Paradox
 
-localParadox = this.freeReach - localReach;
+    localParadox = localReach - this.freeReach;
+    if (localParadox > 0) {
+      localParadox *= this.ref.infoMatrix[this.gnosis].paradox
+    }
+    else {
+      localParadox = 0;
+    }
+    let paradoxRollType = '';
+    let paradoxIntroduced = false;
+    if (this.sleeperWitness) {
+      localParadox += 1;
+    }
+    if (this.inured) {
+      localParadox += 2;
+    }
 
-if (this.sleeperWitness) {
-  localParadox += 1;
-}
-if (this.inured) {
-  localParadox += 2;
-}
-
-if(localParadox<0){
-  localParadox = 0;
-}
+    if (localParadox > 0) {
+      paradoxRollType = this.numberOfSleepers;
+      paradoxIntroduced = true;
+    }
 
 
-localParadox -=this.additionalMana
+    // Paradox Mitigation
+    localParadox -= this.additionalMana
+    if (this.yantraList[this.dedicatedToolIndex].active) {
+      localParadox -= 2;
+    }
 
 
-this.dicePool = localDicePool;
-this.reach = localReach;
-this.mana = localMana;
-this.paradoxDice = localParadox;
+    if (localParadox <= 0 && paradoxIntroduced) {
+      paradoxRollType = 'Chance Die';
+      localParadox = 1;
+    }
+    else if (localParadox <= 0) {
+      paradoxRollType = 'No Roll';
+      localParadox = 0;
+    }
+
+    this.dicePool = localDicePool;
+    this.reach = localReach;
+    this.mana = localMana;
+    this.paradoxDice = localParadox;
+    this.paradoxDesc = paradoxRollType;
+
+
+
+    // Spell Summary Informaton
+    this.summaryCastTime = (this.ref.infoMatrix[this.gnosis].ritual * (this.castTime + 1)) + ' ' + this.ref.infoMatrix[this.gnosis].interval;
+    this.setSummaryDuration();
+    (this.rangeAdvanced) ? this.summaryRange = 'Self/touch or Aimed' : this.summaryRange = 'Sensory';
+    (this.rangeAdvanced && this.sympatheticRange) ? this.summaryRange += ' (Sympathetic)' : '';
+    (this.rangeAdvanced && this.temporalRange) ? this.summaryRange += ' (Temporal)' : '';
+    this.setSummaryScale();
+
   }
 
+  setSummaryDuration() {
 
+    if (this.durationAdvanced) {
+      switch (this.duration) {
+        case 0:
+          this.summaryDuration = '1 scene/hour'
+          break;
+        case 2:
+          this.summaryDuration = '1 day'
+          break;
+        case 4:
+          this.summaryDuration = '1 week'
+          break;
+        case 6:
+          this.summaryDuration = '1 month'
+          break;
+        case 8:
+          this.summaryDuration = '1 year'
+          break;
+        case 10:
+          this.summaryDuration = 'Indefinite'
+          break;
+        default:
+          this.summaryDuration = '1 scene/hour'
+      }
 
+    }
+    else {
+      switch (this.duration) {
+        case 0:
+          this.summaryDuration = '1 turn'
+          break;
+        case 2:
+          this.summaryDuration = '2 turns'
+          break;
+        case 4:
+          this.summaryDuration = '3 turns'
+          break;
+        case 6:
+          this.summaryDuration = '5 turns'
+          break;
+        case 8:
+          this.summaryDuration = '10 turns'
+          break;
+        case 10:
+          this.summaryDuration = '20 turns'
+          break;
+        case 12:
+          this.summaryDuration = '30 turns'
+          break;
+        case 14:
+          this.summaryDuration = '40 turns'
+          break;
+        case 16:
+          this.summaryDuration = '50 turns'
+          break;
+        case 18:
+          this.summaryDuration = '60 turns'
+          break;
+        case 20:
+          this.summaryDuration = '70 turns'
+          break;
+        default:
+          this.summaryDuration = '70 turns'
+      }
+    }
+  }
+
+  setSummaryScale() {
+
+    if (this.scaleAdvanced) {
+      switch (this.scale) {
+        case 0:
+          this.summaryScale = '5 Subjects of up to Size 5, or A large house or building'
+          break;
+        case 2:
+          this.summaryScale = '10 Subjects of up to Size 10, or A small warehouse or parking lot'
+          break;
+        case 4:
+          this.summaryScale = '20 Subjects of up to Size 15, or A large warehouse or supermarket'
+          break;
+        case 6:
+          this.summaryScale = '40 Subjects of up to Size 20, or A small factory, or a shopping mall'
+          break;
+        case 8:
+          this.summaryScale = '80 Subjects of up to Size 25, or A large factory, or a city block'
+          break;
+        case 10:
+          this.summaryScale = '160 Subjects of up to Size 30, or A campus, or a small neighborhood'
+          break;
+        case 12:
+          this.summaryScale = '320 Subjects of up to Size 35, or A campus, or a small neighborhood'
+          break;
+        case 14:
+          this.summaryScale = '640 Subjects of up to Size 40, or A campus, or a small neighborhood'
+          break;
+        case 16:
+          this.summaryScale = '1280 Subjects of up to Size 45, or A campus, or a small neighborhood'
+          break;
+        default:
+          this.summaryScale = '5 Subjects of up to Size 5, or A large house or building'
+      }
+
+    }
+    else {
+
+      switch (this.scale) {
+        case 0:
+          this.summaryScale = '1 Subject of up to Size	5, or	Arm’s reach from a central point'
+          break;
+        case 2:
+          this.summaryScale = '2 Subjects of up to Size 6, or A small room'
+          break;
+        case 4:
+          this.summaryScale = '4 Subjects of up to Size 7, or A large room'
+          break;
+        case 6:
+          this.summaryScale = '8 Subjects of up to Size 8, or Several rooms, or a single floor of a house'
+          break;
+        case 8:
+          this.summaryScale = '16 Subjects of up to Size 9, or A ballroom or small house'
+          break;
+        case 10:
+          this.summaryScale = '32 Subjects of up to Size 10, or A ballroom or small house'
+          break;
+        case 12:
+          this.summaryScale = '64 Subjects of up to Size 11, or A ballroom or small house'
+          break;
+        case 14:
+          this.summaryScale = '128 Subjects of up to Size 12, or A ballroom or small house'
+          break;
+        case 16:
+          this.summaryScale = '256 Subjects of up to Size 13, or A ballroom or small house'
+          break;
+        default:
+          this.summaryScale = '1 Subject of up to Size	5, or	Arm’s reach from a central point'
+      }
+    }
+  }
 
   logAll() {
     console.log({ obj: this, potMod: this.getPotencyMod(this.potencyValue) });

@@ -12,4 +12,9 @@ export default interface ICollapsibleSpellCase {
     pathTools:boolean,
     pathMaterials:boolean,
     paradox:boolean,
+    spellSummary:boolean,
+    spellFactors:boolean,
+    releasedParadox:boolean,
+    containedParadox:boolean,
+    successes:boolean
 }
