@@ -58,6 +58,35 @@ export interface ICharacter {
         streetwise: number,
         subterfuge: number
     },
+    specialities: {
+        // Mental
+        academics: string,
+        computer: string,
+        crafts: string,
+        investigation: string,
+        medicine: string,
+        occult: string,
+        politics: string,
+        science: string,
+        // Physical
+        athletics: string,
+        brawl: string,
+        drive: string,
+        firearms: string,
+        larceny: string,
+        stealth: string,
+        survival: string,
+        weaponry: string,
+        // Social
+        animalKen: string,
+        empathy: string,
+        expression: string,
+        intimidation: string,
+        persuasion: string,
+        socialize: string,
+        streetwise: string,
+        subterfuge: string
+    },
     arcana: {
         rulingArcanum:Array<string>,
         inferiorArcanum:Array<string>,

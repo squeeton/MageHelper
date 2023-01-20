@@ -40,6 +40,7 @@ import { InfoConditionListItemComponent } from './infoPaneDetails/conditions/inf
 import { InfoSingleConditionComponent } from './infoPaneDetails/conditions/info-single-condition/info-single-condition.component';
 import { ArcanumMarkerComponent } from './characters/arcanum-marker/arcanum-marker.component';
 import { InfoCastSpellComponent } from './infoPaneDetails/info-cast-spell/info-cast-spell.component';
+import { InfoSpecialtiesComponent } from './infoPaneDetails/info-specialties/info-specialties.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { InfoCastSpellComponent } from './infoPaneDetails/info-cast-spell/info-c
     InfoConditionListItemComponent,
     InfoSingleConditionComponent,
     ArcanumMarkerComponent,
-    InfoCastSpellComponent
+    InfoCastSpellComponent,
+    InfoSpecialtiesComponent
   ],
   imports: [
     BrowserModule,

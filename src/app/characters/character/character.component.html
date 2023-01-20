@@ -179,7 +179,12 @@
 
       <!-- Skills -->
       <div class="col-span-3 font-bold text-sm">
-        <div class="justify-center text-center text-4xl text-outline-white text-black">Skills</div>
+        <div
+          class="justify-center text-center text-4xl text-outline-white text-black hover:text-red-500 hover:cursor-help"
+          (click)="info.setInfoPane('Specialities')"
+        >
+          Skills
+        </div>
         <!-- Container -->
         <div
           class="grid grid-rows-3 gap-y-5 my-3 py-3 bg-zinc-800/80 rounded-lg shadow-xl border-solid border-double border-4 border-red-800 text-white"
@@ -189,28 +194,61 @@
             <p class="text-center text-2xl">Mental</p>
             <p class="text-center text-xs">(-3 unskilled)</p>
             <div class="grid grid-cols-2 gap-2 min-w-[220px]">
-              <app-dots-label [currentDots]="char.character.skills.academics">Academics</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.academics != ''">
+                  {{ this.char.character.specialities.academics }}
+                </span>
+                {{ this.char.character.specialities.academics != "" ? "●" : "" }} &nbsp; Academics
+              </div>
               <app-dots [path]="'skills.academics'" [currentDots]="char.character.skills.academics"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.computer">Computer</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.computer != ''">
+                  {{ this.char.character.specialities.computer }}
+                </span>
+                {{ this.char.character.specialities.computer != "" ? "●" : "" }} &nbsp; Computer</div>
               <app-dots [path]="'skills.computer'" [currentDots]="char.character.skills.computer"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.crafts">Crafts</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.crafts != ''">
+                  {{ this.char.character.specialities.crafts }}
+                </span>
+                {{ this.char.character.specialities.crafts != "" ? "●" : "" }} &nbsp; Crafts</div>
               <app-dots [path]="'skills.crafts'" [currentDots]="char.character.skills.crafts"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.investigation">Investigation</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.investigation != ''">
+                  {{ this.char.character.specialities.investigation }}
+                </span>
+                {{ this.char.character.specialities.investigation != "" ? "●" : "" }} &nbsp; Investigation</div>
               <app-dots [path]="'skills.investigation'" [currentDots]="char.character.skills.investigation"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.medicine"> Medicine </app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.medicine != ''">
+                  {{ this.char.character.specialities.medicine }}
+                </span>
+                {{ this.char.character.specialities.medicine != "" ? "●" : "" }} &nbsp; Medicine</div>
               <app-dots [path]="'skills.medicine'" [currentDots]="char.character.skills.medicine"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.occult">Occult</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.occult != ''">
+                  {{ this.char.character.specialities.occult }}
+                </span>
+                {{ this.char.character.specialities.occult != "" ? "●" : "" }} &nbsp; Occult</div>
               <app-dots [path]="'skills.occult'" [currentDots]="char.character.skills.occult"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.politics">Politics</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.politics != ''">
+                  {{ this.char.character.specialities.politics }}
+                </span>
+                {{ this.char.character.specialities.politics != "" ? "●" : "" }} &nbsp; Politics</div>
               <app-dots [path]="'skills.politics'" [currentDots]="char.character.skills.politics"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.science">Science</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.science != ''">
+                  {{ this.char.character.specialities.science }}
+                </span>
+                {{ this.char.character.specialities.science != "" ? "●" : "" }} &nbsp; Science</div>
               <app-dots [path]="'skills.science'" [currentDots]="char.character.skills.science"></app-dots>
             </div>
           </div>
@@ -219,28 +257,60 @@
             <p class="text-center text-2xl">Physical</p>
             <p class="text-center text-xs">(-1 unskilled)</p>
             <div class="grid grid-cols-2 gap-2 min-w-[220px]">
-              <app-dots-label [currentDots]="char.character.skills.athletics">Athletics</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.athletics != ''">
+                  {{ this.char.character.specialities.athletics }}
+                </span>
+                {{ this.char.character.specialities.athletics != "" ? "●" : "" }} &nbsp; Athletics</div>
               <app-dots [path]="'skills.athletics'" [currentDots]="char.character.skills.athletics"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.brawl">Brawl</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.brawl != ''">
+                  {{ this.char.character.specialities.brawl }}
+                </span>
+                {{ this.char.character.specialities.brawl != "" ? "●" : "" }} &nbsp; Brawl</div>
               <app-dots [path]="'skills.brawl'" [currentDots]="char.character.skills.brawl"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.drive"> Drive</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.drive != ''">
+                  {{ this.char.character.specialities.drive }}
+                </span>
+                {{ this.char.character.specialities.drive != "" ? "●" : "" }} &nbsp; Drive</div>
               <app-dots [path]="'skills.drive'" [currentDots]="char.character.skills.drive"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.firearms"> Firearms</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.firearms != ''">
+                  {{ this.char.character.specialities.firearms }}
+                </span>
+                {{ this.char.character.specialities.firearms != "" ? "●" : "" }} &nbsp; Firearms</div>
               <app-dots [path]="'skills.firearms'" [currentDots]="char.character.skills.firearms"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.larceny"> Larceny</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.larceny != ''">
+                  {{ this.char.character.specialities.larceny }}
+                </span>
+                {{ this.char.character.specialities.larceny != "" ? "●" : "" }} &nbsp; Larceny</div>
               <app-dots [path]="'skills.larceny'" [currentDots]="char.character.skills.larceny"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.stealth"> Stealth</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.stealth != ''">
+                  {{ this.char.character.specialities.stealth }}
+                </span>
+                {{ this.char.character.specialities.stealth != "" ? "●" : "" }} &nbsp; Stealth</div>
               <app-dots [path]="'skills.stealth'" [currentDots]="char.character.skills.stealth"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.survival"> Survival</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.survival != ''">
+                  {{ this.char.character.specialities.survival }}
+                </span>
+                {{ this.char.character.specialities.survival != "" ? "●" : "" }} &nbsp; Survival</div>
               <app-dots [path]="'skills.survival'" [currentDots]="char.character.skills.survival"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.weaponry"> Weaponry</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.weaponry != ''">
+                  {{ this.char.character.specialities.weaponry }}
+                </span>
+                {{ this.char.character.specialities.weaponry != "" ? "●" : "" }} &nbsp; Weaponry</div>
               <app-dots [path]="'skills.weaponry'" [currentDots]="char.character.skills.weaponry"></app-dots>
             </div>
           </div>
@@ -249,28 +319,60 @@
             <p class="text-center text-2xl">Social</p>
             <p class="text-center text-xs">(-1 unskilled)</p>
             <div class="grid grid-cols-2 gap-2 min-w-[220px]">
-              <app-dots-label [currentDots]="char.character.skills.animalKen">Animal Ken</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.animalKen != ''">
+                  {{ this.char.character.specialities.animalKen }}
+                </span>
+                {{ this.char.character.specialities.animalKen != "" ? "●" : "" }} &nbsp; Animal Ken</div>
               <app-dots [path]="'skills.animalKen'" [currentDots]="char.character.skills.animalKen"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.empathy">Empathy</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.empathy != ''">
+                  {{ this.char.character.specialities.empathy }}
+                </span>
+                {{ this.char.character.specialities.empathy != "" ? "●" : "" }} &nbsp; Empathy</div>
               <app-dots [path]="'skills.empathy'" [currentDots]="char.character.skills.empathy"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.expression"> Expression</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.expression != ''">
+                  {{ this.char.character.specialities.expression }}
+                </span>
+                {{ this.char.character.specialities.expression != "" ? "●" : "" }} &nbsp; Expression</div>
               <app-dots [path]="'skills.expression'" [currentDots]="char.character.skills.expression"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.intimidation"> Intimidation</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.intimidation != ''">
+                  {{ this.char.character.specialities.intimidation }}
+                </span>
+                {{ this.char.character.specialities.intimidation != "" ? "●" : "" }} &nbsp; Intimidation</div>
               <app-dots [path]="'skills.intimidation'" [currentDots]="char.character.skills.intimidation"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.persuasion"> Persuasion</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.persuasion != ''">
+                  {{ this.char.character.specialities.persuasion }}
+                </span>
+                {{ this.char.character.specialities.persuasion != "" ? "●" : "" }} &nbsp; Persuasion</div>
               <app-dots [path]="'skills.persuasion'" [currentDots]="char.character.skills.persuasion"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.socialize"> Socialize</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.socialize != ''">
+                  {{ this.char.character.specialities.socialize }}
+                </span>
+                {{ this.char.character.specialities.socialize != "" ? "●" : "" }} &nbsp; Socialize</div>
               <app-dots [path]="'skills.socialize'" [currentDots]="char.character.skills.socialize"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.streetwise"> Streetwise</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.streetwise != ''">
+                  {{ this.char.character.specialities.streetwise }}
+                </span>
+                {{ this.char.character.specialities.streetwise != "" ? "●" : "" }} &nbsp; Streetwise</div>
               <app-dots [path]="'skills.streetwise'" [currentDots]="char.character.skills.streetwise"></app-dots>
 
-              <app-dots-label [currentDots]="char.character.skills.subterfuge"> Subterfuge</app-dots-label>
+              <div class="tooltip">
+                <span class="tooltiptext" *ngIf="this.char.character.specialities.subterfuge != ''">
+                  {{ this.char.character.specialities.subterfuge }}
+                </span>
+                {{ this.char.character.specialities.subterfuge != "" ? "●" : "" }} &nbsp; Subterfuge</div>
               <app-dots [path]="'skills.subterfuge'" [currentDots]="char.character.skills.subterfuge"></app-dots>
             </div>
           </div>

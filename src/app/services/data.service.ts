@@ -75,13 +75,41 @@ export class DataService {
       const doc = await querySnapshot.docs[0];
 
       returnValue = { id: doc.id, char: doc.data() };
-
+      if (returnValue.char.specialities == undefined) {
+        console.log('adding specs');
+        returnValue.char.specialities = {
+          "weaponry": '',
+          "computer": '',
+          "occult": '',
+          "animalKen": '',
+          "intimidation": '',
+          "empathy": '',
+          "drive": '',
+          "subterfuge": '',
+          "survival": '',
+          "streetwise": '',
+          "stealth": '',
+          "larceny": '',
+          "investigation": '',
+          "medicine": '',
+          "academics": '',
+          "science": '',
+          "firearms": '',
+          "socialize": '',
+          "expression": '',
+          "brawl": '',
+          "crafts": '',
+          "athletics": '',
+          "persuasion": '',
+          "politics": ''
+        }
+      }
       return returnValue;
     }
     else {
       let character = {
         uid: uid,
-        notes:'',
+        notes: '',
         details: {
           characterName: 'Your Character Name',
           shadowName: '',
@@ -131,9 +159,35 @@ export class DataService {
           streetwise: 0,
           subterfuge: 0
         },
+        specialities: {
+          "weaponry": '',
+          "computer": '',
+          "occult": '',
+          "animalKen": '',
+          "intimidation": '',
+          "empathy": '',
+          "drive": '',
+          "subterfuge": '',
+          "survival": '',
+          "streetwise": '',
+          "stealth": '',
+          "larceny": '',
+          "investigation": '',
+          "medicine": '',
+          "academics": '',
+          "science": '',
+          "firearms": '',
+          "socialize": '',
+          "expression": '',
+          "brawl": '',
+          "crafts": '',
+          "athletics": '',
+          "persuasion": '',
+          "politics": ''
+        },
         arcana: {
-          rulingArcanum:[],
-          inferiorArcanum:[],
+          rulingArcanum: [],
+          inferiorArcanum: [],
           death: 0,
           fate: 0,
           forces: 0,
@@ -174,7 +228,7 @@ export class DataService {
         rotes: [],
         praxis: [],
         familiar: {
-          name:'',
+          name: '',
           health: 0,
           damage: 0,
           willpower: 0,
@@ -190,11 +244,11 @@ export class DataService {
           rank: 0,
           ban: '',
           bane: '',
-          essence:0,
-          mana:0,
-          power:0,
-          finesse:0,
-          resistance:0
+          essence: 0,
+          mana: 0,
+          power: 0,
+          finesse: 0,
+          resistance: 0
         }
       }
 
