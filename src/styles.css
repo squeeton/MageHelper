@@ -93,10 +93,18 @@ h6 {
   display: inline-block;
 }
 
+/* Tooltip container Border*/
+.tooltiptext{
+  border-width: 1px;
+    border-style: double;
+    --tw-border-opacity: 1;
+    border-color: rgb(153 27 27 / var(--tw-border-opacity));
+}
+
 /* Tooltip text */
 .tooltip .tooltiptext {
   visibility: hidden;
-  width: 120px;
+  width: 230px;
   background-color: black;
   color: #fff;
   text-align: center;
@@ -112,18 +120,35 @@ h6 {
 .tooltip:hover .tooltiptext {
   visibility: visible;
 }
+
+/* Bottomn Triangle */
 .tooltip .tooltiptext::after {
   content: " ";
   position: absolute;
   top: 100%; /* At the bottom of the tooltip */
   left: 50%;
   margin-left: -5px;
-  border-width: 5px;
+  border-width: 9px;
+  border-style: solid;
+  border-color: red transparent transparent transparent;
+}
+
+/* Bottomn Triangle */
+.inner-triangle {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -3px;
+  border-width: 7px;
   border-style: solid;
   border-color: black transparent transparent transparent;
+  z-index: 5;
 }
+
+
 .tooltip .tooltiptext {
-  width: 120px;
+  width: 230px;
   bottom: 100%;
   left: 50%;
   margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
