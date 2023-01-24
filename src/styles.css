@@ -28,9 +28,10 @@
   background-color: #283046;
 }
 
-.character-sheet-container {
+.max-w-screen{
   max-width: 1200px;
 }
+
 
 h1 {
   display: block;

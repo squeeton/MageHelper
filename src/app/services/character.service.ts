@@ -30,6 +30,7 @@ export class CharacterService {
   casting = false;
   characterID = '';
   character: ICharacter = {
+    createdWhen:new Date(),
     praxis: [],
     uid: "",
     spells: [],
@@ -193,15 +194,10 @@ export class CharacterService {
     return displayName;
   }
 
-  setCharacter(char: ICharacter) {
+  async setCharacter(id:string, char:ICharacter) {
+
     this.character = char;
-  }
-
-  async setInitialCharacter(uid: string) {
-
-    let characterData = await this.db.getCharacter(uid);
-    this.character = characterData.char;
-    this.characterID = characterData.id;
+    this.characterID = id;
     this.loading = false;
   }
 

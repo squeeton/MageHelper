@@ -1661,8 +1661,14 @@
           <p>Dice Pool:&nbsp;&nbsp;</p>
         </div>
         <div class="col-span-8 font-cinzel text-xl font-bold p-4 text-left align-middle">
-          <span class="text-3xl text-red-600 font-extrabold">{{ paradoxDice }}</span> Dice
+          <span class="text-3xl text-red-600 font-extrabold">{{ paradoxDice }}</span> &nbsp; Dice
           {{ paradoxDesc != "Straight Roll" ? " with " + paradoxDesc : "" }}
+        </div>
+        <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === 'Chance Die'">
+          <div class="col-span-12 font-cinzel font-bold">Chance Die :</div>
+          <div class="col-span-12">
+            If your pool drops below one die, you instead roll a single chance die. The chance die only counts as a success if you roll a 10. Any other result is a failure. If you roll a 1 on the chance die, your character suffers a dramatic failure. Chance dice do not benefit from 10-again.
+          </div>
         </div>
         <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === '9-Again'">
           <div class="col-span-12 font-cinzel font-bold">9-Again :</div>

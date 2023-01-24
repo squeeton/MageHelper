@@ -7,6 +7,7 @@ import ISpell from "./spell.model"
 import ITilt from "./tilt.model"
 
 export interface ICharacter {
+    createdWhen:Date,
     uid: string,
     notes:string,
     details: {

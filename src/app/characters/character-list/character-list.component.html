@@ -1,1 +1,87 @@
-<p>character-list works!</p>
+<div>
+  <div class="font-playfair  grid grid-cols-12 max-w-screen mx-auto mt-[120px]">
+    <div class="col-span-9 text-4xl flex items-center">
+     <p> My Characters: <span class="text-2xl text-red-600 ">{{characterList.length}}/4</span></p>
+    </div>
+    <button
+      class="col-span-3 text-3xl text-center border border-slate-300 rounded-md align-middle drop-shadow-lg my-auto p-2 hover:border-red-700 disabled:opacity-50 disabled:bg-white disabled:border-slate-300"
+      (click)="addNewCharacter()"
+      [disabled]="wait"
+      [ngClass]="{ 'opacity-50': wait }"
+    >
+      New Character
+    </button>
+
+    <!-- Character List -->
+    <div class="col-span-12 grid grid-cols-12 mt-10 bg-zinc-100 p-10 rounded-sm gap-5">
+      <!-- Character Container -->
+      <div
+        class="grid grid-cols-1 col-span-4 drop-shadow-lg rounded-md h-[150px] bg-white"
+        *ngFor="let character of characterList"
+      >
+        <span
+          class="material-symbols-outlined text-2xl grid place-items-center text-zinc-600 absolute top-[15px] right-[15px] z-10 hover:cursor-pointer hover:text-red-500"
+          (click)="confirmDelete(character.id, character.char)"
+        >
+          delete
+        </span>
+        <div
+          class="grid grid-cols-1 col-span-4 rounded-md h-[150px] bg-white hover:border-red-500 hover:ring-1 hover:ring-red-500 hover:cursor-pointer hover:shadow-xl hover:shadow-red-600"
+          (click)="setCharacter(character.id, character.char)"
+          [routerLink]="['/', 'character', character.id]"
+        >
+          <!-- Content -->
+          <div class="grid grid-cols-8 m-auto gap-4 place-items-center">
+            <div class="col-span-2 w-[75px] h-[75px] border border-red-600 grid place-items-center">Char Img</div>
+            <div class="col-span-6 text-2xl text-center font-cinzel font-bold">
+              <p>{{ getDisplayName(character.char) }}</p>
+              <p class="text-xs text-zinc-400">
+                &nbsp;&nbsp;&nbsp;{{ character.char.details.path }}
+                <span class="text-black"> - </span>
+                {{ character.char.details.order }}
+                <span class="text-black"> - </span>
+                {{ character.char.details.legacy }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-modal [modalID]="'confirmDelete'">
+    <div class="grid grid-cols-12 gap-2">
+      <div class="col-span-12 text-2xl">Delete this character?</div>
+      <div class="bg-yellow-100/50 col-span-12 m-auto text-sm min-h-[50px] grid place-items-center">
+        <p>
+          <span class="material-symbols-outlined text-2xl text-zinc-600 align-middle"> warning </span>
+          To delete
+          <b class="text-base text-red-600">{{
+            characterInQuestion ? getDisplayName(characterInQuestion.char) : ""
+          }}</b>
+          type the word DELETE into the field below
+        </p>
+      </div>
+
+      <input
+        class="text-center col-span-12 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+        type="text"
+        [(ngModel)]="confirmDeleteInput"
+      />
+    </div>
+    <div class="grid grid-cols-12 mt-5 gap-2">
+      <button
+        class="col-end-9 col-span-3 border border-slate-300 rounded-md text-xl"
+        (click)="modal.toggleModal('confirmDelete')"
+      >
+        Cancel
+      </button>
+      <button
+        class="col-end-12 col-span-3 border border-slate-300 rounded-md text-xl hover:cursor-pointer hover:bg-red-600 hover:border-red-700 disabled:opacity-50 disabled:bg-white disabled:border-slate-300"
+        (click)="actuallyDelete()"
+        [disabled]="confirmDeleteInput.toLowerCase() !== 'delete'"
+      >
+        Delete
+      </button>
+    </div>
+  </app-modal>
+</div>
