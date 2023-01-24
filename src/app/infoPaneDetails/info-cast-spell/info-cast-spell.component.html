@@ -1,8 +1,6 @@
 <div class="grid grid-cols-12">
-  <button (click)="logAll()">Log All</button>
-
   <!-- Casting Nav -->
-  <div class="col-span-12 grid grid-cols-12">
+  <div id="castingNav" class="col-span-12 grid grid-cols-12">
     <div class="col-span-1"></div>
     <div
       class="col-span-2 rounded-full w-[50px] h-[50px] grid place-items-center hover:cursor-pointer"
@@ -178,18 +176,18 @@
             </label>
           </div>
         </div>
-        
-      <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-        <div class="col-span-12 grid grid-cols-12 p-3">
-          <div class="col-span-8 text-xl font-cinzel grid place-items-center">Gnosis Override</div>
-          <input
-            class="col-span-4 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
-            type="number"
-            [(ngModel)]="gnosis"
-            (ngModelChange)="updatePools()"
-          />
+
+        <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
+          <div class="col-span-12 grid grid-cols-12 p-3">
+            <div class="col-span-8 text-xl font-cinzel grid place-items-center">Gnosis Override</div>
+            <input
+              class="col-span-4 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              type="number"
+              [(ngModel)]="gnosis"
+              (ngModelChange)="updatePools()"
+            />
+          </div>
         </div>
-      </div>
       </div>
     </div>
     <!-- Spell Info -->
@@ -1667,7 +1665,9 @@
         <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === 'Chance Die'">
           <div class="col-span-12 font-cinzel font-bold">Chance Die :</div>
           <div class="col-span-12">
-            If your pool drops below one die, you instead roll a single chance die. The chance die only counts as a success if you roll a 10. Any other result is a failure. If you roll a 1 on the chance die, your character suffers a dramatic failure. Chance dice do not benefit from 10-again.
+            If your pool drops below one die, you instead roll a single chance die. The chance die only counts as a
+            success if you roll a 10. Any other result is a failure. If you roll a 1 on the chance die, your character
+            suffers a dramatic failure. Chance dice do not benefit from 10-again.
           </div>
         </div>
         <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === '9-Again'">
@@ -1696,7 +1696,9 @@
 
         <div class="col-span-12 font-cinzel font-bold text-xl mt-6 text-center">Roll Results</div>
         <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-          <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Dramatic Failure:</div>
+          <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">
+            Dramatic Failure:
+          </div>
           <div class="col-span-9">
             The mage does not invoke a Paradox, regains a point of Willpower, and the next Paradox roll made for her in
             the same scene does not suffer the usual, cumulative +1 dice modifier.

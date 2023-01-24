@@ -291,6 +291,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     if (x + 1 < this.tabs.length) {
       this.currentTab = this.tabs[x + 1];
     }
+    document.getElementById('castingNav')?.scrollIntoView();
   }
 
   tabBackward() {
@@ -298,6 +299,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     if (x > 0) {
       this.currentTab = this.tabs[x - 1];
     }
+    document.getElementById('castingNav')?.scrollIntoView();
   }
 
   getPotencyMod(value: number) {
@@ -632,7 +634,4 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
     }
   }
 
-  logAll() {
-    console.log({ obj: this, potMod: this.getPotencyMod(this.potencyValue) });
-  }
 }
