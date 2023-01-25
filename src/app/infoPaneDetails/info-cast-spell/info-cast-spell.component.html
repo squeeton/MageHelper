@@ -90,7 +90,7 @@
       <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
         <div class="col-span-9 text-xl font-cinzel grid place-items-center">Additional Spellcasting Dice?</div>
         <input
-          class="col-span-3 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          class="col-span-3 px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
           type="number"
           [(ngModel)]="additionalDice"
           (ngModelChange)="updatePools()"
@@ -123,7 +123,7 @@
         <div class="col-span-12 grid grid-cols-12 p-3">
           <div class="col-span-9 text-xl font-cinzel grid place-items-center">Active Spells</div>
           <input
-            class="col-span-3 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            class="col-span-3 font-playfair  px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             type="number"
             [(ngModel)]="activeSpells"
             (ngModelChange)="updatePools()"
@@ -181,7 +181,7 @@
           <div class="col-span-12 grid grid-cols-12 p-3">
             <div class="col-span-8 text-xl font-cinzel grid place-items-center">Gnosis Override</div>
             <input
-              class="col-span-4 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              class="col-span-4 font-playfair mt-1  px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
               type="number"
               [(ngModel)]="gnosis"
               (ngModelChange)="updatePools()"
@@ -247,7 +247,7 @@
           <div class="col-span-12 grid grid-cols-12 p-3 m-auto" *ngIf="this.isRote">
             <div class="col-span-8 text-xl font-cinzel grid place-items-center">Rote Skill Override</div>
             <input
-              class="col-span-4 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              class="col-span-4 font-playfair mt-1 px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
               type="number"
               [(ngModel)]="roteSkillDots"
               (ngModelChange)="updateRoteSkill()"
@@ -1366,15 +1366,9 @@
         <hr class="col-span-12 mt-4" />
 
         <div class="col-span-12 grid grid-cols-12 pt-4 px-5">
-          <div class="col-span-6 text-xl font-cinzel grid place-items-center">Extra Reach</div>
-          <!-- <input
-          class="text-center col-span-6 font-playfair mt-1 block w-full  py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
-          type="number"
-          [(ngModel)]="extraReach"
-          (ngModelChange)="updatePools()"
-        /> -->
+          <div class="col-span-6 text-xl font-cinzel grid place-items-center">Extra Reach</div>          
           <input
-            class="text-center col-span-6 font-playfair mt-1 block w-full m-auto px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            class="text-center col-span-6 font-playfair mt-1 px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             type="number"
             [(ngModel)]="extraReach"
             (ngModelChange)="updatePools()"

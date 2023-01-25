@@ -93,7 +93,7 @@
     <div class="text-lg hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Stats')">Mana</div>
     <input
       type="number"
-      class=" bg-transparent w-full border-b border-red-500  text-center"
+      class=" bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
       [(ngModel)]="char.character.stats.remainingMana"
     />
   </div>
@@ -216,7 +216,7 @@
       Aspirations
     </div>
     <textarea 
-    class="col-span-6 text-black p-3 box-border border-2 border-zinc-600 rounded-lg"
+    class="col-span-6 p-3  px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
     rows="4"
     [(ngModel)]="char.character.stats.aspirations"
     ></textarea>
@@ -228,7 +228,7 @@
       Obsessions
     </div>
     <textarea 
-    class="col-span-6 text-black p-3 box-border border-2 border-zinc-600 rounded-lg"
+    class="col-span-6 text-white p-3 bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
     rows="4"    
     [(ngModel)]="char.character.stats.obsessions"
     ></textarea>
