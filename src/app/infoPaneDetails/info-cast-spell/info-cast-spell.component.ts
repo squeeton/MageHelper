@@ -12,7 +12,7 @@ interface yantraPosition { index: number, bonus: number };
   templateUrl: './info-cast-spell.component.html',
   styleUrls: ['./info-cast-spell.component.css']
 })
-export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
+export class InfoCastSpellComponent implements OnInit, OnDestroy {
 
   constructor(public char: CharacterService,
     public info: InfoPaneService,
@@ -221,10 +221,6 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy, OnChanges {
 
   ngOnDestroy(): void {
     this.char.casting = false;
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log('change');
   }
 
   getIsRote(spell: ISpell) {

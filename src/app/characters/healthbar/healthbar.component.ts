@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewChecked, Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-healthbar',
@@ -9,7 +9,7 @@ export class HealthbarComponent implements OnInit {
 
   constructor() { }
 
-  @Input() health: number = 7;
+  @Input() health: number = 0;
   @Input() bashing: number = 0;
   @Input() lethal: number = 0;
   @Input() aggravated: number = 0;

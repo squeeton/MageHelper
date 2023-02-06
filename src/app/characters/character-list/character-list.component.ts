@@ -76,7 +76,6 @@ export class CharacterListComponent implements OnInit, OnDestroy {
 
   async actuallyDelete() {
     this.wait = true;
-    console.log('actually deleting', this.characterInQuestion?.id);
 
     const success = await this.db.deleteCharacter(this.characterInQuestion?.id as string);
 
@@ -96,7 +95,6 @@ export class CharacterListComponent implements OnInit, OnDestroy {
       this.wait = true;
       let newID = await this.db.newCharacter();
       
-      console.log(newID.id);
       this.router.navigate([`/character/${newID.id}`]);
     }
     else {

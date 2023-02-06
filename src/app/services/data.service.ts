@@ -53,7 +53,6 @@ export class DataService {
 
     // let allSpells = []
     // spalls.docs.map(doc => (allSpells.push(doc.data())));
-    // console.log(allSpells);
 
 
     const events = query.get().then((querySnapshot) => {
