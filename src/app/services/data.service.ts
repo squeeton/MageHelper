@@ -11,6 +11,10 @@ import { GlobalRefs } from './GlobalRefs';
 import { ICharacter } from '../models/character.model';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import ICampaign from '../models/campaign.model';
+import ICampaignFull from '../models/campaignFull.model';
+import IUser from '../models/user.model';
+import ICharOwner from '../models/CharOwner.model';
 
 
 @Injectable({
@@ -23,6 +27,8 @@ export class DataService {
     private db: AngularFirestore) {
     this.spellsCollection = db.collection('spells');
     this.characterCollection = db.collection('characters');
+    this.campaignCollection = db.collection('campaigns');
+    this.userCollection = db.collection('users');
 
 
     let userID = firebase.auth().currentUser;
@@ -34,6 +40,8 @@ export class DataService {
   uid: string = '';
   public spellsCollection: AngularFirestoreCollection<ISpell>;
   public characterCollection: AngularFirestoreCollection<ICharacter>;
+  public campaignCollection: AngularFirestoreCollection<ICampaign>;
+  public userCollection: AngularFirestoreCollection<IUser>;
 
   pendingReq = false;
 
@@ -83,7 +91,11 @@ export class DataService {
         console.log('adding attainments');
         returnValue.char.attainments = [];
       }
-      if(returnValue.char != null && returnValue.char.createdWhen == undefined){
+      if (returnValue.char != null && returnValue.char.campaign == undefined) {
+        console.log('adding campaign');
+        returnValue.char.campaign = '';
+      }
+      if (returnValue.char != null && returnValue.char.createdWhen == undefined) {
         returnValue.char.createdWhen = new Date()
       }
       return returnValue;
@@ -97,7 +109,8 @@ export class DataService {
 
   async newCharacter() {
     const char: ICharacter = {
-      createdWhen:new Date(),
+      createdWhen: new Date(),
+      campaign: '',
       praxis: [],
       uid: this.uid,
       spells: [],
@@ -243,6 +256,121 @@ export class DataService {
 
   }
 
+  async getCampaign(campaignID: string) {
+
+    let returnValue: {
+      id: string,
+      campaign: ICampaignFull
+    } = { id: 'Not Found', campaign: { uid: '', name: '', desc: '', characters: [] } }
+
+    console.log('getting campaign', campaignID);
+    const campaignRef = this.campaignCollection.ref.doc(campaignID);
+    const campaignDoc = await campaignRef.get();
+
+    if (campaignDoc.exists) {
+      let campaignBase: ICampaign = campaignDoc.data() as ICampaign
+      console.log('got  campaign', campaignBase);
+      returnValue.id = campaignDoc.id;
+      returnValue.campaign.name = campaignBase.name;
+      returnValue.campaign.uid = campaignBase.uid;
+      returnValue.campaign.desc = campaignBase.desc;
+
+
+      for (let i = 0; i < campaignBase.characters.length; i++) {
+        let charBuffer: ICharOwner = {
+          name: '',
+          owner: '',
+          charID: '',
+          path: '',
+          order: '',
+          legacy: ''
+        }
+        const charRef = this.characterCollection.ref.doc(campaignBase.characters[i]);
+        const charDoc = await charRef.get()
+        let deets = charDoc.data()?.details;
+        if (charDoc.exists && deets) {
+          charBuffer.name = this.getDisplayName(charDoc.data() as ICharacter);
+          charBuffer.path = deets.path;
+          charBuffer.order = deets.order;
+          charBuffer.legacy = deets.legacy;
+          charBuffer.charID = campaignBase.characters[i];
+
+          const userRef = this.userCollection.ref.doc(charDoc.data()?.uid);
+          const userDoc = await userRef.get()
+          const name = userDoc.data()?.name
+          if (userDoc.exists && name) {
+            charBuffer.owner = name;
+          }
+
+          returnValue.campaign.characters.push(charBuffer);
+        }
+
+      }
+    }
+    console.log('returnVal', returnValue);
+    return returnValue;
+  }
+  async getCampaignPure(campaignID: string) {
+
+    let returnValue: {
+      id: string,
+      campaign: ICampaign
+    } = { id: 'Not Found', campaign: { uid: '', name: '', desc: '', characters: [] } }
+
+    const campaignRef = this.campaignCollection.ref.doc(campaignID);
+    const campaignDoc = await campaignRef.get();
+    if (campaignDoc) {
+      returnValue.id = campaignDoc.id;
+      returnValue.campaign = campaignDoc.data() as ICampaign;
+    }
+    return returnValue;
+  }
+
+  updateCampaign(id: string, campaign: ICampaign) {
+    try {
+      this.campaignCollection.doc(id).update(campaign);
+      return true;
+    }
+    catch (e) {
+      console.error(e)
+      return false;
+    }
+
+  }
+
+  async removeCharacterFromCampaign(campaignID: string, charID: string) {
+    try {
+      let camp = (await this.getCampaignPure(campaignID)).campaign;
+      let char = (await this.getCharacter(charID)).char;
+      if (char) {
+        char.campaign = '';
+        this.updateCharacter(charID, char);
+      }
+      if (camp) {
+        camp.characters = camp.characters.filter(e => e !== charID);
+        this.updateCampaign(campaignID, camp);
+      }
+
+      return true;
+    }
+    catch (e) {
+      console.error(e)
+      return false;
+    }
+  }
+
+  async newCampaign(name: string, desc: string) {
+    const camp: ICampaign = {
+      uid: this.uid,
+      name: name,
+      desc: desc,
+      characters: []
+    }
+    const res = await this.campaignCollection.add(camp);
+    return res;
+
+  }
+
   async deleteCharacter(id: string) {
     try {
       const res = await this.characterCollection.doc(id).delete();
@@ -253,6 +381,7 @@ export class DataService {
       return false;
     }
   }
+
 
   async getAllUserCharacters(uid: string) {
     let char: ICharacter;
@@ -270,7 +399,36 @@ export class DataService {
     return returnValue;
   }
 
+  async getAllUserCampaigns(uid: string) {
+    let returnValue: Array<{
+      id: string,
+      campaign: ICampaign
+    }> = [];
+    const querySnapshot = await this.campaignCollection.ref.where('uid', '==', uid).get()
+
+    for (let i = 0; i < querySnapshot.docs.length; i++) {
+      returnValue.push({ id: querySnapshot.docs[i].id, campaign: querySnapshot.docs[i].data() })
+    }
+
+    return returnValue;
+  }
+
   updateCharacter(id: string, char: ICharacter) {
     return this.characterCollection.doc(id).update(char);
+  }
+
+
+  getDisplayName(character: ICharacter) {
+    let displayName = '';
+    if (character.details.characterName.length > 0 && character.details.shadowName.length > 0) {
+      displayName = character.details.characterName + ' - ' + character.details.shadowName;
+    }
+    else if (character.details.characterName.length > 0 && character.details.shadowName.length == 0) {
+      displayName = character.details.characterName
+    }
+    else if (character.details.characterName.length == 0 && character.details.shadowName.length > 0) {
+      displayName = character.details.shadowName
+    }
+    return displayName;
   }
 }

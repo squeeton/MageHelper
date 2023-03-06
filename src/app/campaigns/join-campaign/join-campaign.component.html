@@ -1,0 +1,53 @@
+<div class="grid grid-cols-12">
+
+    <div class="col-span-12 text-4xl text-center font-cinzel font-extrabold mt-8">
+        Join A Campaign
+    </div>
+    <div class="col-span-12 text-3xl text-center font-cinzel font-extrabold mt-8 text-red-500">
+        {{this.campaign.name}}
+    </div>
+    
+    <div class="col-span-12 text-2xl text-center font-cinzel font-extrabold mt-8">
+        Join with one of your Characters
+    </div>
+    
+    <!-- Character List -->
+    <div class="col-span-10 col-start-2 grid grid-cols-12 mt-10 bg-zinc-100 p-10 rounded-sm gap-5">
+        <!-- Character Container -->
+        <div
+          class="grid grid-cols-1 col-span-4 drop-shadow-lg rounded-md h-[150px] bg-white"
+          *ngFor="let character of this.characterList"
+        >
+          <div
+            class="grid grid-cols-1 col-span-4 rounded-md h-[150px] bg-white  hover:cursor-pointer hover:shadow-xl "
+            [ngClass]="{'border-red-500 ring-2 ring-red-500 ': character.char == selectedCharacter?.char}"
+            (click)="setCharacter(character.id, character.char)"
+          >
+            <!-- Content -->
+            <div class="grid grid-cols-8 m-auto gap-4 place-items-center">
+              <div class="col-span-2 w-[75px] h-[75px] border border-red-600 grid place-items-center">Char Img</div>
+              <div class="col-span-6 text-2xl text-center font-cinzel font-bold">
+                <p>{{ getDisplayName(character.char) }}</p>
+                <p class="text-xs text-zinc-400">
+                  &nbsp;&nbsp;&nbsp;{{ character.char.details.path }}
+                  <span class="text-black"> - </span>
+                  {{ character.char.details.order }}
+                  <span class="text-black"> - </span>
+                  {{ character.char.details.legacy }}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-4"></div>
+      <button
+        class="col-span-4 text-3xl text-center bg-sky-500 border text-white border-slate-300 rounded-md align-middle drop-shadow-lg my-auto p-2 hover:border-red-700 disabled:opacity-50 disabled:bg-white disabled:border-slate-300 mt-5 font-cinzel"
+        (click)="joinCampaign()"
+        [disabled]="this.selectedCharacter?.char == undefined || wait"
+        [ngClass]="{ 'opacity-50 text-black': this.selectedCharacter?.char == undefined  || wait}"
+      >
+        Join Campaign
+      </button>
+      <div class="col-span-4"></div>
+</div>

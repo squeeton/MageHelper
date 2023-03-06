@@ -1,0 +1,38 @@
+<div>
+  <div class="font-playfair grid grid-cols-12 max-w-screen mx-auto mt-[120px]">
+    <div class="col-span-9 text-4xl flex items-center">
+      <p>New Campaign</p>
+    </div>
+
+    <!-- Character List -->
+    <div class="col-span-12 grid grid-cols-12 mt-10 bg-zinc-100 p-10 rounded-sm gap-5">
+      <div class="col-span-12 text-2xl text-center">Name</div>
+      <div class="col-span-12">
+        <input
+          type="text"
+          id="first_name"
+          class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          [(ngModel)]="this.name"
+          placeholder="Capaign Name"
+        />
+      </div>
+      <div class="col-span-12 text-2xl text-center">Description</div>
+      <div class="col-span-12">
+        <textarea rows="4" 
+        class="border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"        
+        [(ngModel)]="this.desc"
+        > </textarea>
+      </div>
+    </div>
+    <div class="col-span-4"></div>
+    <button
+      class="col-span-4 text-3xl text-center border border-slate-300 rounded-md align-middle drop-shadow-lg my-auto p-2 hover:border-red-700 disabled:opacity-50 disabled:bg-white disabled:border-slate-300 mt-5"
+      (click)="createCampaign()"
+      [disabled]="wait"
+      [ngClass]="{ 'opacity-50': wait }"
+    >
+      Create Campaign
+    </button>
+    <div class="col-span-4"></div>
+  </div>
+</div>

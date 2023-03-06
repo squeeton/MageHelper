@@ -44,6 +44,10 @@ import { InfoSpecialtiesComponent } from './infoPaneDetails/info-specialties/inf
 import { InfoAttainmentListComponent } from './infoPaneDetails/attainments/info-attainment-list/info-attainment-list.component';
 import { InfoAttainmentsComponent } from './infoPaneDetails/attainments/info-attainments/info-attainments.component';
 import { InfoSingleAttainmentComponent } from './infoPaneDetails/attainments/info-single-attainment/info-single-attainment.component';
+import { AddCampaignComponent } from './campaigns/add-campaign/add-campaign.component';
+import { CampaignListComponent } from './campaigns/campaign-list/campaign-list.component';
+import { CampaignComponent } from './campaigns/campaign/campaign.component';
+import { JoinCampaignComponent } from './campaigns/join-campaign/join-campaign.component';
 
 @NgModule({
   declarations: [
@@ -80,7 +84,11 @@ import { InfoSingleAttainmentComponent } from './infoPaneDetails/attainments/inf
     InfoSpecialtiesComponent,
     InfoAttainmentListComponent,
     InfoAttainmentsComponent,
-    InfoSingleAttainmentComponent
+    InfoSingleAttainmentComponent,
+    AddCampaignComponent,
+    CampaignListComponent,
+    CampaignComponent,
+    JoinCampaignComponent
   ],
   imports: [
     BrowserModule,

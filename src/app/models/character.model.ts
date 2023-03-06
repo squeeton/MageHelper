@@ -10,6 +10,7 @@ import ITilt from "./tilt.model"
 export interface ICharacter {
     createdWhen:Date,
     uid: string,
+    campaign:string,
     notes:string,
     details: {
         characterName: string,

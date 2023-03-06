@@ -14,6 +14,7 @@
         <!-- primary nav -->
         <div class="hidden md:flex items-center space-x-1">
           <a *ngIf="(auth.isAuthenticated$ | async);" href="characters" class="py-5 px-3 hover:text-zinc-400">Characters</a>
+          <a *ngIf="(auth.isAuthenticated$ | async);" href="campaigns" class="py-5 px-3 hover:text-zinc-400">Campaigns</a>
           <!-- <a href="#" class="py-5 px-3 hover:text-zinc-400">Spells</a> -->
         </div>
       </div>

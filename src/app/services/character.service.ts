@@ -32,6 +32,7 @@ export class CharacterService {
   characterID = '';
   character: ICharacter = {
     createdWhen:new Date(),
+    campaign:'',
     praxis: [],
     uid: "",
     spells: [],
