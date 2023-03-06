@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import ISpell from 'src/app/models/spell.model';
 import { InfoPaneService } from 'src/app/services/info-pane.service';
 import { CharacterService } from 'src/app/services/character.service';
+import IAttainment from 'src/app/models/attainment.model';
 
 @Component({
   selector: 'app-spells-tab',
@@ -43,6 +44,14 @@ export class SpellsTabComponent implements OnInit {
     setTimeout(() => {
       this.info.setInfoPane('Single Spell');
       this.info.spell = spell;
+    }, 10);
+  }
+
+  previewAttainment(attainment: IAttainment) {
+    this.info.destroyPanes();
+    setTimeout(() => {
+      this.info.setInfoPane('Single Attainment');
+      this.info.attainment = attainment;
     }, 10);
   }
 }

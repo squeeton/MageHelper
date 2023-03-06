@@ -79,34 +79,9 @@ export class DataService {
       let character: ICharacter = doc.data() as ICharacter
 
       returnValue = { id: doc.id, char: character };
-      if (returnValue.char != null && returnValue.char.specialities == undefined) {
-        console.log('adding specs');
-        returnValue.char.specialities = {
-          "weaponry": '',
-          "computer": '',
-          "occult": '',
-          "animalKen": '',
-          "intimidation": '',
-          "empathy": '',
-          "drive": '',
-          "subterfuge": '',
-          "survival": '',
-          "streetwise": '',
-          "stealth": '',
-          "larceny": '',
-          "investigation": '',
-          "medicine": '',
-          "academics": '',
-          "science": '',
-          "firearms": '',
-          "socialize": '',
-          "expression": '',
-          "brawl": '',
-          "crafts": '',
-          "athletics": '',
-          "persuasion": '',
-          "politics": ''
-        }
+      if (returnValue.char != null && returnValue.char.attainments == undefined) {
+        console.log('adding attainments');
+        returnValue.char.attainments = [];
       }
       if(returnValue.char != null && returnValue.char.createdWhen == undefined){
         returnValue.char.createdWhen = new Date()
@@ -237,6 +212,7 @@ export class DataService {
         "resolve": 1
       },
       rotes: [],
+      attainments: [],
       familiar: {
         name: '',
         health: 0,

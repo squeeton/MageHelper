@@ -41,6 +41,9 @@ import { InfoSingleConditionComponent } from './infoPaneDetails/conditions/info-
 import { ArcanumMarkerComponent } from './characters/arcanum-marker/arcanum-marker.component';
 import { InfoCastSpellComponent } from './infoPaneDetails/info-cast-spell/info-cast-spell.component';
 import { InfoSpecialtiesComponent } from './infoPaneDetails/info-specialties/info-specialties.component';
+import { InfoAttainmentListComponent } from './infoPaneDetails/attainments/info-attainment-list/info-attainment-list.component';
+import { InfoAttainmentsComponent } from './infoPaneDetails/attainments/info-attainments/info-attainments.component';
+import { InfoSingleAttainmentComponent } from './infoPaneDetails/attainments/info-single-attainment/info-single-attainment.component';
 
 @NgModule({
   declarations: [
@@ -74,7 +77,10 @@ import { InfoSpecialtiesComponent } from './infoPaneDetails/info-specialties/inf
     InfoSingleConditionComponent,
     ArcanumMarkerComponent,
     InfoCastSpellComponent,
-    InfoSpecialtiesComponent
+    InfoSpecialtiesComponent,
+    InfoAttainmentListComponent,
+    InfoAttainmentsComponent,
+    InfoSingleAttainmentComponent
   ],
   imports: [
     BrowserModule,

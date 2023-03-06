@@ -5098,4 +5098,253 @@ export class GlobalRefs {
         { gnosis: 9, ritual: 1, interval: 'Minute', traitMax: 9, yantras: 6, paradox: 5, combinedSpells: 4, obsessions: 4, mana: 50, perTurn: 10, highestArcanumMax: 5, otherArcanumMax: 5 },
         { gnosis: 10, ritual: 1, interval: 'Minute', traitMax: 10, yantras: 6, paradox: 5, combinedSpells: 4, obsessions: 4, mana: 75, perTurn: 15, highestArcanumMax: 5, otherArcanumMax: 5 },
     ];
+
+    get allAttainments() {
+        let t = [
+            {
+                arcanum: 'All',
+                dots: 1,
+                name: 'Counterspell',
+                desc: '     Knowledge of one Arcanum imparts the understanding of how to unravel it. To cast a spell, the mage forms an Imago; to counter a spell, the mage simply needs to disrupt one. The Counterspell Attainment is actually 10 different Attainments, one for each Arcanum. By learning even the most basic principles of an Arcanum, a mage understands how to counter a spell. By the time a spell takes effect and a mage feels it in Peripheral Mage Sight, though, it’s too late to counter; to use this Attainment, the countering mage must see her rival casting in Active Mage Sight.',
+                system: 'Counterspell is a Clash of Wills (see p. 117), pitting the acting mage’s Gnosis + Arcanum against the countering mage’s Gnosis + Arcanum. A mage can attempt to counter any theory, counter the spell of a Master. Countering the spell of a mage with a higher rating in the target Arcanum, however, requires that the player spend a point of Mana. Counterspell requires an instant action. If the mage is employing Active Mage Sight (see p. 90), she can attempt to counter a spell of the appropriate Arcanum in combat, regardless of her position in the Initiative order, provided she has not used her action yet.'
+            },
+            {
+                arcanum: 'Death',
+                dots: 2,
+                name: 'Eyes of the Dead',
+                desc: '     The mage can see ghosts and souls in Twilight when using Active Mage Sight with Death. Her Peripheral Mage Sight reacts to even the passive presence of ghosts.',
+                system: 'The mage detects ghosts and deathly Twilight phenomena with her Periphery, and can automatically see souls and ghosts in Twilight with her Death Sight. If a ghost is using a power to hide, it provokes a Clash of Wills. With the expenditure of one point of Mana, the mage can interact with ghosts for a scene. She can speak with them, touch them, and even strike them. However, this renders her vulnerable to their attentions, as well.'
+            },
+            {
+                arcanum: 'Fate',
+                dots: 2,
+                name: 'Conditional Duration',
+                desc: '     The mage can, as well as assigning Duration with a spell factor, create a condition under which the spell ceases to function. Doing so can increase the Duration of a spell, although the mage must still spend Mana and a Reach if Duration becomes indefinite. The more improbable the condition, the smaller the bonus to Duration. Some mages use the Conditional Duration to levy curses designed to teach a target a lesson (“You will suffer boils on your hands until you dirty your hands helping another out of kindness.”), while others employ this Attainment tactically (“This floor will vanish the second I snap this glass rod.”).',
+                system: 'Spend a point of Mana to add a Conditional Duration to a spell. Doing so adds factors to the spell’s Duration based on the nature of the condition. \n     An improbable condition (one that is unlikely to happen given current conditions) adds a level of Duration \n     An infrequent condition (one that will eventually happen, but does not happen often on its own) adds two levels of Duration \n     A common condition (one that will almost certainly happen in the near future) adds three levels of Duration. \n     When the condition is met, the spell ends regardless of how much Duration remains.'
+            },
+            {
+                arcanum: 'Forces',
+                dots: 2,
+                name: 'Precise Force',
+                desc: '     The mage understands the intricacies of Forces to such a degree that she can optimize their intentional application, perfectly directing her energy when striking an object with a mundane  attack or spell that involves a physical projectile.',
+                system: 'If the mage has a full turn to calculate her action, she can take the 9-Again quality on the roll. If she’s applying force to  a stationary object, she can ignore two points of Durability, and a successful hit automatically causes two additional Structure damage. Against a stationary, armored target, this strike destroys (and ignores) 1/1 armor if successful. This Attainment doesn’t work against anything moving faster than a casual walk.'
+            },
+            {
+                arcanum: 'Life',
+                dots: 2,
+                name: 'Improved Pattern Restoration',
+                desc: '     All mages can spend Mana to heal wounds, but an Apprentice of Life can use that Mana more efficiently, healing more or more serious wounds with the same amount of energy. In addition, Scouring her Pattern for Mana becomes easier and less detrimental.',
+                system: 'Instead of each bashing or lethal wound costing three points of Mana, the mage can heal bashing damage at a rate of one wound per point of Mana, and lethal damage at a rate of one wound per two points of Mana. In addition, if the mage Scours a Physical Attribute, any derived traits based on that Attribute are not affected (for instance, the mage can Scour a dot of Strength without losing a point of Speed).'
+            },
+            {
+                arcanum: 'Matter',
+                dots: 2,
+                name: 'Permanence',
+                desc: '     Changing an object’s nature and properties is easier than changing the nature of a living being. An Apprentice of Matter need simply make a small investment of energy to an object to make any Matter spell’s effects long-lasting.',
+                system: 'The character may spend one Mana instead of using a Reach to use the Advanced Duration spell factor of a spell with Matter as its highest Arcanum.'
+            },
+            {
+                arcanum: 'Mind',
+                dots: 2,
+                name: 'Mind’s Eye',
+                desc: '     The mage can see Goetia, other Astral entities, and beings using supernatural powers to project out of their bodies in Twilight when using Active Mage Sight with Mind. Her Peripheral Mage Sight reacts to even the passive presence of such entities.',
+                system: 'The mage detects Goetia and Mental Twilight phenomena with her Periphery, and can automatically see Goetia and projecting beings in Twilight with her Mind Sight. If a Goetia is using a power to hide, it provokes a Clash of Wills. With the expenditure of one point of Mana, the mage can interact with Goetia for a scene. She can speak with them, touch them, and even strike them. However, this renders her vulnerable to their attentions, as well.'
+            },
+            {
+                arcanum: 'Prime',
+                dots: 2,
+                name: 'Universal Counterspell',
+                desc: '     An Apprentice of Prime understands the formation of spells and the creation of an Imago well enough to attack it on a direct, metaphysical level, allowing her a great deal more defensive capability.',
+                system: 'The mage may use Counterspell on any Awakened spell. The player rolls Gnosis + Prime when the character does not know the Arcanum used, or when this would be a higher dice pool than the appropriate Arcanum. The mage may also spend a point of Mana to Counter a spell’s lowest Arcanum rather than its primary Arcanum. For example, a mage with this Attainment Countering a Fate 4, Space 2 spell may pay a point of Mana to roll the Clash of Wills against Gnosis + Space instead of Gnosis + Fate.'
+            },
+            {
+                arcanum: 'Space',
+                dots: 2,
+                name: 'Sympathetic Range',
+                desc: '     An Apprentice of Space can cast spells using her sympathy to a subject she cannot see. The mage requires a sympathetic connection to the subject, and a Yantra symbolizing that subject to use as a focus for the spell.\n     To use this Attainment, the mage must be casting a spell at sensory range, use a sympathy Yantra, and spend one Mana. The spell is Withstood by the fragility of the sympathetic connection (p.173), between the mage and her subject, but if the mage does not know the sympathetic name of the subject the Withstand level increases by one.',
+                system: ''
+            },
+            {
+                arcanum: 'Spirit',
+                dots: 2,
+                name: 'Spirit Eyes',
+                desc: '     The mage can see spirits in Twilight when using Active Mage Sight with Spirit. Her Peripheral Mage Sight reacts to even the passive presence of such entities.',
+                system: 'The mage detects spiritual Twilight phenomena with her Periphery, and can automatically see spirits and projecting beings in Twilight with her Spirit Sight. If a spirit is using a power to hide, it provokes a Clash of Wills. With the expenditure of one point of Mana, the mage can interact with spirits for a scene. She can speak with them, touch them, and even strike them. However, this renders her vulnerable to their attentions, as well.'
+            },
+            {
+                arcanum: 'Time',
+                dots: 2,
+                name: 'Temporal Sympathy',
+                desc: '     Temporal Sympathy allows a mage to cast a Time spell at the past of a subject. The mage must be casting a spell on the subject as it exists now, cast at sensory range, use a sympathy Yantra, and spend one Mana. The spell is Withstood by the fragility of the temporal sympathy (p. 186) between the mage and her subject, plus one Withstand level if the mage does not know the sympathetic name of the subject. It is possible to combine this Attainment with Sympathetic Range to cast on a subject both in the past and at a distance beyond the sensory by paying to activate both Attainments, but unlike Sympathetic Range, Temporal Sympathy can only be used on Time spells that call for it and other spells Combined with them.',
+                system: ''
+            },
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            {
+                arcanum: 'Death',
+                dots: 2,
+                name: 'Death Armor',
+                desc: '     Death Armor causes a field of entropy around the character, causing her body to react to injury almost like one of the undead.\n     Death Armor downgrades all lethal damage from kinetic attacks (bullets, claws, rocks, etc.) to bashing. A mage using Death Armor does not roll to stay conscious once her Health track is filled with damage.',
+                system: ''
+            },
+            {
+                arcanum: 'Fate',
+                dots: 2,
+                name: 'Fate Armor',
+                desc: '    Fate Armor comes from incredible luck — attacks miss, the character trips at just the right moment to avoid a swinging fist, a knife glances off the button on her coat, and so forth.\n     Fate Armor adds the character’s Fate rating to her Defense. In addition, Fate Armor allows the character to apply her Defense to firearms attacks. If the character successfully Dodges an opponent’s attack, the player can spend a point of Mana to add the character’s Fate dots as a weapon rating on the mage’s next physical attack on that target. This bonus must be used by the mage’s next action or it is lost.',
+                system: ''
+            },
+            {
+                arcanum: 'Forces',
+                dots: 2,
+                name: 'Forces Armor',
+                desc: '     Forces Armor disperses the energy of attacks before they can reach the mage, much like a force field.\n     Forces Armor applies the mage’s full Forces rating as general armor, applicable against all damaging physical attacks and the automatic damage from fire and electricity. It has no effect on mental or psychic attacks',
+                system: ''
+            },
+            {
+                arcanum: 'Life',
+                dots: 2,
+                name: 'Life Armor',
+                desc: '     Life Armor heightens the combat instincts of the mage and prepares her body to shrug off injuries.\n     Life Armor adds half the character’s Life rating (round up) as both general armor and a bonus to Defense. Use the higher of the character’s Wits and Dexterity as Defense, rather than the lower.',
+                system: ''
+            },
+            {
+                arcanum: 'Matter',
+                dots: 2,
+                name: 'Matter Armor',
+                desc: '     Matter Armor changes the properties of the matter surrounding the mage to protect her; her clothes solidify to repel a fist, a bullet softens to lessen the impact, or ambient moisture condenses to quench a fireball.\n     Matter Armor applies the mage’s full Matter rating as general armor, applicable against all damaging physical attacks. It is immune to Armor Piercing. Matter Armor has no effect on mental or psychic attacks.',
+                system: ''
+            },
+            {
+                arcanum: 'Mind',
+                dots: 2,
+                name: 'Mind Armor',
+                desc: '     Mind Armor causes minute doubt and hesitations in the mind of an enemy as to where the mage is and how best to hit him. This allows the mage to be highly effective at dodging incoming attacks, but provides no protection against threats with no cognition to affect (explosions, natural disasters, automatons).\n     Mind Armor adds the character’s Mind Arcanum to her Defense. In addition, if the mage Dodges a target’s attack, the player can spend a point of Mana to cause the target to gain the Beaten Down Tilt (p. 319); the target just doesn’t want to continue the fight. A supernatural being can contest this with  Clash of Wills.',
+                system: ''
+            },
+            {
+                arcanum: 'Prime',
+                dots: 2,
+                name: 'Prime Armor',
+                desc: '     Prime Armor does not protect the mage from mundane attacks. Instead, it protects the mage from incoming magical attacks, including the damaging spells of other Awakened, but also any supernatural effect that deals direct damage.\n     Prime Armor reduces the damage of all wholly supernatural attacks by the character’s Prime dots. For example, it will defend against an Aimed damaging spell or a bolt of energy shot at the character, but not a werewolf’s claws.',
+                system: ''
+            },
+            {
+                arcanum: 'Space',
+                dots: 2,
+                name: 'Space Armor',
+                desc: '     The mage makes tiny changes in the fabric of space, moving attacks away from her.\n     Space Armor adds character’s Space rating to her Defense. The character also applies her Defense to firearms attacks. In addition, if the character successfully Dodges an attack, the player can spend one point of Mana to redirect the attack to another applicable target. The attack hits with successes equal to the mage’s Space Arcanum rating.',
+                system: ''
+            },
+            {
+                arcanum: 'Spirit',
+                dots: 2,
+                name: 'Spirit Armor',
+                desc: '     The character cloaks herself in ephemeral armor, protecting the character from any attack stemming from Twilight, and slowing the force of physical attacks.\n     Spirit Armor downgrades lethal damage from kinetic attacks (bullets, claws, rocks, etc.) and the attacks of ephemeral entities to bashing.',
+                system: ''
+            },
+            {
+                arcanum: 'Time',
+                dots: 2,
+                name: 'Time Armor',
+                desc: '     Time Armor speeds or slows time in the mage’s area, allowing her to move out of the way of incoming attacks.\n     Time Armor adds the character’s Time rating to her Defense. Time Armor also allows the character to apply her Defense to Firearms attacks. In addition, if the character successfully Dodges an attack, the player can spend a point of Mana to reduce the attacker’s Initiative rating by the mage’s Time Arcanum dots for the remainder of the scene.',
+                system: ''
+            },
+            {
+                arcanum: 'All',
+                dots: 3,
+                name: 'Targeted Summoning',
+                desc: '     With three dots in an Arcanum, a mage can add greater specificity when summoning a Supernal being (p. 94). All Supernal beings have a primary Arcanum, defined by their home Realm and the type of being (manifest or recondite). They can have other Arcana, however, and a mage using this Attainment can narrow her summoning to Supernal beings with particular powers.',
+                system: 'The mage spends one additional Mana during the summoning, and specifies a second Arcanum for the target upernal being. The primary Arcanum must remain one of the mage’s two Path Ruling Arcana.'
+            },
+            {
+                arcanum: 'Death',
+                dots: 4,
+                name: 'Inviolate Soul',
+                desc: '     The soul of an Adept of Death is almost impossible to affect, let alone harm or dislodge. The mage can reflexively repel deleterious magic that will or could harm her soul.',
+                system: 'The mage can reflexively use this Attainment under the following circumstances:  \n     • Her soul is being tampered with or attacked. \n     • Something attempts to alter or influence her Nimbus or aura. \n     • Anything attempts to possess her. \n     The mage is immediately aware when one of the above circumstances applies, and may protect herself by spending a point of Mana. The character enters a Clash of Wills with the intruding power, using her Gnosis + Death.'
+            },
+            {
+                arcanum: 'Fate',
+                dots: 4,
+                name: 'Unbound Fate',
+                desc: '     A mage with this level of proficiency with the intricacies of Fate has a sixth sense for powers intended to usurp control of his own destiny. The mage can reflexively repel deleterious magic that will or could harm her fate. She can resist falling under the sway of a magical oath, for example, or shrug off psychic control.',
+                system: 'The mage can reflexively use this Attainment under the following circumstances: \n     • She is being forcibly bound into a magical oath, contract, or geas. \n     • A supernatural compulsion to do something she does not wish to do is directed at her. \n     • A supernatural effect is changing her destiny. \n     The mage is immediately aware when one of the above circumstances applies, and may protect herself by spending a point of Mana. The character enters a Clash of Wills with the intruding power, using her Gnosis + Fate.'
+            },
+            {
+                arcanum: 'Forces',
+                dots: 4,
+                name: 'Environmental Immunity',
+                desc: '     Wind, fire, extreme cold, and lightning — the forces of nature are largely under the command of the Adept of Forces, and she can ignore them with near impunity.',
+                system: 'The player spends a point of Mana. The character is thereafter immune to the effects of Environmental Tilts and Extreme Environments (p. 231 and 224, respectively), for the rest of the scene. Note that this Attainment does not protect the mage from Forces spells aimed at her specifically. In such cases, the Imago of the spell includes damage to her, and thus she must make a more concerted effort to avoid it (perhaps by using the Counterspell Attainment).'
+            },
+            {
+                arcanum: 'Life',
+                dots: 4,
+                name: 'Body Autonomy',
+                desc: '     The mage’s body is a temple, and cannot be altered, harmed, or affected without her consent. Any incoming magical effect that would change her physical body can be immediately countered. ',
+                system: 'The mage can reflexively use this Attainment under the following circumstances: \n     • She is the target of a supernatural power that would alter her physical body in some way. \n     • She is the target of a supernatural power that would injure her. \n     • She is the target of an attack that would place a Personal Tilt on her (Arm Wrack, Blind, etc.). \n     The mage is immediately aware when one of the above circumstances applies, and may protect herself by spending a point of Mana. The character enters a Clash of Wills with the intruding power, using her Gnosis + Life.'
+            },
+            {
+                arcanum: 'Matter',
+                dots: 4,
+                name: 'Durability Control',
+                desc: '     The mage can shift the relative material strength or weakness of any object she touches, making it more easily broken or much tougher than its components would indicate.',
+                system: 'The mage touches the target object; the player spends a point of Mana. The character can raise or lower the object’s Durability by her dots in Matter. The change lasts for the rest of the scene, so the mage can let go of the object once she shifts its Durability.'
+            },
+            {
+                arcanum: 'Mind',
+                dots: 4,
+                name: 'Intuitive Leap',
+                desc: '     An Adept of Mind possesses a keen understanding of social responses and cues, as well as the ability to think quickly enough to eviscerate opponents in debates or find exactly the right wording to garner support.',
+                system: 'The player can spend a point of Mana whenever she rolls three or more successes on a Social or Mental roll. That roll is considered an exceptional success, meaning that the player can place a Condition on a subject.'
+            },
+            {
+                arcanum: 'Prime',
+                dots: 4,
+                name: 'Imbue Item',
+                desc: '     The mage can infuse an item with magic, creating an Imbued Item. Imbued items are granted a single spell. In effect, whoever wields the imbued item gains the benefits of its spell, even though she did not necessarily cast it. See the Imbued Item Merit, p. 102. \n     The mage can imbue an item with any spell she is capable of casting. Imbued items retain their magic indefinitely; a spell cast using an imbued item might run out, but the imbued item itself does not. Attainments may only be included if they modify a spell; for example, mages can imbue items with spells using Sympathetic Range, but may not imbue an item with Mage Armor or the ability to create Rotes. \n     The spell imbued into an item remains in the item’s creator’s spell control, even if the item only casts that spell when activated. If an imbued item casts its spell multiple times, however, it still only takes up one spell control “slot.” Most mages relinquish spells after they have imbued them (see p.118), but if the mage retains control over an item’s spell, she may alter its spell factors when the item casts it, and even cancel it as though she cast it herself. By spending Mana equal to the item’s rating, a mage can destroy an imbued item she retains spell control over, no matter where it is.',
+                system: 'Check Rules for item creation on p.196'
+            },
+            {
+                arcanum: 'Space',
+                dots: 4,
+                name: 'Everywhere',
+                desc: '     An Adept of Space can spread the influence of her magic over a large area with very little effort.',
+                system: 'The character may spend one Mana instead of using a Reach to use the Advanced Scale factor of a spell.'
+            },
+            {
+                arcanum: 'Spirit',
+                dots: 4,
+                name: 'Honorary Rank',
+                desc: '     An Adept of Spirit is sufficiently in control of her own interactions with ephemera that she, while still never a native, is at least not a stranger to the Shadow. Spirits react to her presence with respect rather than naked hostility.',
+                system: 'The character has an “honorary” spirit Rank equal to her dots in Spirit. Spirits sense her Rank as though she were a spirit, and her Physical attacks count as banes to spirits two Ranks or more below her as described on p. 256. She may spend a point of Mana to reduce a spirit’s Doors against her Social maneuvering actions by one.'
+            },
+            {
+                arcanum: 'Time',
+                dots: 4,
+                name: 'Time in a Bottle',
+                desc: '     An Adept of Time can cast spells in seconds that would take other mages hours.',
+                system: 'The character may spend one Mana instead of using a Reach to use instant casting time for a spell.'
+            },
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            //DSDFASDFASDFSDFSDFSDFSDFSEDF
+            {
+                arcanum: 'All',
+                dots: 5,
+                name: 'Create Rote',
+                desc: '     Masters of any Arcanum can translate an improvised spell into a Rote (Rotes and the mechanics for using them are described on p. 112). Creating a Rote requires Mastery of the Arcanum in question — the mage needs to know the Arcanum’s most advanced principles before being able to codify a spell into a Rote. Masters often include personal flourishes in their Rotes, and so is it sometimes possible to tell which variant of a spell a mage uses based on how she performs a Rote.\n     In order to create a Rote, the mage needs to have cast the spell in question many times and be familiar with the Imago she will use to make the Rote. She then performs it, slowly and deliberately, infusing every gesture and action with magic, until the Rote is solidified and the Imago fixed and perfect in her mind.',
+                system: 'The mage can create a Rote out of any spell she can cast, provided that she has Mastered all of the Arcana to be included. She needs to choose a Skill to encode and fix the Imago in her mind. Doing so is an extended action (Arcanum + the encoded Skill, each roll equals three hours of study and practice, 5 successes required per dot of Arcana involved in the spell). The mage can devote three hours at a time to this working over a period of weeks — the successes need not be accrued sequentially. The player spends one Mana for each roll. The usual rules for failure apply. If the player fails one of these rolls, the character must either break off the attempt or take a Condition, which cannot resolve until the Rote is complete or the mage gives up.\n     Once the character has mastered the Imago, the player spends a point of Willpower and an Arcane Experience, and the Rote is complete. The character can then teach it to other mages, or use the Prime 1 spell Scribe Grimoire (p. 166) to write it down and allow others to cast it.'
+            },
+        ]
+        return t;
+    }
+
 }

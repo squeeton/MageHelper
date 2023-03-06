@@ -9,6 +9,7 @@ import IMeritRef from '../models/meritRef.model';
 import IMerit from '../models/merit.model';
 import ITilt from '../models/tilt.model';
 import ICondition from '../models/condition.model';
+import IAttainment from '../models/attainment.model';
 
 @Injectable({
   providedIn: 'root'
@@ -145,6 +146,7 @@ export class CharacterService {
       "resolve": 1
     },
     rotes: [],
+    attainments: [],
     familiar: {
       name: '',
       health: 0,
@@ -177,6 +179,7 @@ export class CharacterService {
 
   addSpell = false;
   addMerit = false;
+  addAttainment = false;
   addType = '';
   roteSkillAdd = '';
 
@@ -392,6 +395,14 @@ export class CharacterService {
 
   }
 
+  addSingleAttainment(attainment: IAttainment) {
+    this.saveCurrentToBuffer(this.character);
+
+    let x = this.character.attainments;
+    x.push(attainment);
+
+  }
+
   removeRote(index: number) {
     this.saveCurrentToBuffer(this.character);
 
@@ -404,6 +415,13 @@ export class CharacterService {
 
     if (this.character.praxis[index]) {
       this.character.praxis.splice(index, 1);
+    }
+  }
+  removeAttainment(index: number) {
+    this.saveCurrentToBuffer(this.character);
+
+    if (this.character.attainments[index]) {
+      this.character.attainments.splice(index, 1);
     }
   }
   removeMerit(index: number) {

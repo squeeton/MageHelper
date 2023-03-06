@@ -1,0 +1,13 @@
+
+<div class="grid grid-cols-12 bg-zinc-700/80 hover:text-red-500 hover:cursor-pointer hover:bg-zinc-800/80 "
+(click)="expandItem()">
+  <div class="col-span-1 grid place-items-center h-[25px]"></div>
+  <div class="col-span-10 grid place-items-center h-[25px]">
+    {{ attainment.name }}&nbsp; ({{ attainment.arcanum }} &nbsp; {{ this.dotDisplay(attainment.dots) }}&nbsp;)
+  </div>
+  <div class="col-span-1 grid place-items-center h-[25px]"></div>
+</div>
+<!-- Full Description *ngIf="!loading;"-->
+<div class="grid col-span-12 text-white"  *ngIf="!this.descriptionHidden">
+  <app-info-single-attainment [attainment]="attainment"></app-info-single-attainment>
+</div>

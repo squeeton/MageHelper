@@ -1,3 +1,4 @@
+import IAttainment from "./attainment.model"
 import ICondition from "./condition.model"
 import IFamiliar from "./familiar.model"
 import IMerit from "./merit.model"
@@ -127,6 +128,7 @@ export interface ICharacter {
     spells: Array<ISpell>,
     rotes: Array<IRote>,
     praxis: Array<ISpell>,
+    attainments: Array<IAttainment>,
     tilts: Array<ITilt>,
     conditions: Array<ICondition>,
     familiar: IFamiliar

@@ -1,0 +1,27 @@
+<div class="col-span-12 bg-zinc-800/80 shadow-xl grid place-items-center font-playfair">
+    <div class="grid grid-cols-12 m-5">
+      <div class="col-span-1 grid place-items-center font-cinzel border-b border-red-500">
+      </div>
+      <div class="col-span-10 grid place-items-center font-cinzel border-b border-red-500">
+        <strong>{{ attainment.name }}&nbsp; ({{ attainment.arcanum }} &nbsp; {{ this.dotDisplay(attainment.dots) }}&nbsp;)</strong>
+      </div>
+      <div class="col-span-1 grid place-items-center font-cinzel border-b border-red-500">
+        <span
+          class="material-symbols-outlined text-3xl grid place-items-center hover:cursor-pointer hover:text-red-500"
+          title="Add Rote"
+          [ngClass]="{ hidden: !char.addAttainment}"
+          (click)="char.addSingleAttainment(attainment)"
+        >
+          add_circle
+        </span>
+      </div>
+      <div class="col-span-12  whitespace-pre-wrap">
+        {{ attainment.desc }}
+      </div>
+      <div class="col-span-12 border-b border-red-500 whitespace-pre-wrap" *ngIf="attainment.system != ''">      
+        <br>
+       <p><b>System: </b>{{ attainment.system }}</p> 
+      </div>
+    </div>
+  </div>
+  

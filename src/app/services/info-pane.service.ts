@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import IAttainment from '../models/attainment.model';
 import ICondition from '../models/condition.model';
 import IMeritRef from '../models/meritRef.model';
 import ISpell from '../models/spell.model';
@@ -25,9 +26,10 @@ export class InfoPaneService {
     "description": "",
     "arcanum": ""
   };
+  attainment: IAttainment = { arcanum: '', dots: 0, name: '', desc: '', system: '' };
   merit: IMeritRef = { name: '', type: '', variableCost: false, minCost: null, maxCost: 0, prerequisite: '', effect: '' };
   tilt: ITilt = { name: '', preDesc: '', effect: ' ', cause: ' ', end: ' ' };
-  condition: ICondition = {name: '', effect: '', exampleSkills:'', possibleSources:'', resolution:'', beat: ''};
+  condition: ICondition = { name: '', effect: '', exampleSkills: '', possibleSources: '', resolution: '', beat: '' };
   meritDots = 0;
   index = 0;
 
