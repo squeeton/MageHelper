@@ -83,6 +83,35 @@ async getUserType(uid:string){
         console.log('adding campaign');
         returnValue.char.campaign = '';
       }
+      if (returnValue.char != null && returnValue.char.specialities == undefined) {
+        console.log('adding specialities');
+        returnValue.char.specialities = {
+          "weaponry": '',
+          "computer": '',
+          "occult": '',
+          "animalKen": '',
+          "intimidation": '',
+          "empathy": '',
+          "drive": '',
+          "subterfuge": '',
+          "survival": '',
+          "streetwise": '',
+          "stealth": '',
+          "larceny": '',
+          "investigation": '',
+          "medicine": '',
+          "academics": '',
+          "science": '',
+          "firearms": '',
+          "socialize": '',
+          "expression": '',
+          "brawl": '',
+          "crafts": '',
+          "athletics": '',
+          "persuasion": '',
+          "politics": ''
+        };
+      }
       if (returnValue.char != null && returnValue.char.createdWhen == undefined) {
         returnValue.char.createdWhen = new Date()
       }
