@@ -34,10 +34,13 @@ export class DataService {
     let userID = firebase.auth().currentUser;
     if (userID) {
       this.uid = userID.uid;
+      this.getUserType(userID.uid);
     }
 
   }
   uid: string = '';
+  userType: boolean = false;
+
   public spellsCollection: AngularFirestoreCollection<ISpell>;
   public characterCollection: AngularFirestoreCollection<ICharacter>;
   public campaignCollection: AngularFirestoreCollection<ICampaign>;
@@ -49,29 +52,14 @@ export class DataService {
     //documents spells json
   }
 
-  async getAllSpells() {
-
-
-    const query = this.spellsCollection.ref
-      .orderBy('arcanum', 'asc')
-      .orderBy('dots', 'asc')
-      .orderBy('name', 'asc');
-
-    // const spalls = await query.get();
-
-    // let allSpells = []
-    // spalls.docs.map(doc => (allSpells.push(doc.data())));
-
-
-    const events = query.get().then((querySnapshot) => {
-      const tempDoc = querySnapshot.docs.map((doc) => {
-        return { id: doc.id, ...doc.data() }
-      })
-    })
-
-
-
+async getUserType(uid:string){
+  const userRef = this.userCollection.ref.doc(uid);
+  const doc = await userRef.get();
+  if(doc.data()){
+    this.userType = !!(doc.data()?.premium);
   }
+}
+
 
   async getCharacter(charID: string) {
 

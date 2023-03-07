@@ -43,8 +43,9 @@ export class CharacterListComponent implements OnInit, OnDestroy {
   }
 
   setCharacter(id: string, character: ICharacter) {
-    this.char.characterID = id;
-    this.char.character = character;
+    console.log(this.db.userType)
+    // this.char.characterID = id;
+    // this.char.character = character;
   }
 
 
@@ -91,7 +92,7 @@ export class CharacterListComponent implements OnInit, OnDestroy {
   }
 
   async addNewCharacter() {
-    if (this.characterList.length < 4) {
+    if (this.characterList.length < 4 || this.db.userType) {
       this.wait = true;
       let newID = await this.db.newCharacter();
       

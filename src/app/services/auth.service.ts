@@ -76,7 +76,8 @@ export class AuthService {
     }
     await this.usersCollection.doc(userCred.user?.uid).set({
       name: userData.name,
-      email: userData.email
+      email: userData.email,
+      premium:false
     });
 
     await userCred.user.updateProfile({
