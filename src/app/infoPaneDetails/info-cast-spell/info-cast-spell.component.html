@@ -4,11 +4,15 @@
     <div class="col-span-1"></div>
     <div
       class="col-span-2 rounded-full w-[50px] h-[50px] grid place-items-center hover:cursor-pointer"
-      [ngClass]="this.currentTab == 'Spell Overview' ? 'bg-red-500' : 'bg-zinc-500'"
+      [ngClass]="
+        this.currentTab == 'Spell Overview' ? 'bg-red-500' : 'bg-zinc-500'
+      "
       title="Spell Overview"
       (click)="setTab('Spell Overview')"
     >
-      <span class="material-symbols-outlined text-3xl"> temp_preferences_custom </span>
+      <span class="material-symbols-outlined text-3xl">
+        temp_preferences_custom
+      </span>
     </div>
     <div
       class="col-span-2 rounded-full w-[50px] h-[50px] grid place-items-center hover:cursor-pointer"
@@ -68,52 +72,93 @@
 
   <!-- Dice Pools -->
   <div class="col-span-12 grid grid-cols-12 pb-4">
-    <div class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center align-middle">
-      Reach: {{ reach }}/{{ freeReach }}
-    </div>
-    <div class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center align-middle">
-      Dice Pool: {{ dicePool }}
-    </div>
-    <div class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center align-middle">Mana: {{ mana }}</div>
     <div
-      *ngIf="paradoxDice > 0"
       class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center align-middle"
     >
-      Paradox: {{ paradoxDesc == "Chance Die" ? paradoxDesc : paradoxDice }}
+      Reach: {{ castConfig.reach }}/{{ castConfig.freeReach }}
     </div>
+    <div
+      class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center align-middle"
+    >
+      Dice Pool: {{ castConfig.dicePool }}
+    </div>
+    <div
+      class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center align-middle"
+    >
+      Mana: {{ castConfig.mana }}
+    </div>
+    <div
+      *ngIf="castConfig.paradoxDice > 0"
+      class="col-span-3 rounded-lg drop-shadow-lg bg-red-500 p-2 m-2 text-center align-middle"
+    >
+      Paradox:
+      {{
+        castConfig.paradoxDesc == "Chance Die"
+          ? castConfig.paradoxDesc
+          : castConfig.paradoxDice
+      }}
+    </div>
+    <span
+      class="col-span-3 p-2 m-2 text-center align-middle hover:cursor-pointer material-symbols-outlined text-2xl"
+      [ngClass]="{ filled: this.isFavorite }"
+      title="Favorite Configuration"
+      (click)="addToFavorites()"
+      >kid_star
+    </span>
   </div>
 
   <!-- Overview -->
-  <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.currentTab !== 'Spell Overview' }">
+  <div
+    class="col-span-12 grid grid-cols-12"
+    [ngClass]="{ hidden: this.currentTab !== 'Spell Overview' }"
+  >
     <!-- Constants -->
     <div class="col-span-12">
       <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-        <div class="col-span-9 text-xl font-cinzel grid place-items-center">Additional Spellcasting Dice?</div>
+        <div class="col-span-9 text-xl font-cinzel grid place-items-center">
+          Additional Spellcasting Dice?
+        </div>
         <input
-          class="col-span-3 px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+          class="col-span-3 px-3 py-2 bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
           type="number"
-          [(ngModel)]="additionalDice"
+          [(ngModel)]="castConfig.additionalDice"
           (ngModelChange)="updatePools()"
         />
-        <div class="col-span-12 text-sm text-zinc-400 text-center">From Fate magic, Merits, Artifacts, etc.</div>
+        <div class="col-span-12 text-sm text-zinc-400 text-center">
+          From Fate magic, Merits, Artifacts, etc.
+        </div>
       </div>
 
       <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-        <div class="col-span-9 text-xl font-cinzel grid place-items-center">Spend Willpower</div>
+        <div class="col-span-9 text-xl font-cinzel grid place-items-center">
+          Spend Willpower
+        </div>
         <div class="col-span-3">
           <label class="switch">
-            <input type="checkbox" [(ngModel)]="this.spendWillpower" (ngModelChange)="updatePools()" />
+            <input
+              type="checkbox"
+              [(ngModel)]="this.castConfig.spendWillpower"
+              (ngModelChange)="updatePools()"
+            />
             <span class="slider round"></span>
           </label>
         </div>
-        <div class="col-span-12 text-sm text-zinc-400 text-center">Adds +3 dice</div>
+        <div class="col-span-12 text-sm text-zinc-400 text-center">
+          Adds +3 dice
+        </div>
       </div>
 
       <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-        <div class="col-span-9 text-xl font-cinzel grid place-items-center">Casting from Grimoire?</div>
+        <div class="col-span-9 text-xl font-cinzel grid place-items-center">
+          Casting from Grimoire?
+        </div>
         <div class="col-span-3">
           <label class="switch">
-            <input type="checkbox" [(ngModel)]="this.grimoire" (ngModelChange)="updatePools()" />
+            <input
+              type="checkbox"
+              [(ngModel)]="this.castConfig.grimoire"
+              (ngModelChange)="updatePools()"
+            />
             <span class="slider round"></span>
           </label>
         </div>
@@ -121,11 +166,13 @@
 
       <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
         <div class="col-span-12 grid grid-cols-12 p-3">
-          <div class="col-span-9 text-xl font-cinzel grid place-items-center">Active Spells</div>
+          <div class="col-span-9 text-xl font-cinzel grid place-items-center">
+            Active Spells
+          </div>
           <input
-            class="col-span-3 font-playfair  px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            class="col-span-3 font-playfair px-3 py-2 bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             type="number"
-            [(ngModel)]="activeSpells"
+            [(ngModel)]="castConfig.activeSpells"
             (ngModelChange)="updatePools()"
           />
         </div>
@@ -142,15 +189,20 @@
       >
         Caster Info Override
       </div>
-      <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.collapsible.caster }">
+      <div
+        class="col-span-12 grid grid-cols-12"
+        [ngClass]="{ hidden: this.collapsible.caster }"
+      >
         <div class="col-span-12 grid grid-cols-12 p-3">
-          <div class="col-span-8 text-xl font-cinzel grid place-items-center">Highest Arcanum Used:</div>
+          <div class="col-span-8 text-xl font-cinzel grid place-items-center">
+            Highest Arcanum Used:
+          </div>
           <div class="col-span-4 grid place-items-center">
             <select
               name="highest-arcanum"
               id="highest-arcanum"
               class="font-playfair mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
-              [(ngModel)]="this.highestArcanum"
+              [(ngModel)]="this.castConfig.highestArcanum"
               (ngModelChange)="updatePools()"
             >
               <option value="death">Death</option>
@@ -168,10 +220,16 @@
         </div>
 
         <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-          <div class="col-span-9 text-xl font-cinzel grid place-items-center">Is Ruling Arcana?</div>
+          <div class="col-span-9 text-xl font-cinzel grid place-items-center">
+            Is Ruling Arcana?
+          </div>
           <div class="col-span-3">
             <label class="switch">
-              <input type="checkbox" [(ngModel)]="this.rulingArcana" (ngModelChange)="updatePools()" />
+              <input
+                type="checkbox"
+                [(ngModel)]="this.castConfig.rulingArcana"
+                (ngModelChange)="updatePools()"
+              />
               <span class="slider round"></span>
             </label>
           </div>
@@ -179,11 +237,13 @@
 
         <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
           <div class="col-span-12 grid grid-cols-12 p-3">
-            <div class="col-span-8 text-xl font-cinzel grid place-items-center">Gnosis Override</div>
+            <div class="col-span-8 text-xl font-cinzel grid place-items-center">
+              Gnosis Override
+            </div>
             <input
-              class="col-span-4 font-playfair mt-1  px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              class="col-span-4 font-playfair mt-1 px-3 py-2 bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
               type="number"
-              [(ngModel)]="gnosis"
+              [(ngModel)]="castConfig.gnosis"
               (ngModelChange)="updatePools()"
             />
           </div>
@@ -191,16 +251,17 @@
 
         <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
           <div class="col-span-12 grid grid-cols-12 p-3">
-            <div class="col-span-8 text-xl font-cinzel grid place-items-center">Arcanum Override</div>
+            <div class="col-span-8 text-xl font-cinzel grid place-items-center">
+              Arcanum Override
+            </div>
             <input
-              class="col-span-4 font-playfair mt-1  px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              class="col-span-4 font-playfair mt-1 px-3 py-2 bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
               type="number"
-              [(ngModel)]="charArcanaDots"
+              [(ngModel)]="castConfig.charArcanaDots"
               (ngModelChange)="updatePools()"
             />
           </div>
         </div>
-
       </div>
     </div>
     <!-- Spell Info -->
@@ -212,15 +273,20 @@
         Spell Info Override
       </div>
 
-      <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.collapsible.spell }">
+      <div
+        class="col-span-12 grid grid-cols-12"
+        [ngClass]="{ hidden: this.collapsible.spell }"
+      >
         <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-          <div class="col-span-8 text-xl font-cinzel grid place-items-center">Primary Factor:</div>
+          <div class="col-span-8 text-xl font-cinzel grid place-items-center">
+            Primary Factor:
+          </div>
           <div class="col-span-4 grid place-items-center">
             <select
               name="highest-arcanum"
               id="highest-arcanum"
               class="font-playfair mt-1 block w-full px-3 py-2 border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
-              [(ngModel)]="this.primaryFactor"
+              [(ngModel)]="this.castConfig.primaryFactor"
               (ngModelChange)="updatePools()"
             >
               <option value="Potency">Potency</option>
@@ -228,23 +294,33 @@
             </select>
           </div>
           <div class="col-span-12 text-sm text-zinc-400 text-center">
-            The Primary Factor is boosted up to the caster's Arcanum rating without incurring a penalty.
+            The Primary Factor is boosted up to the caster's Arcanum rating
+            without incurring a penalty.
           </div>
         </div>
         <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-          <div class="col-span-3 text-xl font-cinzel grid place-items-center">Rote</div>
-          <div class="col-span-3">
-            <label class="switch">
-              <input type="checkbox" [checked]="this.isRote" (change)="toggleRote()" (ngModelChange)="updatePools()" />
-              <span class="slider round"></span>
-            </label>
+          <div class="col-span-3 text-xl font-cinzel grid place-items-center">
+            Rote
           </div>
-          <div class="col-span-3 text-xl font-cinzel grid place-items-center">Praxis</div>
           <div class="col-span-3">
             <label class="switch">
               <input
                 type="checkbox"
-                [checked]="this.isPraxis"
+                [checked]="this.castConfig.isRote"
+                (change)="toggleRote()"
+                (ngModelChange)="updatePools()"
+              />
+              <span class="slider round"></span>
+            </label>
+          </div>
+          <div class="col-span-3 text-xl font-cinzel grid place-items-center">
+            Praxis
+          </div>
+          <div class="col-span-3">
+            <label class="switch">
+              <input
+                type="checkbox"
+                [checked]="this.castConfig.isPraxis"
                 (change)="togglePraxis()"
                 (ngModelChange)="updatePools()"
               />
@@ -253,16 +329,22 @@
           </div>
 
           <div class="col-span-12 text-sm text-zinc-400 text-center">
-            Praxes only require three successes for an exceptional success, and do not require a Mana if the spell is
-            from a Common or Inferior Arcanum.
+            Praxes only require three successes for an exceptional success, and
+            do not require a Mana if the spell is from a Common or Inferior
+            Arcanum.
           </div>
 
-          <div class="col-span-12 grid grid-cols-12 p-3 m-auto" *ngIf="this.isRote">
-            <div class="col-span-8 text-xl font-cinzel grid place-items-center">Rote Skill Override</div>
+          <div
+            class="col-span-12 grid grid-cols-12 p-3 m-auto"
+            *ngIf="this.castConfig.isRote"
+          >
+            <div class="col-span-8 text-xl font-cinzel grid place-items-center">
+              Rote Skill Override
+            </div>
             <input
-              class="col-span-4 font-playfair mt-1 px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+              class="col-span-4 font-playfair mt-1 px-3 py-2 bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
               type="number"
-              [(ngModel)]="roteSkillDots"
+              [(ngModel)]="castConfig.roteSkillDots"
               (ngModelChange)="updateRoteSkill()"
             />
             <div class="col-span-12 text-sm text-zinc-400 text-center">
@@ -275,9 +357,19 @@
   </div>
 
   <!-- Factors -->
-  <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.currentTab !== 'Factors' }">
+  <div
+    class="col-span-12 grid grid-cols-12"
+    [ngClass]="{ hidden: this.currentTab !== 'Factors' }"
+  >
     <div class="col-span-12 py-4">
-      <ng-container *ngIf="primaryFactor === 'Potency'; then potencyElem; else durationElem"> </ng-container>
+      <ng-container
+        *ngIf="
+          castConfig.primaryFactor === 'Potency';
+          then potencyElem;
+          else durationElem
+        "
+      >
+      </ng-container>
 
       <!-- Potency -->
       <ng-template #potencyElem>
@@ -286,9 +378,17 @@
             class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 border-y border-zinc-300/50 text-center p-2 hover:text-red-500 hover:cursor-pointer"
             (click)="toggleSection('potency')"
           >
-            Potency {{ primaryFactor === "Potency" ? "(Primary Spell Factor)" : "" }}
+            Potency
+            {{
+              castConfig.primaryFactor === "Potency"
+                ? "(Primary Spell Factor)"
+                : ""
+            }}
           </div>
-          <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.potency }">
+          <div
+            class="col-span-12 grid grid-cols-12 px-5"
+            [ngClass]="{ hidden: this.collapsible.potency }"
+          >
             <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -296,11 +396,13 @@
                   type="radio"
                   [value]="1"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 1 &nbsp;(-{{ getPotencyMod(1) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -309,11 +411,13 @@
                   type="radio"
                   [value]="2"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 2 &nbsp;(-{{ getPotencyMod(2) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -322,11 +426,13 @@
                   type="radio"
                   [value]="3"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 3 &nbsp;(-{{ getPotencyMod(3) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -335,11 +441,13 @@
                   type="radio"
                   [value]="4"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 4 &nbsp;(-{{ getPotencyMod(4) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -348,11 +456,13 @@
                   type="radio"
                   [value]="5"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 5 &nbsp;(-{{ getPotencyMod(5) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -361,11 +471,13 @@
                   type="radio"
                   [value]="6"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 6 &nbsp;(-{{ getPotencyMod(6) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -374,11 +486,13 @@
                   type="radio"
                   [value]="7"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 7 &nbsp;(-{{ getPotencyMod(7) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -387,11 +501,13 @@
                   type="radio"
                   [value]="8"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 8 &nbsp;(-{{ getPotencyMod(8) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -400,11 +516,13 @@
                   type="radio"
                   [value]="9"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 9 &nbsp;(-{{ getPotencyMod(9) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -413,11 +531,13 @@
                   type="radio"
                   [value]="10"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 10 &nbsp;(-{{ getPotencyMod(10) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
@@ -426,18 +546,30 @@
                   type="radio"
                   [value]="11"
                   name="potencyValue"
-                  [(ngModel)]="potencyValue"
+                  [(ngModel)]="castConfig.potencyValue"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 11 &nbsp;(-{{ getPotencyMod(11) }} Dice)
               </div>
 
-              <div class="col-span-8 grid place-items-center text-lg font-cinzel mt-4">Advanced Potency</div>
-              <div class="col-span-4 text-base font-cinzel grid place-items-center mt-4">
+              <div
+                class="col-span-8 grid place-items-center text-lg font-cinzel mt-4"
+              >
+                Advanced Potency
+              </div>
+              <div
+                class="col-span-4 text-base font-cinzel grid place-items-center mt-4"
+              >
                 <label class="switch">
-                  <input type="checkbox" [(ngModel)]="this.advancedPotency" (ngModelChange)="updatePools()" />
+                  <input
+                    type="checkbox"
+                    [(ngModel)]="this.castConfig.advancedPotency"
+                    (ngModelChange)="updatePools()"
+                  />
                   <span class="slider round"></span>
                 </label>
               </div>
@@ -456,20 +588,38 @@
             class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 text-center p-2 border-y border-zinc-300/50 hover:text-red-500 hover:cursor-pointer"
             (click)="toggleSection('duration')"
           >
-            Duration {{ primaryFactor === "Duration" ? "(Primary Spell Factor)" : "" }}
+            Duration
+            {{
+              castConfig.primaryFactor === "Duration"
+                ? "(Primary Spell Factor)"
+                : ""
+            }}
           </div>
-          <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.duration }">
+          <div
+            class="col-span-12 grid grid-cols-12 px-5"
+            [ngClass]="{ hidden: this.collapsible.duration }"
+          >
             <!-- Standard -->
             <div
               class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center hover:cursor-pointer"
-              (click)="durationAdvanced = !durationAdvanced; updatePools()"
-              [ngClass]="{ 'opacity-50': durationAdvanced }"
+              (click)="
+                castConfig.durationAdvanced = !castConfig.durationAdvanced;
+                updatePools()
+              "
+              [ngClass]="{ 'opacity-50': castConfig.durationAdvanced }"
             >
-              Standard<span class="material-symbols-outlined text-2xl align-middle">
-                {{ durationAdvanced ? "expand_more" : "expand_less" }}
+              Standard<span
+                class="material-symbols-outlined text-2xl align-middle"
+              >
+                {{
+                  castConfig.durationAdvanced ? "expand_more" : "expand_less"
+                }}
               </span>
             </div>
-            <div class="col-span-12 grid grid-cols-12 p-3" *ngIf="!durationAdvanced">
+            <div
+              class="col-span-12 grid grid-cols-12 p-3"
+              *ngIf="!castConfig.durationAdvanced"
+            >
               <div class="col-span-12 grid grid-cols-12">
                 <div class="col-span-4 grid place-items-center">
                   <input
@@ -477,11 +627,13 @@
                     type="radio"
                     [value]="0"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>1 turn (-0 dice)</p>
                 </div>
               </div>
@@ -492,11 +644,13 @@
                     type="radio"
                     [value]="2"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>2 turns (-2 dice)</p>
                 </div>
               </div>
@@ -507,11 +661,13 @@
                     type="radio"
                     [value]="4"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>3 turns (-4 dice)</p>
                 </div>
               </div>
@@ -522,11 +678,13 @@
                     type="radio"
                     [value]="6"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>5 turns (-6 dice)</p>
                 </div>
               </div>
@@ -537,11 +695,13 @@
                     type="radio"
                     [value]="8"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>10 turns (-8 dice)</p>
                 </div>
               </div>
@@ -552,11 +712,13 @@
                     type="radio"
                     [value]="10"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>20 turns (-10 dice)</p>
                 </div>
               </div>
@@ -567,11 +729,13 @@
                     type="radio"
                     [value]="12"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>30 turns (-12 dice)</p>
                 </div>
               </div>
@@ -582,11 +746,13 @@
                     type="radio"
                     [value]="14"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>40 turns (-14 dice)</p>
                 </div>
               </div>
@@ -597,11 +763,13 @@
                     type="radio"
                     [value]="16"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>50 turns (-16 dice)</p>
                 </div>
               </div>
@@ -612,11 +780,13 @@
                     type="radio"
                     [value]="18"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>60 turns (-18 dice)</p>
                 </div>
               </div>
@@ -627,11 +797,13 @@
                     type="radio"
                     [value]="20"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-8 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
                   <p>70 turns (-20 dice)</p>
                 </div>
               </div>
@@ -640,15 +812,25 @@
             <!-- Advanced -->
             <div
               class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center hover:cursor-pointer"
-              (click)="durationAdvanced = !durationAdvanced; updatePools()"
-              [ngClass]="{ 'opacity-50': !durationAdvanced }"
+              (click)="
+                castConfig.durationAdvanced = !castConfig.durationAdvanced;
+                updatePools()
+              "
+              [ngClass]="{ 'opacity-50': !castConfig.durationAdvanced }"
             >
-              Advanced<span class="material-symbols-outlined text-2xl align-middle">
-                {{ !durationAdvanced ? "expand_more" : "expand_less" }}
+              Advanced<span
+                class="material-symbols-outlined text-2xl align-middle"
+              >
+                {{
+                  !castConfig.durationAdvanced ? "expand_more" : "expand_less"
+                }}
               </span>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 p-3" *ngIf="durationAdvanced">
+            <div
+              class="col-span-12 grid grid-cols-12 p-3"
+              *ngIf="castConfig.durationAdvanced"
+            >
               <div class="col-span-12 grid grid-cols-12">
                 <div class="col-span-2 grid place-items-center">
                   <input
@@ -656,11 +838,13 @@
                     type="radio"
                     [value]="0"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-10 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
                   <p>1 scene/hour (-0 dice)</p>
                 </div>
               </div>
@@ -671,11 +855,13 @@
                     type="radio"
                     [value]="2"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-10 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
                   <p>1 day (-2 dice)</p>
                 </div>
               </div>
@@ -686,11 +872,13 @@
                     type="radio"
                     [value]="4"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-10 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
                   <p>1 week (-4 dice)</p>
                 </div>
               </div>
@@ -701,11 +889,13 @@
                     type="radio"
                     [value]="6"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-10 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
                   <p>1 month (-6 dice)</p>
                 </div>
               </div>
@@ -716,11 +906,13 @@
                     type="radio"
                     [value]="8"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-10 text-base font-cinzel grid place-items-center">
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
                   <p>1 year (-8 dice)</p>
                 </div>
               </div>
@@ -731,12 +923,20 @@
                     type="radio"
                     [value]="10"
                     name="duration"
-                    [(ngModel)]="duration"
+                    [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
                   />
                 </div>
-                <div class="col-span-10 text-base font-cinzel grid place-items-center">
-                  <p>Indefinite <span class="text-xs font-playfair">(+1 Reach & +1 Mana)</span> (-10 dice)</p>
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
+                  <p>
+                    Indefinite
+                    <span class="text-xs font-playfair"
+                      >(+1 Reach & +1 Mana)</span
+                    >
+                    (-10 dice)
+                  </p>
                 </div>
               </div>
             </div>
@@ -752,19 +952,28 @@
         >
           Range
         </div>
-        <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.range }">
+        <div
+          class="col-span-12 grid grid-cols-12 px-5"
+          [ngClass]="{ hidden: this.collapsible.range }"
+        >
           <!-- Standard -->
           <div
             class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center"
-            (click)="rangeAdvanced = !rangeAdvanced; updatePools()"
-            [ngClass]="{ 'opacity-50': rangeAdvanced }"
+            (click)="
+              castConfig.rangeAdvanced = !castConfig.rangeAdvanced;
+              updatePools()
+            "
+            [ngClass]="{ 'opacity-50': castConfig.rangeAdvanced }"
           >
             Standard
             <span class="material-symbols-outlined text-2xl align-middle">
-              {{ rangeAdvanced ? "expand_more" : "expand_less" }}
+              {{ castConfig.rangeAdvanced ? "expand_more" : "expand_less" }}
             </span>
           </div>
-          <div class="col-span-12 grid grid-cols-12 p-3" *ngIf="!rangeAdvanced">
+          <div
+            class="col-span-12 grid grid-cols-12 p-3"
+            *ngIf="!castConfig.rangeAdvanced"
+          >
             <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -772,55 +981,68 @@
                   type="radio"
                   [value]="0"
                   name="range"
-                  [(ngModel)]="range"
+                  [(ngModel)]="castConfig.range"
                   (ngModelChange)="updatePools()"
                 />
               </div>
-              <div class="col-span-8 text-base font-cinzel grid place-items-center">
+              <div
+                class="col-span-8 text-base font-cinzel grid place-items-center"
+              >
                 <p><strong>Standard: </strong>Self/touch or Aimed</p>
               </div>
             </div>
           </div>
           <div
             class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center"
-            (click)="rangeAdvanced = !rangeAdvanced; updatePools()"
-            [ngClass]="{ 'opacity-50': !rangeAdvanced }"
+            (click)="
+              castConfig.rangeAdvanced = !castConfig.rangeAdvanced;
+              updatePools()
+            "
+            [ngClass]="{ 'opacity-50': !castConfig.rangeAdvanced }"
           >
-            Advanced<span class="material-symbols-outlined text-2xl align-middle">
-              {{ rangeAdvanced ? "expand_more" : "expand_less" }}
+            Advanced<span
+              class="material-symbols-outlined text-2xl align-middle"
+            >
+              {{ castConfig.rangeAdvanced ? "expand_more" : "expand_less" }}
             </span>
           </div>
-          <div class="col-span-12 grid grid-cols-12 p-3" *ngIf="rangeAdvanced">
+          <div
+            class="col-span-12 grid grid-cols-12 p-3"
+            *ngIf="castConfig.rangeAdvanced"
+          >
             <div class="col-span-4 grid place-items-center">
               <input
                 class=""
                 type="radio"
                 [value]="0"
                 name="range"
-                [(ngModel)]="range"
+                [(ngModel)]="castConfig.range"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p><strong>Advanced: </strong>Sensory</p>
             </div>
             <div class="col-span-12 grid grid-cols-12 mx-5">
               <div
                 class="col-span-8 grid place-items-center text-sm font-playfair mt-4"
-                [ngClass]="{ 'opacity-50': !rangeAdvanced }"
+                [ngClass]="{ 'opacity-50': !castConfig.rangeAdvanced }"
               >
                 <strong>Sympathetic Range (Space ●●)</strong>
-                Subject can be beyond sensory range. Requires Advanced Range, a sympathy Yantra, and costs +1 Mana.
+                Subject can be beyond sensory range. Requires Advanced Range, a
+                sympathy Yantra, and costs +1 Mana.
               </div>
               <div
                 class="col-span-4 text-base font-cinzel grid place-items-center mt-4"
-                [ngClass]="{ 'opacity-50': !rangeAdvanced }"
+                [ngClass]="{ 'opacity-50': !castConfig.rangeAdvanced }"
               >
                 <label class="switch">
                   <input
                     type="checkbox"
-                    [disabled]="!rangeAdvanced"
-                    [(ngModel)]="this.sympatheticRange"
+                    [disabled]="!castConfig.rangeAdvanced"
+                    [(ngModel)]="this.castConfig.sympatheticRange"
                     (ngModelChange)="updatePools()"
                   />
                   <span class="slider round"></span>
@@ -828,21 +1050,22 @@
               </div>
               <div
                 class="col-span-8 grid place-items-center text-sm font-playfair mt-4"
-                [ngClass]="{ 'opacity-50': !rangeAdvanced }"
+                [ngClass]="{ 'opacity-50': !castConfig.rangeAdvanced }"
               >
                 <strong>Temporal Sympathy (Time ●●) </strong>
-                Cast a spell at subject's past self. Requires Advanced Range, a sympathy Yantra, and costs +1 Mana. Can
-                only be used with Time spells that allow it or spells combined with them.
+                Cast a spell at subject's past self. Requires Advanced Range, a
+                sympathy Yantra, and costs +1 Mana. Can only be used with Time
+                spells that allow it or spells combined with them.
               </div>
               <div
                 class="col-span-4 text-base font-cinzel grid place-items-center mt-4"
-                [ngClass]="{ 'opacity-50': !rangeAdvanced }"
+                [ngClass]="{ 'opacity-50': !castConfig.rangeAdvanced }"
               >
                 <label class="switch">
                   <input
                     type="checkbox"
-                    [disabled]="!rangeAdvanced"
-                    [(ngModel)]="this.temporalRange"
+                    [disabled]="!castConfig.rangeAdvanced"
+                    [(ngModel)]="this.castConfig.temporalRange"
                     (ngModelChange)="updatePools()"
                   />
                   <span class="slider round"></span>
@@ -861,32 +1084,48 @@
         >
           Casting Time
         </div>
-        <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.castTime }">
+        <div
+          class="col-span-12 grid grid-cols-12 px-5"
+          [ngClass]="{ hidden: this.collapsible.castTime }"
+        >
           <!-- Standard -->
           <div
             class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center"
-            (click)="castingAdvanced = !castingAdvanced; updatePools()"
-            [ngClass]="{ 'opacity-50': castingAdvanced }"
+            (click)="
+              castConfig.castingAdvanced = !castConfig.castingAdvanced;
+              updatePools()
+            "
+            [ngClass]="{ 'opacity-50': castConfig.castingAdvanced }"
           >
-            Standard<span class="material-symbols-outlined text-2xl align-middle">
-              {{ castingAdvanced ? "expand_more" : "expand_less" }}
+            Standard<span
+              class="material-symbols-outlined text-2xl align-middle"
+            >
+              {{ castConfig.castingAdvanced ? "expand_more" : "expand_less" }}
             </span>
           </div>
-          <div class="col-span-12 grid grid-cols-12 p-3" *ngIf="!castingAdvanced">
+          <div
+            class="col-span-12 grid grid-cols-12 p-3"
+            *ngIf="!castConfig.castingAdvanced"
+          >
             <div class="col-span-4 grid place-items-center">
               <input
                 class=""
                 type="radio"
                 [value]="0"
                 name="castTime"
-                [(ngModel)]="castTime"
+                [(ngModel)]="castConfig.castTime"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p>
-                {{ this.ref.infoMatrix[this.gnosis].ritual }}
-                {{ this.ref.infoMatrix[this.gnosis].interval }} &nbsp;(+0 Dice)
+                {{ this.ref.infoMatrix[this.castConfig.gnosis].ritual }}
+                {{
+                  this.ref.infoMatrix[this.castConfig.gnosis].interval
+                }}
+                &nbsp;(+0 Dice)
               </p>
             </div>
             <div class="col-span-4 grid place-items-center">
@@ -895,14 +1134,19 @@
                 type="radio"
                 [value]="1"
                 name="castTime"
-                [(ngModel)]="castTime"
+                [(ngModel)]="castConfig.castTime"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p>
-                {{ this.ref.infoMatrix[this.gnosis].ritual * 2 }}
-                {{ this.ref.infoMatrix[this.gnosis].interval }} &nbsp;(+1 Dice)
+                {{ this.ref.infoMatrix[this.castConfig.gnosis].ritual * 2 }}
+                {{
+                  this.ref.infoMatrix[this.castConfig.gnosis].interval
+                }}
+                &nbsp;(+1 Dice)
               </p>
             </div>
             <div class="col-span-4 grid place-items-center">
@@ -911,14 +1155,19 @@
                 type="radio"
                 [value]="2"
                 name="castTime"
-                [(ngModel)]="castTime"
+                [(ngModel)]="castConfig.castTime"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p>
-                {{ this.ref.infoMatrix[this.gnosis].ritual * 3 }}
-                {{ this.ref.infoMatrix[this.gnosis].interval }} &nbsp;(+2 Dice)
+                {{ this.ref.infoMatrix[this.castConfig.gnosis].ritual * 3 }}
+                {{
+                  this.ref.infoMatrix[this.castConfig.gnosis].interval
+                }}
+                &nbsp;(+2 Dice)
               </p>
             </div>
             <div class="col-span-4 grid place-items-center">
@@ -927,14 +1176,19 @@
                 type="radio"
                 [value]="3"
                 name="castTime"
-                [(ngModel)]="castTime"
+                [(ngModel)]="castConfig.castTime"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p>
-                {{ this.ref.infoMatrix[this.gnosis].ritual * 4 }}
-                {{ this.ref.infoMatrix[this.gnosis].interval }} &nbsp;(+3 Dice)
+                {{ this.ref.infoMatrix[this.castConfig.gnosis].ritual * 4 }}
+                {{
+                  this.ref.infoMatrix[this.castConfig.gnosis].interval
+                }}
+                &nbsp;(+3 Dice)
               </p>
             </div>
             <div class="col-span-4 grid place-items-center">
@@ -943,14 +1197,19 @@
                 type="radio"
                 [value]="4"
                 name="castTime"
-                [(ngModel)]="castTime"
+                [(ngModel)]="castConfig.castTime"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p>
-                {{ this.ref.infoMatrix[this.gnosis].ritual * 5 }}
-                {{ this.ref.infoMatrix[this.gnosis].interval }} &nbsp;(+4 Dice)
+                {{ this.ref.infoMatrix[this.castConfig.gnosis].ritual * 5 }}
+                {{
+                  this.ref.infoMatrix[this.castConfig.gnosis].interval
+                }}
+                &nbsp;(+4 Dice)
               </p>
             </div>
             <div class="col-span-4 grid place-items-center">
@@ -959,14 +1218,19 @@
                 type="radio"
                 [value]="5"
                 name="castTime"
-                [(ngModel)]="castTime"
+                [(ngModel)]="castConfig.castTime"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p>
-                {{ this.ref.infoMatrix[this.gnosis].ritual * 6 }}
-                {{ this.ref.infoMatrix[this.gnosis].interval }} &nbsp;(+5 Dice)
+                {{ this.ref.infoMatrix[this.castConfig.gnosis].ritual * 6 }}
+                {{
+                  this.ref.infoMatrix[this.castConfig.gnosis].interval
+                }}
+                &nbsp;(+5 Dice)
               </p>
             </div>
           </div>
@@ -974,44 +1238,54 @@
           <!-- Advanced -->
           <div
             class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center"
-            (click)="castingAdvanced = !castingAdvanced; updatePools()"
-            [ngClass]="{ 'opacity-50': !castingAdvanced }"
+            (click)="
+              castConfig.castingAdvanced = !castConfig.castingAdvanced;
+              updatePools()
+            "
+            [ngClass]="{ 'opacity-50': !castConfig.castingAdvanced }"
           >
-            Advanced<span class="material-symbols-outlined text-2xl align-middle">
-              {{ castingAdvanced ? "expand_more" : "expand_less" }}
+            Advanced<span
+              class="material-symbols-outlined text-2xl align-middle"
+            >
+              {{ castConfig.castingAdvanced ? "expand_more" : "expand_less" }}
             </span>
           </div>
-          <div class="col-span-12 grid grid-cols-12 p-3 m-auto" *ngIf="castingAdvanced">
+          <div
+            class="col-span-12 grid grid-cols-12 p-3 m-auto"
+            *ngIf="castConfig.castingAdvanced"
+          >
             <div class="col-span-4 grid place-items-center">
               <input
                 class=""
                 type="radio"
                 [value]="0"
                 name="castTime"
-                [(ngModel)]="castTime"
+                [(ngModel)]="castConfig.castTime"
                 (ngModelChange)="updatePools()"
               />
             </div>
-            <div class="col-span-8 text-base font-cinzel grid place-items-center">
+            <div
+              class="col-span-8 text-base font-cinzel grid place-items-center"
+            >
               <p><strong>Quick casting time:</strong>1 Turn</p>
             </div>
 
             <div
               class="col-span-8 grid place-items-center text-sm font-playfair mt-4"
-              [ngClass]="{ 'opacity-50': !castingAdvanced }"
+              [ngClass]="{ 'opacity-50': !castConfig.castingAdvanced }"
             >
               <strong>Time in a Bottle (Time ●●●●) </strong>
               Advanced Casting Time costs 1 Mana instead of 1 Reach.
             </div>
             <div
               class="col-span-4 text-base font-cinzel grid place-items-center mt-4"
-              [ngClass]="{ 'opacity-50': !castingAdvanced }"
+              [ngClass]="{ 'opacity-50': !castConfig.castingAdvanced }"
             >
               <label class="switch">
                 <input
                   type="checkbox"
-                  [disabled]="!castingAdvanced"
-                  [(ngModel)]="this.timeInBottle"
+                  [disabled]="!castConfig.castingAdvanced"
+                  [(ngModel)]="this.castConfig.timeInBottle"
                   (ngModelChange)="updatePools()"
                 />
                 <span class="slider round"></span>
@@ -1029,49 +1303,82 @@
         >
           Scale
         </div>
-        <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.scale }">
+        <div
+          class="col-span-12 grid grid-cols-12 px-5"
+          [ngClass]="{ hidden: this.collapsible.scale }"
+        >
           <!-- Standard -->
           <div
             class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center hover:cursor-pointer"
-            (click)="scaleAdvanced = !scaleAdvanced; updatePools()"
-            [ngClass]="{ 'opacity-50': scaleAdvanced }"
+            (click)="
+              castConfig.scaleAdvanced = !castConfig.scaleAdvanced;
+              updatePools()
+            "
+            [ngClass]="{ 'opacity-50': castConfig.scaleAdvanced }"
           >
-            Standard<span class="material-symbols-outlined text-2xl align-middle">
-              {{ scaleAdvanced ? "expand_more" : "expand_less" }}
+            Standard<span
+              class="material-symbols-outlined text-2xl align-middle"
+            >
+              {{ castConfig.scaleAdvanced ? "expand_more" : "expand_less" }}
             </span>
           </div>
-          <div class="col-span-12 grid grid-cols-12 p-3" *ngIf="!scaleAdvanced">
+          <div
+            class="col-span-12 grid grid-cols-12 p-3"
+            *ngIf="!castConfig.scaleAdvanced"
+          >
             <div class="col-span-12 grid grid-cols-12">
-              <div class="col-span-3 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">Subjects</div>
-              <div class="col-span-1 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">Size</div>
-              <div class="col-span-6 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">AoE</div>
-              <div class="col-span-2 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">Dice</div>
+              <div
+                class="col-span-3 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                Subjects
+              </div>
+              <div
+                class="col-span-1 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                Size
+              </div>
+              <div
+                class="col-span-6 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                AoE
+              </div>
+              <div
+                class="col-span-2 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                Dice
+              </div>
             </div>
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="0"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">1</div>
               <div class="col-span-1 text-sm text-center p-1">5</div>
-              <div class="col-span-6 text-sm text-center p-1">Arm’s reach from a central point</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                Arm’s reach from a central point
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-0 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="2"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
@@ -1081,14 +1388,16 @@
               <div class="col-span-2 text-sm text-center p-1">-2 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="4"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
@@ -1098,105 +1407,129 @@
               <div class="col-span-2 text-sm text-center p-1">-4 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="6"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">8</div>
               <div class="col-span-1 text-sm text-center p-1">8</div>
-              <div class="col-span-6 text-sm text-center p-1">Several rooms, or a single floor of a house</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                Several rooms, or a single floor of a house
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-6 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="8"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">16</div>
               <div class="col-span-1 text-sm text-center p-1">9</div>
-              <div class="col-span-6 text-sm text-center p-1">A ballroom or small house</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A ballroom or small house
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-8 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="10"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">32</div>
               <div class="col-span-1 text-sm text-center p-1">10</div>
-              <div class="col-span-6 text-sm text-center p-1">A ballroom or small house</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A ballroom or small house
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-10 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="12"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">64</div>
               <div class="col-span-1 text-sm text-center p-1">11</div>
-              <div class="col-span-6 text-sm text-center p-1">A ballroom or small house</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A ballroom or small house
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-12 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="14"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">128</div>
               <div class="col-span-1 text-sm text-center p-1">12</div>
-              <div class="col-span-6 text-sm text-center p-1">A ballroom or small house</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A ballroom or small house
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-14 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="16"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">256</div>
               <div class="col-span-1 text-sm text-center p-1">13</div>
-              <div class="col-span-6 text-sm text-center p-1">A ballroom or small house</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A ballroom or small house
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-16 Dice</div>
             </div>
           </div>
@@ -1204,210 +1537,290 @@
           <!-- Advanced -->
           <div
             class="col-span-12 text-lg font-bold font-cinzel bg-red-500 text-center hover:cursor-pointer"
-            (click)="scaleAdvanced = !scaleAdvanced; updatePools()"
-            [ngClass]="{ 'opacity-50': !scaleAdvanced }"
+            (click)="
+              castConfig.scaleAdvanced = !castConfig.scaleAdvanced;
+              updatePools()
+            "
+            [ngClass]="{ 'opacity-50': !castConfig.scaleAdvanced }"
           >
-            Advanced<span class="material-symbols-outlined text-2xl align-middle">
-              {{ scaleAdvanced ? "expand_more" : "expand_less" }}
+            Advanced<span
+              class="material-symbols-outlined text-2xl align-middle"
+            >
+              {{ castConfig.scaleAdvanced ? "expand_more" : "expand_less" }}
             </span>
           </div>
 
-          <div class="col-span-12 grid grid-cols-12 p-3" *ngIf="scaleAdvanced">
+          <div
+            class="col-span-12 grid grid-cols-12 p-3"
+            *ngIf="castConfig.scaleAdvanced"
+          >
             <div class="col-span-12 grid grid-cols-12">
-              <div class="col-span-3 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">Subjects</div>
-              <div class="col-span-1 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">Size</div>
-              <div class="col-span-6 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">AoE</div>
-              <div class="col-span-2 text-md font-bold font-cinzel bg-zinc-600 text-center p-1">Dice</div>
+              <div
+                class="col-span-3 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                Subjects
+              </div>
+              <div
+                class="col-span-1 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                Size
+              </div>
+              <div
+                class="col-span-6 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                AoE
+              </div>
+              <div
+                class="col-span-2 text-md font-bold font-cinzel bg-zinc-600 text-center p-1"
+              >
+                Dice
+              </div>
             </div>
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="0"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">5</div>
               <div class="col-span-1 text-sm text-center p-1">5</div>
-              <div class="col-span-6 text-sm text-center p-1">A large house or building</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A large house or building
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-0 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="2"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">10</div>
               <div class="col-span-1 text-sm text-center p-1">10</div>
-              <div class="col-span-6 text-sm text-center p-1">A small warehouse or parking lot</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A small warehouse or parking lot
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-2 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="4"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">20</div>
               <div class="col-span-1 text-sm text-center p-1">15</div>
-              <div class="col-span-6 text-sm text-center p-1">A large warehouse or supermarket</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A large warehouse or supermarket
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-4 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="6"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">40</div>
               <div class="col-span-1 text-sm text-center p-1">20</div>
-              <div class="col-span-6 text-sm text-center p-1">A small factory, or a shopping mall</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A small factory, or a shopping mall
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-6 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="8"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">80</div>
               <div class="col-span-1 text-sm text-center p-1">25</div>
-              <div class="col-span-6 text-sm text-center p-1">A large factory, or a city block</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A large factory, or a city block
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-8 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="10"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">160</div>
               <div class="col-span-1 text-sm text-center p-1">30</div>
-              <div class="col-span-6 text-sm text-center p-1">A campus, or a small neighborhood</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A campus, or a small neighborhood
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-10 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="12"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">320</div>
               <div class="col-span-1 text-sm text-center p-1">35</div>
-              <div class="col-span-6 text-sm text-center p-1">A campus, or a small neighborhood</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A campus, or a small neighborhood
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-12 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="14"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">640</div>
               <div class="col-span-1 text-sm text-center p-1">40</div>
-              <div class="col-span-6 text-sm text-center p-1">A campus, or a small neighborhood</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A campus, or a small neighborhood
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-14 Dice</div>
             </div>
 
-            <div class="col-span-12 grid grid-cols-12 border-b border border-zinc-300">
+            <div
+              class="col-span-12 grid grid-cols-12 border-b border border-zinc-300"
+            >
               <div class="col-span-1 text-sm p-1">
                 <input
                   class=""
                   type="radio"
                   [value]="16"
                   name="scale"
-                  [(ngModel)]="scale"
+                  [(ngModel)]="castConfig.scale"
                   (ngModelChange)="updatePools()"
                 />
               </div>
               <div class="col-span-2 text-sm text-center p-1">1280</div>
               <div class="col-span-1 text-sm text-center p-1">45</div>
-              <div class="col-span-6 text-sm text-center p-1">A campus, or a small neighborhood</div>
+              <div class="col-span-6 text-sm text-center p-1">
+                A campus, or a small neighborhood
+              </div>
               <div class="col-span-2 text-sm text-center p-1">-16 Dice</div>
             </div>
           </div>
         </div>
 
-        <ng-container *ngIf="primaryFactor === 'Duration'; then potencyElem; else durationElem"> </ng-container>
+        <ng-container
+          *ngIf="
+            castConfig.primaryFactor === 'Duration';
+            then potencyElem;
+            else durationElem
+          "
+        >
+        </ng-container>
 
         <hr class="col-span-12 mt-4" />
 
         <div class="col-span-12 grid grid-cols-12 pt-4 px-5">
-          <div class="col-span-6 text-xl font-cinzel grid place-items-center">Extra Reach</div>          
+          <div class="col-span-6 text-xl font-cinzel grid place-items-center">
+            Extra Reach
+          </div>
           <input
-            class="text-center col-span-6 font-playfair mt-1 px-3 py-2  bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
+            class="text-center col-span-6 font-playfair mt-1 px-3 py-2 bg-transparent w-full border-b border-red-500 text-center focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             type="number"
-            [(ngModel)]="extraReach"
+            [(ngModel)]="castConfig.extraReach"
             (ngModelChange)="updatePools()"
           />
         </div>
-        <div class="col-span-12 text-sm text-zinc-400 text-center">Reach from Spell Effects</div>
+        <div class="col-span-12 text-sm text-zinc-400 text-center">
+          Reach from Spell Effects
+        </div>
       </div>
     </div>
   </div>
 
   <!-- Yantras -->
-  <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.currentTab !== 'Yantras' }">
+  <div
+    class="col-span-12 grid grid-cols-12"
+    [ngClass]="{ hidden: this.currentTab !== 'Yantras' }"
+  >
     <!-- Yantras -->
     <div
       class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 text-center p-2 border-y border-zinc-300/50 hover:text-red-500 hover:cursor-pointer"
       (click)="toggleSection('yantra')"
     >
-      Yantras (max {{ this.ref.infoMatrix[this.gnosis].yantras }})
+      Yantras (max {{ this.ref.infoMatrix[this.castConfig.gnosis].yantras }})
     </div>
-    <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.yantra }">
+    <div
+      class="col-span-12 grid grid-cols-12 px-5"
+      [ngClass]="{ hidden: this.collapsible.yantra }"
+    >
       <div
         class="col-span-12 grid grid-cols-12 p-3"
         *ngFor="let yantra of yantraList; let i = index"
         [attr.data-index]="i"
       >
-        <div class="col-span-4 grid place-items-center" [ngClass]="{ 'opacity-50': !yantraEnabled(i) }">
+        <div
+          class="col-span-4 grid place-items-center"
+          [ngClass]="{ 'opacity-50': !yantraEnabled(i) }"
+        >
           <label class="switch">
             <input
               type="checkbox"
@@ -1433,29 +1846,49 @@
     >
       Path Materials
     </div>
-    <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.pathMaterials }">
-      <div class="col-span-12 text-base text-center text-xl font-cinzel">Materials</div>
+    <div
+      class="col-span-12 grid grid-cols-12 px-5"
+      [ngClass]="{ hidden: this.collapsible.pathMaterials }"
+    >
+      <div class="col-span-12 text-base text-center text-xl font-cinzel">
+        Materials
+      </div>
       <div class="col-span-12 text-base font-playfair mb-2">
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each Path has specific materials that elevate a Magical Tool from merely an object
-        to something resonant with a Supernal Realm, as well as weapons that can replace the traditional knife.
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Each Path has specific materials that
+        elevate a Magical Tool from merely an object to something resonant with
+        a Supernal Realm, as well as weapons that can replace the traditional
+        knife.
       </div>
-      <div class="col-span-3 text-base text-center font-cinzel font-bold">Acanthus:</div>
+      <div class="col-span-3 text-base text-center font-cinzel font-bold">
+        Acanthus:
+      </div>
       <div class="col-span-9 text-base text-center font-playfair">
-        Glass, crystal, silver, reflective materials; Rapier, bow, precision weapons
+        Glass, crystal, silver, reflective materials; Rapier, bow, precision
+        weapons
       </div>
-      <div class="col-span-3 text-base text-center font-cinzel font-bold">Mastigos:</div>
+      <div class="col-span-3 text-base text-center font-cinzel font-bold">
+        Mastigos:
+      </div>
       <div class="col-span-9 text-base text-center font-playfair">
-        Iron, brass, leather, worked materi- als; Curved sword, whip, cruel weapons
+        Iron, brass, leather, worked materi- als; Curved sword, whip, cruel
+        weapons
       </div>
-      <div class="col-span-3 text-base text-center font-cinzel font-bold">Moros:</div>
+      <div class="col-span-3 text-base text-center font-cinzel font-bold">
+        Moros:
+      </div>
       <div class="col-span-9 text-base text-center font-playfair">
         Lead, bone, gems, buried materials; Hammer, mace, crushing weapons
       </div>
-      <div class="col-span-3 text-base text-center font-cinzel font-bold">Obrimos:</div>
-      <div class="col-span-9 text-base text-center font-playfair">
-        Steel, petrified wood, gold, per- fected materials; Double-edged sword, spear, noble weapons
+      <div class="col-span-3 text-base text-center font-cinzel font-bold">
+        Obrimos:
       </div>
-      <div class="col-span-3 text-base text-center font-cinzel font-bold">Thyrsus:</div>
+      <div class="col-span-9 text-base text-center font-playfair">
+        Steel, petrified wood, gold, per- fected materials; Double-edged sword,
+        spear, noble weapons
+      </div>
+      <div class="col-span-3 text-base text-center font-cinzel font-bold">
+        Thyrsus:
+      </div>
       <div class="col-span-9 text-base text-center font-playfair">
         Wood, copper, stone, natural mate- rials; Axe, sling, hunting weapons
       </div>
@@ -1467,52 +1900,73 @@
     >
       Path tools
     </div>
-    <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.pathTools }">
+    <div
+      class="col-span-12 grid grid-cols-12 px-5"
+      [ngClass]="{ hidden: this.collapsible.pathTools }"
+    >
       <div class="col-span-12 text-base mt-4">
         <p class="text-base font-playfair">
-          <span class="font-cinzel font-bold text-red-600"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coins</span>
-          or other symbols of material wealth, which represent construction, repair, and inanimate or intangible things
-          that last beyond mere human lifespans. It is the Tool closest to the Fallen World, and so is often used to
-          manipulate it directly, for money or other resources.
+          <span class="font-cinzel font-bold text-red-600">
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Coins</span
+          >
+          or other symbols of material wealth, which represent construction,
+          repair, and inanimate or intangible things that last beyond mere human
+          lifespans. It is the Tool closest to the Fallen World, and so is often
+          used to manipulate it directly, for money or other resources.
         </p>
       </div>
       <div class="col-span-12 text-base mt-4">
         <p class="text-base font-playfair">
-          <span class="font-cinzel font-bold text-red-600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cups</span>
-          or other drinking vessels can invoke healing, intuition, perceptual magic, and gathering together. Drinking
-          from a shared cup is a common way to spread a spell among a group. It’s often seen as a symbol of female
-          sexuality, though what that means depends on the mage.
+          <span class="font-cinzel font-bold text-red-600"
+            >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cups</span
+          >
+          or other drinking vessels can invoke healing, intuition, perceptual
+          magic, and gathering together. Drinking from a shared cup is a common
+          way to spread a spell among a group. It’s often seen as a symbol of
+          female sexuality, though what that means depends on the mage.
         </p>
       </div>
       <div class="col-span-12 text-base mt-4">
         <p class="text-base font-playfair">
-          <span class="font-cinzel font-bold text-red-600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mirrors</span>
-          may be actual mirrors, polished plates, or reflecting pools held in containers of the appropriate material.
-          They represent sight, soul, and the self, and are the Magical Tool most commonly used when the mage would work
-          a spell upon herself.
+          <span class="font-cinzel font-bold text-red-600"
+            >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mirrors</span
+          >
+          may be actual mirrors, polished plates, or reflecting pools held in
+          containers of the appropriate material. They represent sight, soul,
+          and the self, and are the Magical Tool most commonly used when the
+          mage would work a spell upon herself.
         </p>
       </div>
       <div class="col-span-12 text-base mt-4">
         <p class="text-base font-playfair">
-          <span class="font-cinzel font-bold text-red-600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rods</span>
-          , wands, or staves are symbols of control — the ability to point and have a thing happen. Pointing a rod is a
-          way of singling out a specific victim, while holding one is a symbol of rulership and command. It’s also used
-          as a symbol of male sexuality.
+          <span class="font-cinzel font-bold text-red-600"
+            >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rods</span
+          >
+          , wands, or staves are symbols of control — the ability to point and
+          have a thing happen. Pointing a rod is a way of singling out a
+          specific victim, while holding one is a symbol of rulership and
+          command. It’s also used as a symbol of male sexuality.
         </p>
       </div>
       <div class="col-span-12 text-base mt-4">
         <p class="text-base font-playfair">
-          <span class="font-cinzel font-bold text-red-600">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weapons</span>
-          , most normally knives, are symbols of thought made action — any spell that takes direct, decisive action on
-          the world (or a person) can benefit from a weapon. While often used to harm, weapons also represent the
-          mastery of intellect and will over the world.
+          <span class="font-cinzel font-bold text-red-600"
+            >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Weapons</span
+          >
+          , most normally knives, are symbols of thought made action — any spell
+          that takes direct, decisive action on the world (or a person) can
+          benefit from a weapon. While often used to harm, weapons also
+          represent the mastery of intellect and will over the world.
         </p>
       </div>
     </div>
   </div>
 
   <!-- Paradox -->
-  <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.currentTab !== 'Paradox' }">
+  <div
+    class="col-span-12 grid grid-cols-12"
+    [ngClass]="{ hidden: this.currentTab !== 'Paradox' }"
+  >
     <!-- Paradox -->
     <div
       class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 text-center p-2 border-y border-zinc-300/50 hover:text-red-500 hover:cursor-pointer"
@@ -1520,16 +1974,25 @@
     >
       Paradox
     </div>
-    <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.paradox }">
+    <div
+      class="col-span-12 grid grid-cols-12 px-5"
+      [ngClass]="{ hidden: this.collapsible.paradox }"
+    >
       <div class="col-span-12 grid grid-cols-12 mt-6">
         <div class="col-span-4 grid place-items-center">
           <label class="switch">
-            <input type="checkbox" [(ngModel)]="inured" (ngModelChange)="updatePools()" />
+            <input
+              type="checkbox"
+              [(ngModel)]="castConfig.inured"
+              (ngModelChange)="updatePools()"
+            />
             <span class="slider round"></span>
           </label>
         </div>
         <div class="col-span-8 text-base grid place-items-center">
-          <p class="font-cinzel">Is the Mage's Inured to this Spell? (+2 dice)</p>
+          <p class="font-cinzel">
+            Is the Mage's Inured to this Spell? (+2 dice)
+          </p>
         </div>
       </div>
       <div class="col-span-12 text-sm text-zinc-400 text-center">
@@ -1538,23 +2001,32 @@
 
       <div class="col-span-12 grid grid-cols-12 mt-6">
         <div class="col-span-8 text-base grid place-items-center">
-          <p class="font-cinzel">Number of Previous Paradox Rolls by the Mage in this Scene (+1 dice per roll)</p>
+          <p class="font-cinzel">
+            Number of Previous Paradox Rolls by the Mage in this Scene (+1 dice
+            per roll)
+          </p>
         </div>
         <div class="col-span-4 grid place-items-center">
           <input
             class="col-span-4 font-playfair mt-1 block w-full px-3 py-2 bg-white border border-slate-300 rounded-md text-black text-sm shadow-sm placeholder-slate-400 focus:outline-none focus:border-red-500 focus:ring-1 focus:ring-red-500"
             type="number"
-            [(ngModel)]="previousParadox"
+            [(ngModel)]="castConfig.previousParadox"
             (ngModelChange)="updatePools()"
           />
         </div>
       </div>
-      <div class="col-span-12 text-sm text-zinc-400 text-center">Includes all Paradox rolls not just failed ones</div>
+      <div class="col-span-12 text-sm text-zinc-400 text-center">
+        Includes all Paradox rolls not just failed ones
+      </div>
 
       <div class="col-span-12 grid grid-cols-12 mt-6">
         <div class="col-span-4 grid place-items-center">
           <label class="switch">
-            <input type="checkbox" [(ngModel)]="sleeperWitness" (ngModelChange)="updatePools()" />
+            <input
+              type="checkbox"
+              [(ngModel)]="castConfig.sleeperWitness"
+              (ngModelChange)="updatePools()"
+            />
             <span class="slider round"></span>
           </label>
         </div>
@@ -1563,14 +2035,17 @@
         </div>
       </div>
 
-      <div class="col-span-12 grid grid-cols-12" *ngIf="sleeperWitness">
+      <div
+        class="col-span-12 grid grid-cols-12"
+        *ngIf="castConfig.sleeperWitness"
+      >
         <div class="col-span-4 grid place-items-center">
           <input
             class=""
             type="radio"
             [value]="'Straight Roll'"
             name="numberOfSleepers"
-            [(ngModel)]="numberOfSleepers"
+            [(ngModel)]="castConfig.numberOfSleepers"
             (ngModelChange)="updatePools()"
           />
         </div>
@@ -1584,7 +2059,7 @@
             type="radio"
             [value]="'9-Again'"
             name="numberOfSleepers"
-            [(ngModel)]="numberOfSleepers"
+            [(ngModel)]="castConfig.numberOfSleepers"
             (ngModelChange)="updatePools()"
           />
         </div>
@@ -1598,7 +2073,7 @@
             type="radio"
             [value]="'8-Again'"
             name="numberOfSleepers"
-            [(ngModel)]="numberOfSleepers"
+            [(ngModel)]="castConfig.numberOfSleepers"
             (ngModelChange)="updatePools()"
           />
         </div>
@@ -1612,7 +2087,7 @@
             type="radio"
             [value]="'Rote Quality'"
             name="numberOfSleepers"
-            [(ngModel)]="numberOfSleepers"
+            [(ngModel)]="castConfig.numberOfSleepers"
             (ngModelChange)="updatePools()"
           />
         </div>
@@ -1620,9 +2095,11 @@
           <p>A full crowd</p>
         </div>
         <div class="col-span-12 text-sm text-zinc-400 text-center">
-          Multiple Sleeper witnesses do not add Paradox dice, but increase the chances of a Paradox occurring. If a few
-          Sleepers witness the magic casting, the Paradox roll gains the 9-Again quality, a large group grants the
-          Paradox roll the 8-Again quality, and a full crowd grants the Paradox roll the rote quality.
+          Multiple Sleeper witnesses do not add Paradox dice, but increase the
+          chances of a Paradox occurring. If a few Sleepers witness the magic
+          casting, the Paradox roll gains the 9-Again quality, a large group
+          grants the Paradox roll the 8-Again quality, and a full crowd grants
+          the Paradox roll the rote quality.
         </div>
       </div>
 
@@ -1631,22 +2108,29 @@
           <label class="switch">
             <input
               type="checkbox"
-              [(ngModel)]="yantraList[dedicatedToolIndex].active"
+              [(ngModel)]="yantraList[castConfig.dedicatedToolIndex].active"
               (ngModelChange)="updatePools()"
             />
             <span class="slider round"></span>
           </label>
         </div>
         <div class="col-span-8 text-base grid place-items-center">
-          <p class="font-cinzel">A Dedicated Magical Tool was Used? (-2 dice)</p>
+          <p class="font-cinzel">
+            A Dedicated Magical Tool was Used? (-2 dice)
+          </p>
         </div>
       </div>
-      <div class="col-span-12 text-sm text-zinc-400 text-center">This option is also in the Yantras section.</div>
+      <div class="col-span-12 text-sm text-zinc-400 text-center">
+        This option is also in the Yantras section.
+      </div>
     </div>
   </div>
 
   <!-- Summary -->
-  <div class="col-span-12 grid grid-cols-12" [ngClass]="{ hidden: this.currentTab !== 'Summary' }">
+  <div
+    class="col-span-12 grid grid-cols-12"
+    [ngClass]="{ hidden: this.currentTab !== 'Summary' }"
+  >
     <!-- Paradox -->
     <div
       class="col-span-12 text-2xl font-extrabold font-cinzel bg-zinc-600 text-center p-2 border-y border-zinc-300/50 hover:text-red-500 hover:cursor-pointer"
@@ -1654,74 +2138,133 @@
     >
       Paradox
     </div>
-    <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.paradox }">
-      <div class="grid grid-cols-12 col-span-12" *ngIf="paradoxDice > 0">
-        <div class="col-span-12 h-[75px] grid place-items-center align-middle bg-red-600">
+    <div
+      class="col-span-12 grid grid-cols-12 px-5"
+      [ngClass]="{ hidden: this.collapsible.paradox }"
+    >
+      <div
+        class="grid grid-cols-12 col-span-12"
+        *ngIf="castConfig.paradoxDice > 0"
+      >
+        <div
+          class="col-span-12 h-[75px] grid place-items-center align-middle bg-red-600"
+        >
           <p>
-            <span class="material-symbols-outlined text-3xl"> crisis_alert </span> This spell requires a Paradox roll.
-            Roll for Paradox first.
+            <span class="material-symbols-outlined text-3xl">
+              crisis_alert
+            </span>
+            This spell requires a Paradox roll. Roll for Paradox first.
           </p>
         </div>
-        <div class="col-span-4 font-cinzel text-xl font-bold p-4 text-right grid place-items-center">
+        <div
+          class="col-span-4 font-cinzel text-xl font-bold p-4 text-right grid place-items-center"
+        >
           <p>Dice Pool:&nbsp;&nbsp;</p>
         </div>
-        <div class="col-span-8 font-cinzel text-xl font-bold p-4 text-left align-middle">
-          <span class="text-3xl text-red-600 font-extrabold">{{ paradoxDice }}</span> &nbsp; Dice
-          {{ paradoxDesc != "Straight Roll" ? " with " + paradoxDesc : "" }}
+        <div
+          class="col-span-8 font-cinzel text-xl font-bold p-4 text-left align-middle"
+        >
+          <span class="text-3xl text-red-600 font-extrabold">{{
+            castConfig.paradoxDice
+          }}</span>
+          &nbsp; Dice
+          {{
+            castConfig.paradoxDesc != "Straight Roll"
+              ? " with " + castConfig.paradoxDesc
+              : ""
+          }}
         </div>
-        <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === 'Chance Die'">
+        <div
+          class="grid grid-cols-12 col-span-12 mt-2 text-center"
+          *ngIf="castConfig.paradoxDesc === 'Chance Die'"
+        >
           <div class="col-span-12 font-cinzel font-bold">Chance Die :</div>
           <div class="col-span-12">
-            If your pool drops below one die, you instead roll a single chance die. The chance die only counts as a
-            success if you roll a 10. Any other result is a failure. If you roll a 1 on the chance die, your character
-            suffers a dramatic failure. Chance dice do not benefit from 10-again.
+            If your pool drops below one die, you instead roll a single chance
+            die. The chance die only counts as a success if you roll a 10. Any
+            other result is a failure. If you roll a 1 on the chance die, your
+            character suffers a dramatic failure. Chance dice do not benefit
+            from 10-again.
           </div>
         </div>
-        <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === '9-Again'">
+        <div
+          class="grid grid-cols-12 col-span-12 mt-2 text-center"
+          *ngIf="castConfig.paradoxDesc === '9-Again'"
+        >
           <div class="col-span-12 font-cinzel font-bold">9-Again :</div>
           <div class="col-span-12">
-            You re-roll dice that show 9 or 10, as opposed to just 10. Keep rolling until you get a result that isn’t a
-            9 or 10.
+            You re-roll dice that show 9 or 10, as opposed to just 10. Keep
+            rolling until you get a result that isn’t a 9 or 10.
           </div>
         </div>
-        <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === '8-Again'">
+        <div
+          class="grid grid-cols-12 col-span-12 mt-2 text-center"
+          *ngIf="castConfig.paradoxDesc === '8-Again'"
+        >
           <div class="col-span-12 font-cinzel font-bold">8-Again :</div>
           <div class="col-span-12">
-            You re-roll dice that show 8, 9, or 10 — any successful die — and keep rolling as long as your dice show
-            successes
+            You re-roll dice that show 8, 9, or 10 — any successful die — and
+            keep rolling as long as your dice show successes
           </div>
         </div>
-        <div class="grid grid-cols-12 col-span-12 mt-2 text-center" *ngIf="paradoxDesc === 'Rote Quality'">
+        <div
+          class="grid grid-cols-12 col-span-12 mt-2 text-center"
+          *ngIf="castConfig.paradoxDesc === 'Rote Quality'"
+        >
           <div class="col-span-12 font-cinzel font-bold">Rote Quality :</div>
           <div class="col-span-12">
-            When you’ve got plenty of training and the steps you need to follow are laid out in front of you, you’ve got
-            a significant chance of success. When you make a roll, you can re-roll any dice that do not show an 8, 9, or
-            10. If you’re reduced to a chance die on a rote action, don’t re-roll a dramatic failure. You may only
-            re-roll each die once.
+            When you’ve got plenty of training and the steps you need to follow
+            are laid out in front of you, you’ve got a significant chance of
+            success. When you make a roll, you can re-roll any dice that do not
+            show an 8, 9, or 10. If you’re reduced to a chance die on a rote
+            action, don’t re-roll a dramatic failure. You may only re-roll each
+            die once.
           </div>
         </div>
 
-        <div class="col-span-12 font-cinzel font-bold text-xl mt-6 text-center">Roll Results</div>
+        <div class="col-span-12 font-cinzel font-bold text-xl mt-6 text-center">
+          Roll Results
+        </div>
         <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-          <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">
+          <div
+            class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+          >
             Dramatic Failure:
           </div>
           <div class="col-span-9">
-            The mage does not invoke a Paradox, regains a point of Willpower, and the next Paradox roll made for her in
-            the same scene does not suffer the usual, cumulative +1 dice modifier.
+            The mage does not invoke a Paradox, regains a point of Willpower,
+            and the next Paradox roll made for her in the same scene does not
+            suffer the usual, cumulative +1 dice modifier.
           </div>
         </div>
         <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-          <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Failure :</div>
+          <div
+            class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+          >
+            Failure :
+          </div>
           <div class="col-span-9">The mage does not invoke a Paradox</div>
         </div>
         <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-          <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Success :</div>
-          <div class="col-span-9">A Paradox occurs, regardless of the spell casting’s success or failure</div>
+          <div
+            class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+          >
+            Success :
+          </div>
+          <div class="col-span-9">
+            A Paradox occurs, regardless of the spell casting’s success or
+            failure
+          </div>
         </div>
         <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-          <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Exceptional Success :</div>
-          <div class="col-span-9">The mage gains a Paradox Condition and a Paradox occurs.</div>
+          <div
+            class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+          >
+            Exceptional Success :
+          </div>
+          <div class="col-span-9">
+            The mage gains a Paradox Condition and a Paradox occurs.
+          </div>
         </div>
 
         <!-- Released Paradox -->
@@ -1731,46 +2274,82 @@
         >
           Released Paradox
           <span class="material-symbols-outlined text-2xl align-middle">
-            {{ !this.collapsible.releasedParadox ? "expand_more" : "expand_less" }}
+            {{
+              !this.collapsible.releasedParadox ? "expand_more" : "expand_less"
+            }}
           </span>
         </div>
-        <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.releasedParadox }">
+        <div
+          class="col-span-12 grid grid-cols-12 px-5"
+          [ngClass]="{ hidden: this.collapsible.releasedParadox }"
+        >
           <div class="grid grid-cols-12 col-span-12">
-            <div class="col-span-12">Spend Paradox Successes to apply Paradox Reach to spell</div>
-            <div class="col-span-12 font-cinzel font-bold text-xl mt-2 text-center">Anomalies</div>
+            <div class="col-span-12">
+              Spend Paradox Successes to apply Paradox Reach to spell
+            </div>
+            <div
+              class="col-span-12 font-cinzel font-bold text-xl mt-2 text-center"
+            >
+              Anomalies
+            </div>
 
             <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-              <div class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle">1 Reach</div>
+              <div
+                class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle"
+              >
+                1 Reach
+              </div>
               <div class="col-span-9 text-left text-sm align-middle">
-                Undo or apply a single Reach from the Common Reach Effects list on p.326 except Casting Time.
+                Undo or apply a single Reach from the Common Reach Effects list
+                on p.326 except Casting Time.
               </div>
             </div>
             <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-              <div class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle">1 Reach</div>
+              <div
+                class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle"
+              >
+                1 Reach
+              </div>
               <div class="col-span-9 text-left text-sm align-middle">
                 Impose a Condition on the subject of the spell.
               </div>
             </div>
             <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-              <div class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle">2 Reach</div>
-              <div class="col-span-9 text-left text-sm align-middle">Change the subject of the spell.</div>
+              <div
+                class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle"
+              >
+                2 Reach
+              </div>
+              <div class="col-span-9 text-left text-sm align-middle">
+                Change the subject of the spell.
+              </div>
             </div>
             <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-              <div class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle">3 Reach</div>
+              <div
+                class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle"
+              >
+                3 Reach
+              </div>
               <div class="col-span-9 text-left text-sm align-middle">
                 Create an Abyssal environ- mental effect (Tilt).
               </div>
             </div>
             <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-              <div class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle">5 Reach</div>
+              <div
+                class="col-span-3 font-cinzel text-base font-extrabold mx-2 align-middle"
+              >
+                5 Reach
+              </div>
               <div class="col-span-9 text-left text-sm align-middle">
-                Summon an Abyssal entity of Rank 2. Further Reach may increase the entities Rank by 1/Reach
+                Summon an Abyssal entity of Rank 2. Further Reach may increase
+                the entities Rank by 1/Reach
               </div>
             </div>
 
             <div class="col-span-12 text-sm text-zinc-400 text-center">
-              Also apply Paradox successes as dice penalty to spellcasting roll. If spellcasting roll results in
-              dramatic failure, apply Paradox Condition to caster.
+              Also apply Paradox successes as dice penalty to spellcasting roll.
+              If spellcasting roll results in dramatic failure, apply Paradox
+              Condition to caster.
             </div>
           </div>
         </div>
@@ -1782,28 +2361,39 @@
         >
           Contained Paradox
           <span class="material-symbols-outlined text-2xl align-middle">
-            {{ !this.collapsible.containedParadox ? "expand_more" : "expand_less" }}
+            {{
+              !this.collapsible.containedParadox ? "expand_more" : "expand_less"
+            }}
           </span>
         </div>
-        <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.containedParadox }">
+        <div
+          class="col-span-12 grid grid-cols-12 px-5"
+          [ngClass]="{ hidden: this.collapsible.containedParadox }"
+        >
           <div class="grid grid-cols-12 col-span-12">
             <div class="col-span-12">
               <p>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roll caster’s Wisdom. Successes remove successes from Paradox pool, but
-                inflict one resistant bashing damage to caster each.
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Roll caster’s Wisdom. Successes
+                remove successes from Paradox pool, but inflict one resistant
+                bashing damage to caster each.
               </p>
               <p>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If Paradox successes remain, apply Paradox Condition to caster. Do not
-                penalize spellcasting roll.
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;If Paradox successes remain, apply
+                Paradox Condition to caster. Do not penalize spellcasting roll.
               </p>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-span-12 h-[75px] grid place-items-center align-middle bg-green-600" *ngIf="paradoxDice === 0">
+      <div
+        class="col-span-12 h-[75px] grid place-items-center align-middle bg-green-600"
+        *ngIf="castConfig.paradoxDice === 0"
+      >
         <p>
-          <span class="material-symbols-outlined text-3xl"> verified_user </span> This spell does not require a Paradox
-          roll.
+          <span class="material-symbols-outlined text-3xl">
+            verified_user
+          </span>
+          This spell does not require a Paradox roll.
         </p>
       </div>
     </div>
@@ -1815,55 +2405,87 @@
     >
       Spell Summary
     </div>
-    <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.spellSummary }">
+    <div
+      class="col-span-12 grid grid-cols-12 px-5"
+      [ngClass]="{ hidden: this.collapsible.spellSummary }"
+    >
       <!-- Roll Results -->
       <div class="col-span-12 grid grid-cols-12">
-        <div class="col-span-12 font-cinzel font-bold text-3xl mt-6 text-center">Roll Results</div>
-        <div class="col-span-12 font-cinzel text-xl font-bold text-right grid place-items-center">
+        <div
+          class="col-span-12 font-cinzel font-bold text-3xl mt-6 text-center"
+        >
+          Roll Results
+        </div>
+        <div
+          class="col-span-12 font-cinzel text-xl font-bold text-right grid place-items-center"
+        >
           <p>
-            Dice Pool: &nbsp; <span class="text-3xl text-red-600 font-extrabold">{{ dicePool }}</span> &nbsp;Dice
-            {{ grimoire ? " with Rote Quality" : "" }}
+            Dice Pool: &nbsp;
+            <span class="text-3xl text-red-600 font-extrabold">{{
+              castConfig.dicePool
+            }}</span>
+            &nbsp;Dice
+            {{ castConfig.grimoire ? " with Rote Quality" : "" }}
           </p>
         </div>
-        <div class="col-span-12 text-sm text-zinc-400 text-center">A single success means the spell takes place.</div>
-        <div class="col-span-12 text-sm text-zinc-400 text-center" *ngIf="grimoire">
+        <div class="col-span-12 text-sm text-zinc-400 text-center">
+          A single success means the spell takes place.
+        </div>
+        <div
+          class="col-span-12 text-sm text-zinc-400 text-center"
+          *ngIf="castConfig.grimoire"
+        >
           <span class="font-bold">Rote Quality: </span>
-          When you’ve got plenty of training and the steps you need to follow are laid out in front of you, you’ve got a
-          significant chance of success. When you make a roll, you can re-roll any dice that do not show an 8, 9, or 10.
-          If you’re reduced to a chance die on a rote action, don’t re-roll a dramatic failure. You may only re-roll
-          each die once.
+          When you’ve got plenty of training and the steps you need to follow
+          are laid out in front of you, you’ve got a significant chance of
+          success. When you make a roll, you can re-roll any dice that do not
+          show an 8, 9, or 10. If you’re reduced to a chance die on a rote
+          action, don’t re-roll a dramatic failure. You may only re-roll each
+          die once.
         </div>
       </div>
 
       <div class="col-span-12 grid grid-cols-12">
-        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">Mana Cost</div>
+        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">
+          Mana Cost
+        </div>
         <div class="col-span-9 grid grid-cols-1 px-2">
-          {{ mana }}
+          {{ castConfig.mana }}
         </div>
 
-        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">Casting Time</div>
+        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">
+          Casting Time
+        </div>
         <div class="col-span-9 grid grid-cols-1 px-2">
-          {{ summaryCastTime }}
+          {{ castConfig.summaryCastTime }}
         </div>
 
-        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">Duration</div>
+        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">
+          Duration
+        </div>
         <div class="col-span-9 grid grid-cols-1 px-2">
-          {{ summaryDuration }}
+          {{ castConfig.summaryDuration }}
         </div>
 
-        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">Potency</div>
+        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">
+          Potency
+        </div>
         <div class="col-span-9 grid grid-cols-1 px-2">
-          {{ potencyValue }}
+          {{ castConfig.potencyValue }}
         </div>
 
-        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">Range</div>
+        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">
+          Range
+        </div>
         <div class="col-span-9 grid grid-cols-1 px-2">
-          {{ summaryRange }}
+          {{ castConfig.summaryRange }}
         </div>
 
-        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">Scale</div>
+        <div class="col-span-3 grid grid-cols-1 bg-zinc-500 text-right px-2">
+          Scale
+        </div>
         <div class="col-span-9 grid grid-cols-1 px-2">
-          {{ summaryScale }}
+          {{ castConfig.summaryScale }}
         </div>
       </div>
     </div>
@@ -1875,38 +2497,70 @@
     >
       Success or Failure
     </div>
-    <div class="col-span-12 grid grid-cols-12 px-5" [ngClass]="{ hidden: this.collapsible.successes }">
+    <div
+      class="col-span-12 grid grid-cols-12 px-5"
+      [ngClass]="{ hidden: this.collapsible.successes }"
+    >
       <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-        <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Dramatic Failure:</div>
+        <div
+          class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+        >
+          Dramatic Failure:
+        </div>
         <div class="col-span-9">
-          The magic does not work. The caster gains a Condition based on the intended outcome of the spell.
+          The magic does not work. The caster gains a Condition based on the
+          intended outcome of the spell.
         </div>
       </div>
       <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-        <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Failure :</div>
-        <div class="col-span-9">The magic does not work, the mage’s imagination is not made real.</div>
-      </div>
-      <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-        <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Success :</div>
-        <div class="col-span-9">The spell’s effect takes place as imagined.</div>
-      </div>
-      <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
-        <div class="col-span-3 font-cinzel font-bold grid place-items-center text-center">Exceptional Success :</div>
+        <div
+          class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+        >
+          Failure :
+        </div>
         <div class="col-span-9">
-          The spell’s effect takes place better than imagined. The character regains one spent point of Willpower, and
-          the player may choose one of the following results:
+          The magic does not work, the mage’s imagination is not made real.
+        </div>
+      </div>
+      <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
+        <div
+          class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+        >
+          Success :
+        </div>
+        <div class="col-span-9">
+          The spell’s effect takes place as imagined.
+        </div>
+      </div>
+      <div class="grid grid-cols-12 col-span-12 border-b border-red-500">
+        <div
+          class="col-span-3 font-cinzel font-bold grid place-items-center text-center"
+        >
+          Exceptional Success :
+        </div>
+        <div class="col-span-9">
+          The spell’s effect takes place better than imagined. The character
+          regains one spent point of Willpower, and the player may choose one of
+          the following results:
         </div>
 
-        <div class="col-span-12 bg-zinc-600/50 mx-6 pl-2">● &nbsp;A bonus step in the primary spell factor</div>
-        <div class="col-span-12 mx-6 pl-2">● &nbsp;A Reach in the primary spell factor.</div>
         <div class="col-span-12 bg-zinc-600/50 mx-6 pl-2">
-          ● &nbsp;A Condition which will give Arcane Beats when resolved, on either the mage or her subject.
+          ● &nbsp;A bonus step in the primary spell factor
         </div>
         <div class="col-span-12 mx-6 pl-2">
-          ● &nbsp;All Mana spent on the spell is refunded, and the mage receives one more point of Mana.
+          ● &nbsp;A Reach in the primary spell factor.
         </div>
         <div class="col-span-12 bg-zinc-600/50 mx-6 pl-2">
-          ● &nbsp;The spell ignores any Withstand levels and takes effect at full Potency.
+          ● &nbsp;A Condition which will give Arcane Beats when resolved, on
+          either the mage or her subject.
+        </div>
+        <div class="col-span-12 mx-6 pl-2">
+          ● &nbsp;All Mana spent on the spell is refunded, and the mage receives
+          one more point of Mana.
+        </div>
+        <div class="col-span-12 bg-zinc-600/50 mx-6 pl-2">
+          ● &nbsp;The spell ignores any Withstand levels and takes effect at
+          full Potency.
         </div>
       </div>
     </div>

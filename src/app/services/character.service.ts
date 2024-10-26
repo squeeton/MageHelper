@@ -171,7 +171,8 @@ export class CharacterService {
       finesse: 0,
       resistance: 0
     },
-    notes: ''
+    notes: '',
+    favoriteSpells:[]
   }
   characterBuffer: Array<ICharacter> = [];
   editMode = false;
@@ -411,6 +412,14 @@ export class CharacterService {
       this.character.rotes.splice(index, 1);
     }
   }
+  removeFavoriteSpell(index: number){
+    this.saveCurrentToBuffer(this.character);
+
+    if (this.character.favoriteSpells[index]) {
+      this.character.favoriteSpells.splice(index, 1);
+    }
+  }
+
   removePraxis(index: number) {
     this.saveCurrentToBuffer(this.character);
 

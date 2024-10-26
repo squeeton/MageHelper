@@ -19,6 +19,13 @@ export class InfoSingleSpellComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if(this.info.castingConfig!= undefined){
+      setTimeout(() => {
+        this.info.setInfoPane('Cast Spell', true);
+        this.info.spell = this.spell;
+        this.char.casting = true;
+      }, 10);
+    }
   }
 
   castSpell() {

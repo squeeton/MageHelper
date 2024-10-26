@@ -1,4 +1,5 @@
 import IAttainment from "./attainment.model"
+import ICastConfig from "./castConfig.model"
 import ICondition from "./condition.model"
 import IFamiliar from "./familiar.model"
 import IMerit from "./merit.model"
@@ -132,7 +133,8 @@ export interface ICharacter {
     attainments: Array<IAttainment>,
     tilts: Array<ITilt>,
     conditions: Array<ICondition>,
-    familiar: IFamiliar
+    familiar: IFamiliar,
+    favoriteSpells: Array<ICastConfig>
 }
 
 

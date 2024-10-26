@@ -115,6 +115,10 @@ async getUserType(uid:string){
       if (returnValue.char != null && returnValue.char.createdWhen == undefined) {
         returnValue.char.createdWhen = new Date()
       }
+      if (returnValue.char != null && returnValue.char.favoriteSpells == undefined) {
+        console.log('adding favorite Spells');
+        returnValue.char.favoriteSpells = [];
+      }
       return returnValue;
     }
     else {
@@ -266,7 +270,8 @@ async getUserType(uid:string){
         finesse: 0,
         resistance: 0
       },
-      notes: ''
+      notes: '',
+      favoriteSpells:[]
     }
     const res = await this.characterCollection.add(char);
     return res;

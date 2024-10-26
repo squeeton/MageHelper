@@ -3,6 +3,7 @@ import ISpell from 'src/app/models/spell.model';
 import { InfoPaneService } from 'src/app/services/info-pane.service';
 import { CharacterService } from 'src/app/services/character.service';
 import IAttainment from 'src/app/models/attainment.model';
+import ICastConfig from 'src/app/models/castConfig.model';
 
 @Component({
   selector: 'app-spells-tab',
@@ -44,6 +45,15 @@ export class SpellsTabComponent implements OnInit {
     setTimeout(() => {
       this.info.setInfoPane('Single Spell');
       this.info.spell = spell;
+    }, 10);
+  }
+
+  previewFavoriteSpell(spell: ISpell, castConfig:ICastConfig) {
+    this.info.destroyPanes();
+    setTimeout(() => {
+      this.info.setInfoPane('Single Spell');
+      this.info.spell = spell;
+      this.info.castingConfig = castConfig;
     }, 10);
   }
 

@@ -1,140 +1,322 @@
 <div class="grid grid-cols-12 gap-5 text-center">
   <!-- Left Side -->
-    <!-- Rotes -->
-    <div class="col-span-8 grid grid-cols-12 border-solid border-double border-4 border-red-800 my-2 py-2 text-center">
-      <div class="col-span-12 text-2xl">
-        <span class="hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Rotes')"> Rotes </span>
-      </div>
-      <div class="grid grid-cols-12 gap-5 text-l col-span-12">
-        <div class="col-span-5">Spell</div>
-        <div class="col-span-2">Arcanum</div>
-        <div class="col-span-1">Dots</div>
-        <div class="col-span-4">Skill</div>
-      </div>
-      <div
-        class="grid grid-cols-12 gap-5 text-md font-playfair col-span-12 font-normal"
-        *ngFor="let rote of char.character.rotes; let i = index"
-                [attr.data-index]="i"
+  <!-- Rotes -->
+  <div
+    class="col-span-8 grid grid-cols-12 border-solid border-double border-4 border-red-800 my-2 py-2 text-center"
+  >
+    <div class="col-span-12 text-2xl">
+      <span
+        class="hover:cursor-help hover:text-red-500"
+        (click)="info.setInfoPane('Rotes')"
       >
-        <div class="col-span-5 hover:cursor-help hover:text-red-500" (click)="previewSpell(rote.spell)">
-          {{ rote.spell.name }}
-        </div>
-        <div class="col-span-2">{{ rote.spell.arcanum }}</div>
-        <div class="col-span-1">{{ rote.spell.dots }}</div>
-        <div class="col-span-4">
-          {{ rote.roteSkill }}
-          <span
-            *ngIf="char.editMode"
-            class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
-            title="Remove Spell"
-            (click)="char.removeRote(i)"
-          >
-            do_not_disturb_on
-          </span>
-        </div>
+        Rotes
+      </span>
+    </div>
+    <div class="grid grid-cols-12 gap-5 text-l col-span-12">
+      <div class="col-span-5">Spell</div>
+      <div class="col-span-2">Arcanum</div>
+      <div class="col-span-1">Dots</div>
+      <div class="col-span-4">Skill</div>
+    </div>
+    <div
+      class="grid grid-cols-12 gap-5 text-md font-playfair col-span-12 font-normal"
+      *ngFor="let rote of char.character.rotes; let i = index"
+      [attr.data-index]="i"
+    >
+      <div
+        class="col-span-5 hover:cursor-help hover:text-red-500"
+        (click)="previewSpell(rote.spell)"
+      >
+        {{ rote.spell.name }}
+      </div>
+      <div class="col-span-2">{{ rote.spell.arcanum }}</div>
+      <div class="col-span-1">{{ rote.spell.dots }}</div>
+      <div class="col-span-4">
+        {{ rote.roteSkill }}
+        <span
+          *ngIf="char.editMode"
+          class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
+          title="Remove Spell"
+          (click)="char.removeRote(i)"
+        >
+          do_not_disturb_on
+        </span>
       </div>
     </div>
-    <!-- Arcanum -->
-    <div class="row-span-2 col-span-4 border-solid border-double border-4 border-red-800 p-5">
-      <div class="grid grid-cols-12 gap-5 text-xl"></div>
-  
-      <div class="rounded-lg flex flex-col justify-center items-center">
-        <p class="text-center text-2xl hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Spells')">
-          Arcana
-        </p>
-        <div class="grid grid-cols-12 gap-2 min-w-[220px]">
-            <app-arcanum-marker class="col-span-1"  [arcanum]="'death'"></app-arcanum-marker>
-            <app-dots-label class="col-span-5" [currentDots]="arcana.death">Death</app-dots-label>
-          <app-dots class="col-span-6" (valueOut)="sendValue($event)" [path]="'arcana.death'" [currentDots]="arcana.death"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'fate'"></app-arcanum-marker>
-          <app-dots-label class="col-span-5"  [currentDots]="arcana.fate">Fate</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.fate'" [currentDots]="arcana.fate"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'forces'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.forces">Forces</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.forces'" [currentDots]="arcana.forces"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'life'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.life">Life</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.life'" [currentDots]="arcana.life"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'matter'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.matter"> Matter </app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.matter'" [currentDots]="arcana.matter"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'mind'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.mind">Mind</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.mind'" [currentDots]="arcana.mind"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'prime'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.prime">Prime</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.prime'" [currentDots]="arcana.prime"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'spirit'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.spirit">Spirit</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.spirit'" [currentDots]="arcana.spirit"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'space'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.space">Space</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.space'" [currentDots]="arcana.space"></app-dots>
-  
-          <app-arcanum-marker class="col-span-1"  [arcanum]="'time'"></app-arcanum-marker>
-          <app-dots-label  class="col-span-5" [currentDots]="arcana.time">Time</app-dots-label>
-          <app-dots class="col-span-6"  (valueOut)="sendValue($event)" [path]="'arcana.time'" [currentDots]="arcana.time"></app-dots>
-        </div>
+  </div>
+  <!-- Arcanum -->
+  <div
+    class="row-span-2 col-span-4 border-solid border-double border-4 border-red-800 p-5"
+  >
+    <div class="grid grid-cols-12 gap-5 text-xl"></div>
+
+    <div class="rounded-lg flex flex-col justify-center items-center">
+      <p
+        class="text-center text-2xl hover:cursor-help hover:text-red-500"
+        (click)="info.setInfoPane('Spells')"
+      >
+        Arcana
+      </p>
+      <div class="grid grid-cols-12 gap-2 min-w-[220px]">
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'death'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.death"
+          >Death</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.death'"
+          [currentDots]="arcana.death"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'fate'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.fate"
+          >Fate</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.fate'"
+          [currentDots]="arcana.fate"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'forces'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.forces"
+          >Forces</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.forces'"
+          [currentDots]="arcana.forces"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'life'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.life"
+          >Life</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.life'"
+          [currentDots]="arcana.life"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'matter'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.matter">
+          Matter
+        </app-dots-label>
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.matter'"
+          [currentDots]="arcana.matter"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'mind'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.mind"
+          >Mind</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.mind'"
+          [currentDots]="arcana.mind"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'prime'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.prime"
+          >Prime</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.prime'"
+          [currentDots]="arcana.prime"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'spirit'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.spirit"
+          >Spirit</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.spirit'"
+          [currentDots]="arcana.spirit"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'space'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.space"
+          >Space</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.space'"
+          [currentDots]="arcana.space"
+        ></app-dots>
+
+        <app-arcanum-marker
+          class="col-span-1"
+          [arcanum]="'time'"
+        ></app-arcanum-marker>
+        <app-dots-label class="col-span-5" [currentDots]="arcana.time"
+          >Time</app-dots-label
+        >
+        <app-dots
+          class="col-span-6"
+          (valueOut)="sendValue($event)"
+          [path]="'arcana.time'"
+          [currentDots]="arcana.time"
+        ></app-dots>
       </div>
     </div>
-    <!-- Praxis -->
-    <div class="col-span-8 grid grid-cols-12 border-solid border-double border-4 border-red-800 my-2 py-2 text-center">
-      <div class="col-span-12 text-2xl">
-        <span class="hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Praxis')"> Praxis </span>
-      </div>
-      <div class="grid grid-cols-12 gap-5 text-l col-span-12">
-        <div class="col-span-6">Spell</div>
-        <div class="col-span-3">Arcanum</div>
-        <div class="col-span-3">Dots</div>
-      </div>
-      <div class="grid grid-cols-12 gap-5 text-md font-playfair col-span-12 font-normal"
+  </div>
+  <!-- Praxis -->
+  <div
+    class="col-span-8 grid grid-cols-12 border-solid border-double border-4 border-red-800 my-2 py-2 text-center"
+  >
+    <div class="col-span-12 text-2xl">
+      <span
+        class="hover:cursor-help hover:text-red-500"
+        (click)="info.setInfoPane('Praxis')"
+      >
+        Praxis
+      </span>
+    </div>
+    <div class="grid grid-cols-12 gap-5 text-l col-span-12">
+      <div class="col-span-6">Spell</div>
+      <div class="col-span-3">Arcanum</div>
+      <div class="col-span-3">Dots</div>
+    </div>
+    <div
+      class="grid grid-cols-12 gap-5 text-md font-playfair col-span-12 font-normal"
       *ngFor="let praxis of char.character.praxis; let i = index"
-              [attr.data-index]="i">
-        <div class="col-span-6 hover:cursor-help hover:text-red-500" (click)="previewSpell(praxis)">{{ praxis.name }}</div>
-        <div class="col-span-3">{{ praxis.arcanum }}</div>
-        <div class="col-span-3">{{ praxis.dots }}
-          <span
-            *ngIf="char.editMode"
-            class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
-            title="Remove Spell"
-            (click)="char.removePraxis(i)"
-          >
-            do_not_disturb_on
-          </span></div>
+      [attr.data-index]="i"
+    >
+      <div
+        class="col-span-6 hover:cursor-help hover:text-red-500"
+        (click)="previewSpell(praxis)"
+      >
+        {{ praxis.name }}
+      </div>
+      <div class="col-span-3">{{ praxis.arcanum }}</div>
+      <div class="col-span-3">
+        {{ praxis.dots }}
+        <span
+          *ngIf="char.editMode"
+          class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
+          title="Remove Spell"
+          (click)="char.removePraxis(i)"
+        >
+          do_not_disturb_on
+        </span>
       </div>
     </div>
-    <!-- Attainments -->
-    <div class="col-span-8 grid grid-cols-12 border-solid border-double border-4 border-red-800 my-2 py-2 text-center">
-      <div class="col-span-12 text-2xl">
-        <span class="hover:cursor-help hover:text-red-500" (click)="info.setInfoPane('Attainments')"> Attainments </span>
-      </div>
-      <div class="grid grid-cols-12 gap-5 text-l col-span-12">
-        <div class="col-span-6">Attainment</div>
-        <div class="col-span-3">Arcanum</div>
-        <div class="col-span-3">Dots</div>
-      </div>
-      <div class="grid grid-cols-12 gap-5 text-md font-playfair col-span-12 font-normal"
+  </div>
+  <!-- Attainments -->
+  <div
+    class="col-span-6 grid grid-cols-12 border-solid border-double border-4 border-red-800 my-2 py-2 text-center"
+  >
+    <div class="col-span-12 text-2xl">
+      <span
+        class="hover:cursor-help hover:text-red-500"
+        (click)="info.setInfoPane('Attainments')"
+      >
+        Attainments
+      </span>
+    </div>
+    <div class="grid grid-cols-12 gap-5 text-l col-span-12">
+      <div class="col-span-6">Attainment</div>
+      <div class="col-span-3">Arcanum</div>
+      <div class="col-span-3">Dots</div>
+    </div>
+    <div
+      class="grid grid-cols-12 gap-5 text-md font-playfair col-span-12 font-normal"
       *ngFor="let attainment of char.character.attainments; let i = index"
-              [attr.data-index]="i">
-        <div class="col-span-6 hover:cursor-help hover:text-red-500" (click)="previewAttainment(attainment)">{{ attainment.name }}</div>
-        <div class="col-span-3">{{ attainment.arcanum }}</div>
-        <div class="col-span-3">{{ attainment.dots }}
-          <span
-            *ngIf="char.editMode"
-            class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
-            title="Remove Spell"
-            (click)="char.removeAttainment(i)"
-          >
-            do_not_disturb_on
-          </span></div>
+      [attr.data-index]="i"
+    >
+      <div
+        class="col-span-6 hover:cursor-help hover:text-red-500"
+        (click)="previewAttainment(attainment)"
+      >
+        {{ attainment.name }}
+      </div>
+      <div class="col-span-3">{{ attainment.arcanum }}</div>
+      <div class="col-span-3">
+        {{ attainment.dots }}
+        <span
+          *ngIf="char.editMode"
+          class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
+          title="Remove Spell"
+          (click)="char.removeAttainment(i)"
+        >
+          do_not_disturb_on
+        </span>
       </div>
     </div>
+  </div>
+  <!-- Favorited Spells -->
+  <div
+    class="col-span-6 grid grid-cols-12 border-solid border-double border-4 border-red-800 my-2 py-2 text-center"
+  >
+    <div class="col-span-12 text-2xl">
+      <span class=""> Favorited Spells </span>
+    </div>
+    <div class="grid grid-cols-12 gap-5 text-l col-span-12">
+      <div class="col-span-6">Spell</div>
+      <div class="col-span-3">Arcanum</div>
+      <div class="col-span-3">Dots</div>
+    </div>
+    <div
+      class="grid grid-cols-12 gap-5 text-md font-playfair col-span-12 font-normal"
+      *ngFor="let spellConfig of char.character.favoriteSpells; let i = index"
+      [attr.data-index]="i"
+    >
+      <div
+        class="col-span-6 hover:cursor-help hover:text-red-500"
+        (click)="previewFavoriteSpell(spellConfig.spell, spellConfig)"
+      >
+        {{ spellConfig.spell.name }}
+      </div>
+      <div class="col-span-3">{{ spellConfig.spell.arcanum }}</div>
+      <div class="col-span-3">{{ spellConfig.spell.dots }}
+        <span
+          *ngIf="char.editMode"
+          class="material-symbols-outlined text-sm hover:cursor-pointer hover:text-red-500"
+          title="Remove Spell"
+          (click)="char.removeFavoriteSpell(i)"
+        >
+          do_not_disturb_on
+        </span></div>
+    </div>
+  </div>
 </div>

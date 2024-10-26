@@ -5,6 +5,7 @@ import { InfoPaneService } from 'src/app/services/info-pane.service';
 import ICollapsibleSpellCase from 'src/app/models/collapsibleSpellCase.model';
 import { GlobalRefs } from 'src/app/services/GlobalRefs';
 import { IfStmt } from '@angular/compiler';
+import ICastConfig from 'src/app/models/castConfig.model';
 
 interface yantraPosition { index: number, bonus: number };
 @Component({
@@ -16,11 +17,22 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
 
   constructor(public char: CharacterService,
     public info: InfoPaneService,
-    public ref: GlobalRefs) { }
+    public ref: GlobalRefs) {
+    if (info.castingConfig != undefined) {
+      this.castConfig = structuredClone(info.castingConfig);
+      this.currentTab = 'Summary';
+    }
+    else {
+      this.castConfig = structuredClone(info.defaultCastingConfig);
+    }
+    this.bonus = this.castConfig.roteSkillDots
+  }
 
-
+  castConfig: ICastConfig;
+  bonus = 0;
   // Panel Controls
   currentTab = 'Spell Overview';
+
   collapsible: ICollapsibleSpellCase = {
     spellDesc: false,
     caster: true,
@@ -40,6 +52,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     containedParadox: true,
     successes: true
   }
+
   tabs = [
     'Spell Overview',
     'Factors',
@@ -47,49 +60,6 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     'Paradox',
     'Summary'
   ]
-
-  // Dice Info
-  freeReach = 0;
-  reach = 0;
-  dicePool = 0;
-  mana = 0;
-  paradoxDesc = 'No Paradox Roll';
-  paradoxDice = 0;
-
-  // Caster Info
-  showCasterInfo = true;
-  gnosis = 0;
-  highestArcanum = '';
-  charArcanaDots = 0;
-  activeSpells = 0;
-  rulingArcana = true;
-
-  // Spell Info
-  showSpellInfo = true;
-  requiredArcanum = 0;
-  primaryFactor = 'Potency';
-  isRote = false;
-  isPraxis = false;
-  roteSkillDots = 0;
-  spendWillpower = false;
-  additionalDice = 0;
-  grimoire = false;
-
-  // Factors
-  potencyValue = 1;
-  advancedPotency = false;
-  range = 0;
-  rangeAdvanced = false;
-  sympatheticRange = false;
-  temporalRange = false;
-  castTime = 0;
-  castingAdvanced = false;
-  timeInBottle = false;
-  scale = 0;
-  scaleAdvanced = false;
-  duration = 0
-  durationAdvanced = false;
-  extraReach = 0;
 
 
   // Yantras
@@ -105,7 +75,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
       // Actions
     },
     {
-      name: 'Rote Skill Mudra', active: false, bonus: this.roteSkillDots, desc:
+      name: 'Rote Skill Mudra', active: false, bonus: this.bonus, desc:
         'Uses skill dots as a bonus. The character must be free to make whatever mnemonic gestures are used to recall the Rote.'
     },
     {
@@ -168,52 +138,36 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
         'A persona Yantra keys in to the mage’s Shadow Name and Cabal Theme Merits.'
     }
   ]
-  activeYantras: Array<yantraPosition> = [];
-  yantraBonus = 0;
-  showActiveYantras = true;
 
+  isFavorite = false;
 
-  // Paradox
-  inured = false;
-  previousParadox = 0;
-  sleeperWitness = false;
-  dedicatedToolIndex = 7;
-  additionalMana = 0;
-  numberOfSleepers = 'Straight Roll';
-
-
-  // Summary
-  summaryCastTime = '';
-  summaryDuration = '';
-  summaryRange = '';
-  summaryScale = '';
 
   ngOnInit(): void {
-    this.highestArcanum = this.info.spell.arcanum.toLowerCase();
-    this.isRote = this.getIsRote(this.info.spell);
-    this.isPraxis = this.getIsPraxis(this.info.spell);
-    this.charArcanaDots = this.char.character.arcana[this.highestArcanum.toLowerCase() as keyof object];
-    this.gnosis = this.char.character.stats.gnosis;
-    this.rulingArcana = this.char.character.arcana.rulingArcanum.includes(this.highestArcanum.toLowerCase());
+    this.castConfig.highestArcanum = this.info.spell.arcanum.toLowerCase();
+    this.castConfig.isRote = this.getIsRote(this.info.spell);
+    this.castConfig.isPraxis = this.getIsPraxis(this.info.spell);
+    this.castConfig.charArcanaDots = this.char.character.arcana[this.castConfig.highestArcanum.toLowerCase() as keyof object];
+    this.castConfig.gnosis = this.char.character.stats.gnosis;
+    this.castConfig.rulingArcana = this.char.character.arcana.rulingArcanum.includes(this.castConfig.highestArcanum.toLowerCase());
 
-    if (this.isRote) {
-      this.freeReach = 6 - this.info.spell.dots
+    if (this.castConfig.isRote) {
+      this.castConfig.freeReach = 6 - this.info.spell.dots
       let result = this.yantraList.find(obj => {
         return obj.name === 'Rote Skill Mudra'
       });
 
       if (result) {
-        result.bonus = this.roteSkillDots;
+        result.bonus = this.castConfig.roteSkillDots;
       }
     }
     else {
-      this.freeReach = (this.charArcanaDots + 1) - this.info.spell.dots
+      this.castConfig.freeReach = (this.castConfig.charArcanaDots + 1) - this.info.spell.dots
     }
 
-    this.dedicatedToolIndex = this.yantraList.findIndex((y) => y.name === 'Dedicated Tool');
+    this.castConfig.dedicatedToolIndex = this.yantraList.findIndex((y) => y.name === 'Dedicated Tool');
 
-    this.requiredArcanum = this.info.spell.dots;
-    this.primaryFactor = this.info.spell.primaryFactor;
+    this.castConfig.requiredArcanum = this.info.spell.dots;
+    this.castConfig.primaryFactor = this.info.spell.primaryFactor;
 
 
     this.updatePools();
@@ -231,7 +185,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
         let roteSkill = this.char.character.rotes[i].roteSkill
         let dots = this.char.character.skills[(roteSkill.toLowerCase() as keyof object)];
         if (dots != undefined) {
-          this.roteSkillDots = dots;
+          this.castConfig.roteSkillDots = dots;
         }
         break;
       }
@@ -257,17 +211,17 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
 
 
   toggleRote() {
-    if (this.isPraxis && !this.isRote) {
-      this.isPraxis = false;
+    if (this.castConfig.isPraxis && !this.castConfig.isRote) {
+      this.castConfig.isPraxis = false;
     }
-    this.isRote = !this.isRote;
+    this.castConfig.isRote = !this.castConfig.isRote;
   }
 
   togglePraxis() {
-    if (this.isRote && !this.isPraxis) {
-      this.isRote = false;
+    if (this.castConfig.isRote && !this.castConfig.isPraxis) {
+      this.castConfig.isRote = false;
     }
-    this.isPraxis = !this.isPraxis;
+    this.castConfig.isPraxis = !this.castConfig.isPraxis;
 
   }
 
@@ -300,11 +254,11 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
 
   getPotencyMod(value: number) {
     let dice = 0;
-    if (value <= this.charArcanaDots) {
+    if (value <= this.castConfig.charArcanaDots) {
       return dice
     }
     else {
-      dice = (value - this.charArcanaDots) * 2
+      dice = (value - this.castConfig.charArcanaDots) * 2
       return dice;
     }
   }
@@ -313,8 +267,8 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     let isActive = false;
     let activeIndex = 0;
 
-    for (let i = 0; i < this.activeYantras.length; i++) {
-      if (this.activeYantras[i].index == index) {
+    for (let i = 0; i < this.castConfig.activeYantras.length; i++) {
+      if (this.castConfig.activeYantras[i].index == index) {
         isActive = true;
         activeIndex = i;
         break;
@@ -322,10 +276,10 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     }
 
     if (isActive) {
-      this.activeYantras.splice(activeIndex, 1);
+      this.castConfig.activeYantras.splice(activeIndex, 1);
     }
     else if (this.yantraList[index].active) {
-      this.activeYantras.push({ index: index, bonus: this.yantraList[index].bonus });
+      this.castConfig.activeYantras.push({ index: index, bonus: this.yantraList[index].bonus });
     }
     this.updatePools();
   }
@@ -335,9 +289,9 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
 
     let enabled = true;
     let currentlyActive = yantra.active
-    let atMaxYantras = this.activeYantras.length >= this.ref.infoMatrix[this.gnosis].yantras;
-    let mudraAllowed = this.isRote;
-    let concentrationAllowed = this.durationAdvanced || this.duration > 0;
+    let atMaxYantras = this.castConfig.activeYantras.length >= this.ref.infoMatrix[this.castConfig.gnosis].yantras;
+    let mudraAllowed = this.castConfig.isRote;
+    let concentrationAllowed = this.castConfig.durationAdvanced || this.castConfig.duration > 0;
 
     if (currentlyActive) {
       return true;
@@ -360,7 +314,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
       return obj.name === 'Rote Skill Mudra'
     })
     if (result) {
-      result.bonus = this.roteSkillDots;
+      result.bonus = this.castConfig.roteSkillDots;
     }
 
 
@@ -372,93 +326,124 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
   }
 
 
+  checkForFavoriteConfig() {
+
+    if (this.char.character.favoriteSpells.some(e =>
+      e.spell?.name == this.castConfig.spell?.name
+      && e.freeReach == this.castConfig.freeReach
+      && e.reach == this.castConfig.reach
+      && e.dicePool == this.castConfig.dicePool
+      && e.mana == this.castConfig.mana
+      && e.paradoxDesc == this.castConfig.paradoxDesc
+      && e.paradoxDice == this.castConfig.paradoxDice
+      && e.summaryCastTime == this.castConfig.summaryCastTime
+      && e.summaryDuration == this.castConfig.summaryDuration
+      && e.summaryRange == this.castConfig.summaryRange
+      && e.summaryScale == this.castConfig.summaryScale)) {
+      this.isFavorite = true;
+    }
+    else {
+      this.isFavorite = false;
+    }
+  }
+
+  addToFavorites() {
+
+    const clone = structuredClone(this.castConfig);
+    this.char.character.favoriteSpells.push(clone);
+
+    this.checkForFavoriteConfig();
+  }
+
   updatePools() {
-    let localDicePool = this.gnosis + this.charArcanaDots;
+
+
+    let localDicePool = this.castConfig.gnosis + this.castConfig.charArcanaDots;
     let localReach = 0;
     let localMana = 0;
     let localParadox = 0;
 
 
     // Dice Pool
-    this.activeYantras.map((y) => {
+    this.castConfig.activeYantras.map((y) => {
       localDicePool += y.bonus
     });
-    localDicePool -= this.getPotencyMod(this.potencyValue);
-    localDicePool -= this.range;
-    localDicePool += this.castTime;
-    localDicePool -= this.scale;
-    localDicePool -= this.duration;
-    localDicePool += this.additionalDice;
-    if (this.spendWillpower) {
+    localDicePool -= this.getPotencyMod(this.castConfig.potencyValue);
+    localDicePool -= this.castConfig.range;
+    localDicePool += this.castConfig.castTime;
+    localDicePool -= this.castConfig.scale;
+    localDicePool -= this.castConfig.duration;
+    localDicePool += this.castConfig.additionalDice;
+    if (this.castConfig.spendWillpower) {
       localDicePool += 3;
     }
 
 
     // Reach
-    localReach += this.activeSpells;
-    localReach += this.extraReach;
+    localReach += this.castConfig.activeSpells;
+    localReach += this.castConfig.extraReach;
 
-    if (this.advancedPotency) {
+    if (this.castConfig.advancedPotency) {
       localReach += 1;
     }
-    if (this.rangeAdvanced) {
+    if (this.castConfig.rangeAdvanced) {
       localReach += 1;
     }
-    if (this.castingAdvanced) {
+    if (this.castConfig.castingAdvanced) {
       localReach += 1;
     }
-    if (this.scaleAdvanced) {
+    if (this.castConfig.scaleAdvanced) {
       localReach += 1;
     }
-    if (this.durationAdvanced) {
+    if (this.castConfig.durationAdvanced) {
       localReach += 1;
     }
 
 
     // Mana 
-    if (this.timeInBottle) {
+    if (this.castConfig.timeInBottle) {
       localReach -= 1;
       localMana += 1
     }
-    if (!this.rulingArcana) {
+    if (!this.castConfig.rulingArcana) {
       localMana += 1;
     }
-    if (this.sympatheticRange) {
+    if (this.castConfig.sympatheticRange) {
       localMana += 1;
     }
-    if (this.temporalRange) {
+    if (this.castConfig.temporalRange) {
       localMana += 1;
     }
-    localMana += this.additionalMana;
+    localMana += this.castConfig.additionalMana;
 
 
     // Paradox
 
-    localParadox = localReach - this.freeReach;
+    localParadox = localReach - this.castConfig.freeReach;
     if (localParadox > 0) {
-      localParadox *= this.ref.infoMatrix[this.gnosis].paradox
+      localParadox *= this.ref.infoMatrix[this.castConfig.gnosis].paradox
     }
     else {
       localParadox = 0;
     }
     let paradoxRollType = '';
     let paradoxIntroduced = false;
-    if (this.sleeperWitness) {
+    if (this.castConfig.sleeperWitness) {
       localParadox += 1;
     }
-    if (this.inured) {
+    if (this.castConfig.inured) {
       localParadox += 2;
     }
 
     if (localParadox > 0) {
-      paradoxRollType = this.numberOfSleepers;
+      paradoxRollType = this.castConfig.numberOfSleepers;
       paradoxIntroduced = true;
     }
 
 
     // Paradox Mitigation
-    localParadox -= this.additionalMana
-    if (this.yantraList[this.dedicatedToolIndex].active) {
+    localParadox -= this.castConfig.additionalMana
+    if (this.yantraList[this.castConfig.dedicatedToolIndex].active) {
       localParadox -= 2;
     }
 
@@ -472,160 +457,164 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
       localParadox = 0;
     }
 
-    this.dicePool = localDicePool;
-    this.reach = localReach;
-    this.mana = localMana;
-    this.paradoxDice = localParadox;
-    this.paradoxDesc = paradoxRollType;
+    this.castConfig.dicePool = localDicePool;
+    this.castConfig.reach = localReach;
+    this.castConfig.mana = localMana;
+    this.castConfig.paradoxDice = localParadox;
+    this.castConfig.paradoxDesc = paradoxRollType;
 
 
 
     // Spell Summary Informaton
-    this.summaryCastTime = (this.ref.infoMatrix[this.gnosis].ritual * (this.castTime + 1)) + ' ' + this.ref.infoMatrix[this.gnosis].interval;
+    this.castConfig.summaryCastTime = (this.ref.infoMatrix[this.castConfig.gnosis].ritual * (this.castConfig.castTime + 1)) + ' ' + this.ref.infoMatrix[this.castConfig.gnosis].interval;
+    if (this.castConfig.castingAdvanced) {
+      this.castConfig.summaryCastTime = 'Instant'
+    }
     this.setSummaryDuration();
-    (this.rangeAdvanced) ? this.summaryRange = 'Self/touch or Aimed' : this.summaryRange = 'Sensory';
-    (this.rangeAdvanced && this.sympatheticRange) ? this.summaryRange += ' (Sympathetic)' : '';
-    (this.rangeAdvanced && this.temporalRange) ? this.summaryRange += ' (Temporal)' : '';
+    (this.castConfig.rangeAdvanced) ? this.castConfig.summaryRange = 'Self/touch or Aimed' : this.castConfig.summaryRange = 'Sensory';
+    (this.castConfig.rangeAdvanced && this.castConfig.sympatheticRange) ? this.castConfig.summaryRange += ' (Sympathetic)' : '';
+    (this.castConfig.rangeAdvanced && this.castConfig.temporalRange) ? this.castConfig.summaryRange += ' (Temporal)' : '';
     this.setSummaryScale();
 
+    this.checkForFavoriteConfig();
   }
 
   setSummaryDuration() {
 
-    if (this.durationAdvanced) {
-      switch (this.duration) {
+    if (this.castConfig.durationAdvanced) {
+      switch (this.castConfig.duration) {
         case 0:
-          this.summaryDuration = '1 scene/hour'
+          this.castConfig.summaryDuration = '1 scene/hour'
           break;
         case 2:
-          this.summaryDuration = '1 day'
+          this.castConfig.summaryDuration = '1 day'
           break;
         case 4:
-          this.summaryDuration = '1 week'
+          this.castConfig.summaryDuration = '1 week'
           break;
         case 6:
-          this.summaryDuration = '1 month'
+          this.castConfig.summaryDuration = '1 month'
           break;
         case 8:
-          this.summaryDuration = '1 year'
+          this.castConfig.summaryDuration = '1 year'
           break;
         case 10:
-          this.summaryDuration = 'Indefinite'
+          this.castConfig.summaryDuration = 'Indefinite'
           break;
         default:
-          this.summaryDuration = '1 scene/hour'
+          this.castConfig.summaryDuration = '1 scene/hour'
       }
 
     }
     else {
-      switch (this.duration) {
+      switch (this.castConfig.duration) {
         case 0:
-          this.summaryDuration = '1 turn'
+          this.castConfig.summaryDuration = '1 turn'
           break;
         case 2:
-          this.summaryDuration = '2 turns'
+          this.castConfig.summaryDuration = '2 turns'
           break;
         case 4:
-          this.summaryDuration = '3 turns'
+          this.castConfig.summaryDuration = '3 turns'
           break;
         case 6:
-          this.summaryDuration = '5 turns'
+          this.castConfig.summaryDuration = '5 turns'
           break;
         case 8:
-          this.summaryDuration = '10 turns'
+          this.castConfig.summaryDuration = '10 turns'
           break;
         case 10:
-          this.summaryDuration = '20 turns'
+          this.castConfig.summaryDuration = '20 turns'
           break;
         case 12:
-          this.summaryDuration = '30 turns'
+          this.castConfig.summaryDuration = '30 turns'
           break;
         case 14:
-          this.summaryDuration = '40 turns'
+          this.castConfig.summaryDuration = '40 turns'
           break;
         case 16:
-          this.summaryDuration = '50 turns'
+          this.castConfig.summaryDuration = '50 turns'
           break;
         case 18:
-          this.summaryDuration = '60 turns'
+          this.castConfig.summaryDuration = '60 turns'
           break;
         case 20:
-          this.summaryDuration = '70 turns'
+          this.castConfig.summaryDuration = '70 turns'
           break;
         default:
-          this.summaryDuration = '70 turns'
+          this.castConfig.summaryDuration = '70 turns'
       }
     }
   }
 
   setSummaryScale() {
 
-    if (this.scaleAdvanced) {
-      switch (this.scale) {
+    if (this.castConfig.scaleAdvanced) {
+      switch (this.castConfig.scale) {
         case 0:
-          this.summaryScale = '5 Subjects of up to Size 5, or A large house or building'
+          this.castConfig.summaryScale = '5 Subjects of up to Size 5, or A large house or building'
           break;
         case 2:
-          this.summaryScale = '10 Subjects of up to Size 10, or A small warehouse or parking lot'
+          this.castConfig.summaryScale = '10 Subjects of up to Size 10, or A small warehouse or parking lot'
           break;
         case 4:
-          this.summaryScale = '20 Subjects of up to Size 15, or A large warehouse or supermarket'
+          this.castConfig.summaryScale = '20 Subjects of up to Size 15, or A large warehouse or supermarket'
           break;
         case 6:
-          this.summaryScale = '40 Subjects of up to Size 20, or A small factory, or a shopping mall'
+          this.castConfig.summaryScale = '40 Subjects of up to Size 20, or A small factory, or a shopping mall'
           break;
         case 8:
-          this.summaryScale = '80 Subjects of up to Size 25, or A large factory, or a city block'
+          this.castConfig.summaryScale = '80 Subjects of up to Size 25, or A large factory, or a city block'
           break;
         case 10:
-          this.summaryScale = '160 Subjects of up to Size 30, or A campus, or a small neighborhood'
+          this.castConfig.summaryScale = '160 Subjects of up to Size 30, or A campus, or a small neighborhood'
           break;
         case 12:
-          this.summaryScale = '320 Subjects of up to Size 35, or A campus, or a small neighborhood'
+          this.castConfig.summaryScale = '320 Subjects of up to Size 35, or A campus, or a small neighborhood'
           break;
         case 14:
-          this.summaryScale = '640 Subjects of up to Size 40, or A campus, or a small neighborhood'
+          this.castConfig.summaryScale = '640 Subjects of up to Size 40, or A campus, or a small neighborhood'
           break;
         case 16:
-          this.summaryScale = '1280 Subjects of up to Size 45, or A campus, or a small neighborhood'
+          this.castConfig.summaryScale = '1280 Subjects of up to Size 45, or A campus, or a small neighborhood'
           break;
         default:
-          this.summaryScale = '5 Subjects of up to Size 5, or A large house or building'
+          this.castConfig.summaryScale = '5 Subjects of up to Size 5, or A large house or building'
       }
 
     }
     else {
 
-      switch (this.scale) {
+      switch (this.castConfig.scale) {
         case 0:
-          this.summaryScale = '1 Subject of up to Size	5, or	Arm’s reach from a central point'
+          this.castConfig.summaryScale = '1 Subject of up to Size	5, or	Arm’s reach from a central point'
           break;
         case 2:
-          this.summaryScale = '2 Subjects of up to Size 6, or A small room'
+          this.castConfig.summaryScale = '2 Subjects of up to Size 6, or A small room'
           break;
         case 4:
-          this.summaryScale = '4 Subjects of up to Size 7, or A large room'
+          this.castConfig.summaryScale = '4 Subjects of up to Size 7, or A large room'
           break;
         case 6:
-          this.summaryScale = '8 Subjects of up to Size 8, or Several rooms, or a single floor of a house'
+          this.castConfig.summaryScale = '8 Subjects of up to Size 8, or Several rooms, or a single floor of a house'
           break;
         case 8:
-          this.summaryScale = '16 Subjects of up to Size 9, or A ballroom or small house'
+          this.castConfig.summaryScale = '16 Subjects of up to Size 9, or A ballroom or small house'
           break;
         case 10:
-          this.summaryScale = '32 Subjects of up to Size 10, or A ballroom or small house'
+          this.castConfig.summaryScale = '32 Subjects of up to Size 10, or A ballroom or small house'
           break;
         case 12:
-          this.summaryScale = '64 Subjects of up to Size 11, or A ballroom or small house'
+          this.castConfig.summaryScale = '64 Subjects of up to Size 11, or A ballroom or small house'
           break;
         case 14:
-          this.summaryScale = '128 Subjects of up to Size 12, or A ballroom or small house'
+          this.castConfig.summaryScale = '128 Subjects of up to Size 12, or A ballroom or small house'
           break;
         case 16:
-          this.summaryScale = '256 Subjects of up to Size 13, or A ballroom or small house'
+          this.castConfig.summaryScale = '256 Subjects of up to Size 13, or A ballroom or small house'
           break;
         default:
-          this.summaryScale = '1 Subject of up to Size	5, or	Arm’s reach from a central point'
+          this.castConfig.summaryScale = '1 Subject of up to Size	5, or	Arm’s reach from a central point'
       }
     }
   }
