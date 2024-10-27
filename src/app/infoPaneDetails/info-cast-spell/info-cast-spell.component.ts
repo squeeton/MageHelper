@@ -329,7 +329,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
   checkForFavoriteConfig() {
 
     if (this.char.character.favoriteSpells.some(e =>
-      e.spell?.name == this.castConfig.spell?.name
+      e.spell?.name == this.info.spell?.name
       && e.freeReach == this.castConfig.freeReach
       && e.reach == this.castConfig.reach
       && e.dicePool == this.castConfig.dicePool
@@ -340,19 +340,37 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
       && e.summaryDuration == this.castConfig.summaryDuration
       && e.summaryRange == this.castConfig.summaryRange
       && e.summaryScale == this.castConfig.summaryScale)) {
-      this.isFavorite = true;
+      return true;
     }
     else {
-      this.isFavorite = false;
+      return false;
     }
   }
 
-  addToFavorites() {
+  toggleFavorites() {
 
-    const clone = structuredClone(this.castConfig);
-    this.char.character.favoriteSpells.push(clone);
+    if(this.isFavorite){
+      var configIndex = this.char.character.favoriteSpells.findIndex(e =>
+        e.spell?.name == this.info.spell?.name
+        && e.freeReach == this.castConfig.freeReach
+        && e.reach == this.castConfig.reach
+        && e.dicePool == this.castConfig.dicePool
+        && e.mana == this.castConfig.mana
+        && e.paradoxDesc == this.castConfig.paradoxDesc
+        && e.paradoxDice == this.castConfig.paradoxDice
+        && e.summaryCastTime == this.castConfig.summaryCastTime
+        && e.summaryDuration == this.castConfig.summaryDuration
+        && e.summaryRange == this.castConfig.summaryRange
+        && e.summaryScale == this.castConfig.summaryScale)
+        this.char.removeFavoriteSpell(configIndex);
+    }
+    else{
+      const clone = structuredClone(this.castConfig);
+      clone.spell = structuredClone(this.info.spell);
+      this.char.character.favoriteSpells.push(clone);
+    }
 
-    this.checkForFavoriteConfig();
+    this.isFavorite = this.checkForFavoriteConfig();
   }
 
   updatePools() {
@@ -476,7 +494,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     (this.castConfig.rangeAdvanced && this.castConfig.temporalRange) ? this.castConfig.summaryRange += ' (Temporal)' : '';
     this.setSummaryScale();
 
-    this.checkForFavoriteConfig();
+    this.isFavorite = this.checkForFavoriteConfig();
   }
 
   setSummaryDuration() {
