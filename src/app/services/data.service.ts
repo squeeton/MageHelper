@@ -285,13 +285,11 @@ async getUserType(uid:string){
       campaign: ICampaignFull
     } = { id: 'Not Found', campaign: { uid: '', name: '', desc: '', characters: [] } }
 
-    console.log('getting campaign', campaignID);
     const campaignRef = this.campaignCollection.ref.doc(campaignID);
     const campaignDoc = await campaignRef.get();
 
     if (campaignDoc.exists) {
       let campaignBase: ICampaign = campaignDoc.data() as ICampaign
-      console.log('got  campaign', campaignBase);
       returnValue.id = campaignDoc.id;
       returnValue.campaign.name = campaignBase.name;
       returnValue.campaign.uid = campaignBase.uid;

@@ -515,7 +515,6 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     this.setSummaryScale();
 
     this.isFavorite = this.checkForFavoriteConfig();
-    console.log(this.castConfig.duration);
   }
 
   setSummaryDuration() {
