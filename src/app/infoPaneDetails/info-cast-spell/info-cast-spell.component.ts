@@ -254,14 +254,34 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
 
   getPotencyMod(value: number) {
     let dice = 0;
-    if (value <= this.castConfig.charArcanaDots) {
-      return dice
-    }
-    else {
-      dice = (value - this.castConfig.charArcanaDots) * 2
-      return dice;
+    if(this.castConfig.spell.primaryFactor == 'Potency'){
+      if (value <= (this.castConfig.charArcanaDots-1)) {
+        return dice
+      }
+      else {
+        dice = (value - (this.castConfig.charArcanaDots-1)) * 2
+        return dice;
+      }
+    }else{
+      return value *2;
     }
   }
+
+  getDurationMod(value: number) {
+    let dice = 0;
+    if(this.info.spell.primaryFactor == 'Duration'){
+      if (value <= (this.castConfig.charArcanaDots-1)) {
+        return dice
+      }
+      else {
+        dice = (value - (this.castConfig.charArcanaDots-1)) * 2
+        return dice;
+      }
+    }else{
+      return value *2;
+    }
+  }
+
 
   updateActiveYantras(index: number, set: boolean) {
     let isActive = false;
@@ -386,11 +406,11 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     this.castConfig.activeYantras.map((y) => {
       localDicePool += y.bonus
     });
-    localDicePool -= this.getPotencyMod(this.castConfig.potencyValue);
+    localDicePool -= this.getPotencyMod(this.castConfig.potencyValue-1);
     localDicePool -= this.castConfig.range;
     localDicePool += this.castConfig.castTime;
     localDicePool -= this.castConfig.scale;
-    localDicePool -= this.castConfig.duration;
+    localDicePool -= this.getDurationMod(this.castConfig.duration);
     localDicePool += this.castConfig.additionalDice;
     if (this.castConfig.spendWillpower) {
       localDicePool += 3;
@@ -495,6 +515,7 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
     this.setSummaryScale();
 
     this.isFavorite = this.checkForFavoriteConfig();
+    console.log(this.castConfig.duration);
   }
 
   setSummaryDuration() {
@@ -504,19 +525,19 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
         case 0:
           this.castConfig.summaryDuration = '1 scene/hour'
           break;
-        case 2:
+        case 1:
           this.castConfig.summaryDuration = '1 day'
           break;
-        case 4:
+        case 2:
           this.castConfig.summaryDuration = '1 week'
           break;
-        case 6:
+        case 3:
           this.castConfig.summaryDuration = '1 month'
           break;
-        case 8:
+        case 4:
           this.castConfig.summaryDuration = '1 year'
           break;
-        case 10:
+        case 5:
           this.castConfig.summaryDuration = 'Indefinite'
           break;
         default:
@@ -529,34 +550,34 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
         case 0:
           this.castConfig.summaryDuration = '1 turn'
           break;
-        case 2:
+        case 1:
           this.castConfig.summaryDuration = '2 turns'
           break;
-        case 4:
+        case 2:
           this.castConfig.summaryDuration = '3 turns'
           break;
-        case 6:
+        case 3:
           this.castConfig.summaryDuration = '5 turns'
           break;
-        case 8:
+        case 4:
           this.castConfig.summaryDuration = '10 turns'
           break;
-        case 10:
+        case 5:
           this.castConfig.summaryDuration = '20 turns'
           break;
-        case 12:
+        case 6:
           this.castConfig.summaryDuration = '30 turns'
           break;
-        case 14:
+        case 7:
           this.castConfig.summaryDuration = '40 turns'
           break;
-        case 16:
+        case 8:
           this.castConfig.summaryDuration = '50 turns'
           break;
-        case 18:
+        case 9:
           this.castConfig.summaryDuration = '60 turns'
           break;
-        case 20:
+        case 10:
           this.castConfig.summaryDuration = '70 turns'
           break;
         default:

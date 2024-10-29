@@ -436,6 +436,7 @@ async getUserType(uid:string){
   }
 
   updateCharacter(id: string, char: ICharacter) {
+    console.log('saving', char);
     return this.characterCollection.doc(id).update(char);
   }
 

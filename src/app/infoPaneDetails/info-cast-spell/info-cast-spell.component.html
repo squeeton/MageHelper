@@ -403,7 +403,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                1 &nbsp;(-{{ getPotencyMod(1) }} Dice)
+                1 &nbsp;(-{{ getPotencyMod(0) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -418,7 +418,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                2 &nbsp;(-{{ getPotencyMod(2) }} Dice)
+                2 &nbsp;(-{{ getPotencyMod(1) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -433,7 +433,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                3 &nbsp;(-{{ getPotencyMod(3) }} Dice)
+                3 &nbsp;(-{{ getPotencyMod(2) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -448,7 +448,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                4 &nbsp;(-{{ getPotencyMod(4) }} Dice)
+                4 &nbsp;(-{{ getPotencyMod(3) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -463,7 +463,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                5 &nbsp;(-{{ getPotencyMod(5) }} Dice)
+                5 &nbsp;(-{{ getPotencyMod(4) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -478,7 +478,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                6 &nbsp;(-{{ getPotencyMod(6) }} Dice)
+                6 &nbsp;(-{{ getPotencyMod(5) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -493,7 +493,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                7 &nbsp;(-{{ getPotencyMod(7) }} Dice)
+                7 &nbsp;(-{{ getPotencyMod(6) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -508,7 +508,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                8 &nbsp;(-{{ getPotencyMod(8) }} Dice)
+                8 &nbsp;(-{{ getPotencyMod(7) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -523,7 +523,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                9 &nbsp;(-{{ getPotencyMod(9) }} Dice)
+                9 &nbsp;(-{{ getPotencyMod(8) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -538,7 +538,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                10 &nbsp;(-{{ getPotencyMod(10) }} Dice)
+                10 &nbsp;(-{{ getPotencyMod(9) }} Dice)
               </div>
               <div class="col-span-4 grid place-items-center">
                 <input
@@ -553,7 +553,7 @@
               <div
                 class="col-span-8 text-base font-cinzel grid place-items-center"
               >
-                11 &nbsp;(-{{ getPotencyMod(11) }} Dice)
+                11 &nbsp;(-{{ getPotencyMod(10) }} Dice)
               </div>
 
               <div
@@ -634,7 +634,24 @@
                 <div
                   class="col-span-8 text-base font-cinzel grid place-items-center"
                 >
-                  <p>1 turn (-0 dice)</p>
+                  <p>1 turn &nbsp;(-{{ getDurationMod(0) }} Dice)</p>
+                </div>
+              </div>
+              <div class="col-span-12 grid grid-cols-12">
+                <div class="col-span-4 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="1"
+                    name="duration"
+                    [(ngModel)]="castConfig.duration"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
+                  <p>2 turns &nbsp;(-{{ getDurationMod(1) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -651,7 +668,24 @@
                 <div
                   class="col-span-8 text-base font-cinzel grid place-items-center"
                 >
-                  <p>2 turns (-2 dice)</p>
+                  <p>3 turns &nbsp;(-{{ getDurationMod(2) }} Dice)</p>
+                </div>
+              </div>
+              <div class="col-span-12 grid grid-cols-12">
+                <div class="col-span-4 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="3"
+                    name="duration"
+                    [(ngModel)]="castConfig.duration"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
+                  <p>5 turns &nbsp;(-{{ getDurationMod(3) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -668,7 +702,24 @@
                 <div
                   class="col-span-8 text-base font-cinzel grid place-items-center"
                 >
-                  <p>3 turns (-4 dice)</p>
+                  <p>10 turns &nbsp;(-{{ getDurationMod(4) }} Dice)</p>
+                </div>
+              </div>
+              <div class="col-span-12 grid grid-cols-12">
+                <div class="col-span-4 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="5"
+                    name="duration"
+                    [(ngModel)]="castConfig.duration"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
+                  <p>20 turns &nbsp;(-{{ getDurationMod(5) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -685,7 +736,24 @@
                 <div
                   class="col-span-8 text-base font-cinzel grid place-items-center"
                 >
-                  <p>5 turns (-6 dice)</p>
+                  <p>30 turns &nbsp;(-{{ getDurationMod(6) }} Dice)</p>
+                </div>
+              </div>
+              <div class="col-span-12 grid grid-cols-12">
+                <div class="col-span-4 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="7"
+                    name="duration"
+                    [(ngModel)]="castConfig.duration"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
+                  <p>40 &nbsp;(-{{ getDurationMod(7) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -702,7 +770,24 @@
                 <div
                   class="col-span-8 text-base font-cinzel grid place-items-center"
                 >
-                  <p>10 turns (-8 dice)</p>
+                  <p>50 turns &nbsp;(-{{ getDurationMod(8) }} Dice)</p>
+                </div>
+              </div>
+              <div class="col-span-12 grid grid-cols-12">
+                <div class="col-span-4 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="9"
+                    name="duration"
+                    [(ngModel)]="castConfig.duration"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
+                  <p>60 turns &nbsp;(-{{ getDurationMod(9) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -719,92 +804,7 @@
                 <div
                   class="col-span-8 text-base font-cinzel grid place-items-center"
                 >
-                  <p>20 turns (-10 dice)</p>
-                </div>
-              </div>
-              <div class="col-span-12 grid grid-cols-12">
-                <div class="col-span-4 grid place-items-center">
-                  <input
-                    class=""
-                    type="radio"
-                    [value]="12"
-                    name="duration"
-                    [(ngModel)]="castConfig.duration"
-                    (ngModelChange)="updatePools()"
-                  />
-                </div>
-                <div
-                  class="col-span-8 text-base font-cinzel grid place-items-center"
-                >
-                  <p>30 turns (-12 dice)</p>
-                </div>
-              </div>
-              <div class="col-span-12 grid grid-cols-12">
-                <div class="col-span-4 grid place-items-center">
-                  <input
-                    class=""
-                    type="radio"
-                    [value]="14"
-                    name="duration"
-                    [(ngModel)]="castConfig.duration"
-                    (ngModelChange)="updatePools()"
-                  />
-                </div>
-                <div
-                  class="col-span-8 text-base font-cinzel grid place-items-center"
-                >
-                  <p>40 turns (-14 dice)</p>
-                </div>
-              </div>
-              <div class="col-span-12 grid grid-cols-12">
-                <div class="col-span-4 grid place-items-center">
-                  <input
-                    class=""
-                    type="radio"
-                    [value]="16"
-                    name="duration"
-                    [(ngModel)]="castConfig.duration"
-                    (ngModelChange)="updatePools()"
-                  />
-                </div>
-                <div
-                  class="col-span-8 text-base font-cinzel grid place-items-center"
-                >
-                  <p>50 turns (-16 dice)</p>
-                </div>
-              </div>
-              <div class="col-span-12 grid grid-cols-12">
-                <div class="col-span-4 grid place-items-center">
-                  <input
-                    class=""
-                    type="radio"
-                    [value]="18"
-                    name="duration"
-                    [(ngModel)]="castConfig.duration"
-                    (ngModelChange)="updatePools()"
-                  />
-                </div>
-                <div
-                  class="col-span-8 text-base font-cinzel grid place-items-center"
-                >
-                  <p>60 turns (-18 dice)</p>
-                </div>
-              </div>
-              <div class="col-span-12 grid grid-cols-12">
-                <div class="col-span-4 grid place-items-center">
-                  <input
-                    class=""
-                    type="radio"
-                    [value]="20"
-                    name="duration"
-                    [(ngModel)]="castConfig.duration"
-                    (ngModelChange)="updatePools()"
-                  />
-                </div>
-                <div
-                  class="col-span-8 text-base font-cinzel grid place-items-center"
-                >
-                  <p>70 turns (-20 dice)</p>
+                  <p>70 turns &nbsp;(-{{ getDurationMod(10) }} Dice)</p>
                 </div>
               </div>
             </div>
@@ -845,7 +845,24 @@
                 <div
                   class="col-span-10 text-base font-cinzel grid place-items-center"
                 >
-                  <p>1 scene/hour (-0 dice)</p>
+                  <p>1 scene/hour &nbsp;(-{{ getDurationMod(0) }} Dice)</p>
+                </div>
+              </div>
+              <div class="col-span-12 grid grid-cols-12">
+                <div class="col-span-2 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="1"
+                    name="duration"
+                    [(ngModel)]="castConfig.duration"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
+                  <p>1 day &nbsp;(-{{ getDurationMod(1) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -862,7 +879,24 @@
                 <div
                   class="col-span-10 text-base font-cinzel grid place-items-center"
                 >
-                  <p>1 day (-2 dice)</p>
+                  <p>1 week &nbsp;(-{{ getDurationMod(2) }} Dice)</p>
+                </div>
+              </div>
+              <div class="col-span-12 grid grid-cols-12">
+                <div class="col-span-2 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="3"
+                    name="duration"
+                    [(ngModel)]="castConfig.duration"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-10 text-base font-cinzel grid place-items-center"
+                >
+                  <p>1 month &nbsp;(-{{ getDurationMod(3) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -879,7 +913,7 @@
                 <div
                   class="col-span-10 text-base font-cinzel grid place-items-center"
                 >
-                  <p>1 week (-4 dice)</p>
+                  <p>1 year &nbsp;(-{{ getDurationMod(4) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">
@@ -887,41 +921,7 @@
                   <input
                     class=""
                     type="radio"
-                    [value]="6"
-                    name="duration"
-                    [(ngModel)]="castConfig.duration"
-                    (ngModelChange)="updatePools()"
-                  />
-                </div>
-                <div
-                  class="col-span-10 text-base font-cinzel grid place-items-center"
-                >
-                  <p>1 month (-6 dice)</p>
-                </div>
-              </div>
-              <div class="col-span-12 grid grid-cols-12">
-                <div class="col-span-2 grid place-items-center">
-                  <input
-                    class=""
-                    type="radio"
-                    [value]="8"
-                    name="duration"
-                    [(ngModel)]="castConfig.duration"
-                    (ngModelChange)="updatePools()"
-                  />
-                </div>
-                <div
-                  class="col-span-10 text-base font-cinzel grid place-items-center"
-                >
-                  <p>1 year (-8 dice)</p>
-                </div>
-              </div>
-              <div class="col-span-12 grid grid-cols-12">
-                <div class="col-span-2 grid place-items-center">
-                  <input
-                    class=""
-                    type="radio"
-                    [value]="10"
+                    [value]="5"
                     name="duration"
                     [(ngModel)]="castConfig.duration"
                     (ngModelChange)="updatePools()"
@@ -935,7 +935,7 @@
                     <span class="text-xs font-playfair"
                       >(+1 Reach & +1 Mana)</span
                     >
-                    (-10 dice)
+                    &nbsp;(-{{ getDurationMod(5) }} Dice)
                   </p>
                 </div>
               </div>
