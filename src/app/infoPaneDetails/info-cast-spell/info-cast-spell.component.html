@@ -390,171 +390,28 @@
             [ngClass]="{ hidden: this.collapsible.potency }"
           >
             <div class="col-span-12 grid grid-cols-12 p-3 m-auto">
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="1"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                1 &nbsp;(-{{ getPotencyMod(0) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="2"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                2 &nbsp;(-{{ getPotencyMod(1) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="3"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                3 &nbsp;(-{{ getPotencyMod(2) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="4"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                4 &nbsp;(-{{ getPotencyMod(3) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="5"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                5 &nbsp;(-{{ getPotencyMod(4) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="6"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                6 &nbsp;(-{{ getPotencyMod(5) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="7"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                7 &nbsp;(-{{ getPotencyMod(6) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="8"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                8 &nbsp;(-{{ getPotencyMod(7) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="9"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                9 &nbsp;(-{{ getPotencyMod(8) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="10"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                10 &nbsp;(-{{ getPotencyMod(9) }} Dice)
-              </div>
-              <div class="col-span-4 grid place-items-center">
-                <input
-                  class=""
-                  type="radio"
-                  [value]="11"
-                  name="potencyValue"
-                  [(ngModel)]="castConfig.potencyValue"
-                  (ngModelChange)="updatePools()"
-                />
-              </div>
-              <div
-                class="col-span-8 text-base font-cinzel grid place-items-center"
-              >
-                11 &nbsp;(-{{ getPotencyMod(10) }} Dice)
-              </div>
+
+              <span class="col-span-12 grid grid-cols-12" *ngFor="let _ of [].constructor(10); let i = index" >
+
+                <div class="col-span-4 grid place-items-center">
+                  <input
+                    class=""
+                    type="radio"
+                    [value]="i+1"
+                    name="potencyValue"
+                    [(ngModel)]="castConfig.potencyValue"
+                    (ngModelChange)="updatePools()"
+                  />
+                </div>
+                <div
+                  class="col-span-8 text-base font-cinzel grid place-items-center"
+                >
+                  {{i+1}} &nbsp;(-{{ getPotencyMod(i) }} Dice)
+                </div>
+
+              </span>
+
+
 
               <div
                 class="col-span-8 grid place-items-center text-lg font-cinzel mt-4"
@@ -753,7 +610,7 @@
                 <div
                   class="col-span-8 text-base font-cinzel grid place-items-center"
                 >
-                  <p>40 &nbsp;(-{{ getDurationMod(7) }} Dice)</p>
+                  <p>40 turns &nbsp;(-{{ getDurationMod(7) }} Dice)</p>
                 </div>
               </div>
               <div class="col-span-12 grid grid-cols-12">

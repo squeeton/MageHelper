@@ -254,7 +254,8 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
 
   getPotencyMod(value: number) {
     let dice = 0;
-    if(this.castConfig.spell.primaryFactor == 'Potency'){
+    if(this.info.spell.primaryFactor == 'Potency'){
+      
       if (value <= (this.castConfig.charArcanaDots-1)) {
         return dice
       }
@@ -262,7 +263,8 @@ export class InfoCastSpellComponent implements OnInit, OnDestroy {
         dice = (value - (this.castConfig.charArcanaDots-1)) * 2
         return dice;
       }
-    }else{
+    }
+    else{
       return value *2;
     }
   }
